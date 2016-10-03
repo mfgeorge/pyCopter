@@ -17,12 +17,15 @@ def main():
     controller = Motor_Control(servo1, servo2, servo3, servo4)
     while True:
         try:
-            ss1 = int(input("Motor 1 Speed = \t"))
-            controller.motor_task(ss1, ss2, ss3, ss4)
+            speeds = tuple(map(int,input("\n Enter Motor Speeds in format ss1,ss2,ss3,ss4 \n").split(',')))
+            controller.motor_task(speeds[0], speeds[1], speeds[2], speeds[3])
         except KeyboardInterrupt:
             print("\n \n Ending main and shutting motors down. \n \n")
             controller.motor_task(0,0,0,0)
             break
+        except IndexError:
+            print(" \n \n Please provide at least 4 input paramters for all motors \n \n")
+            pass
 
 if __name__ == '__main__':
     main()
