@@ -15,7 +15,14 @@ def main():
     servo4 = pyb.Servo(4)
 
     controller = Motor_Control(servo1, servo2, servo3, servo4)
-    controller.motor_task(ss1, ss2, ss3, ss4)
+    while True:
+        try:
+            ss1 = int(input("Motor 1 Speed = \t"))
+            controller.motor_task(ss1, ss2, ss3, ss4)
+        except KeyboardInterrupt:
+            print("\n \n Ending main and shutting motors down. \n \n")
+            controller.motor_task(0,0,0,0)
+            break
 
 if __name__ == '__main__':
     main()

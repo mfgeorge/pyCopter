@@ -18,7 +18,7 @@ class Motor_Control:
 
     def motor_task(self,ss1, ss2, ss3, ss4):
         self.servo1.speed(ss1)
-        print(ss1)
+        print("Motor 1 set to: ", ss1)
         self.servo2.speed(ss2)
 
         self.servo3.speed(ss3)
