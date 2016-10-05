@@ -1,0 +1,3 @@
+For the MTK-3339 GPS module. Two links here for communicating with the 
+module and the other for dealing with its raw outputs it seems:
+https://forum.micropython.org/viewtopic.php?t=726
