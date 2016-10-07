@@ -1,3 +1,4 @@
 *.brd binary
 *.sch binary
 *.lbr binary
+*.pdf binary
