@@ -35,7 +35,7 @@ def main():
         pitch = IMU.get_pitch()
         roll = IMU.get_roll()
         yaw = IMU.get_yaw()
-        speeds = (yaw,yaw,yaw,yaw)
+        speeds = [abs(pitch),abs(pitch),abs(roll),abs(roll)]
         time.sleep(0.01)
 
         controller.motor_task(speeds[0], speeds[1], speeds[2], speeds[3])
