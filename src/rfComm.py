@@ -1,21 +1,13 @@
 #!/bin/python
 import pyb
 
-thro_pin = pyb.Pin.board.Y1
-aile_pin = pyb.Pin.board.Y2
-elev_pin = pyb.Pin.board.Y3
-rudd_pin = pyb.Pin.board.Y4
-gear_pin = pyb.Pin.board.Y6
-aux1_pin = pyb.Pin.board.Y7
-
-
 """
 Parent Class for any rf controller available 
 Lays out what needs to be implemented so that all controllers 
 will implement the same methods, no matter what type they are.
 """
 
-class rfController6CH:
+class RFController6CH:
     'A generic parent class for a 6 channel radio module'
     def __init__(self):
         raise NotImplementedError("Subclasses should implement this!")
@@ -38,7 +30,7 @@ class rfController6CH:
     def get_switch2(self):
     	raise NotImplementedError("Subclasses should implement this!")
 
-class spektrumController(rfController6CH):
+class SpektrumController(RFController6CH):
     'A class for a specific 6 channel Spektrum radio module.'
 
 	def __init__(self, thro_pin, aile_pin, elev_pin, rudd_pin, gear_pin, aux1_pin):
@@ -50,22 +42,24 @@ class spektrumController(rfController6CH):
         self.aux1_pulse = ServoPulse(aux1_pin)
 
     def get_thrust(self):
-        return self.thro_pulse.get_width()
+        return (self.thro_pulse.get_width() - 1048)/(1933 - 1048)*50
 
     def get_roll(self):
-        return self.aile_pulse.get_width()
+        return (self.aile_pulse.get_width() - 1094)/(1893 - 1094)*50
 
     def get_pitch(self):
-        return self.elev_pulse.get_width()
+        return (self.elev_pulse.get_width() - 1077)/(1876 - 1077)*50
 
     def get_yaw(self):
-        return self.rudd_pulse.get_width()
+        return (self.rudd_pulse.get_width() - 1086)/(1876 - 1086)*50
 
     def get_switch1(self):
-        return self.gear_pulse.get_width()
+        ret = 1 if self.gear_pulse.get_width() > 1500 else 0
+        return ret
 
     def get_switch2(self):
-        return self.aux1_pulse.get_width()
+        ret = 1 if self.aux1_pulse.get_width() > 1500 else 0
+        return ret
 
 """
 A servo_pulse Class written by wagnerc4 on github and modified by michael george for our
