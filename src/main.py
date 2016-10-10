@@ -20,7 +20,7 @@ def main():
 
     thro_pin=pyb.Pin.board.Y1
     micropython.alloc_emergency_exception_buf(100)
-    thro_pulse = ServoPulse(thro_pin, index=0)
+    thro_pulse = ServoPulse(thro_pin)
 
     # RF_controller = SpektrumController(thro_pin=pyb.Pin.board.Y1,
     #                                     aile_pin=pyb.Pin.board.Y2,

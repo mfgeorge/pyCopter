@@ -68,36 +68,31 @@ purposes
 class ServoPulse:
     start = width = last_width = 0
 
-    def __init__(self, pin, index=0):
-        timer_dict = TimerHelper()
-        timer_number, timer_channel_number = timer_dict.get_timer(pin,index)
-        print("Timer: ", timer_number, "\t Channel: ", timer_channel_number)
-        input("Any key to continue")
-        timer = pyb.Timer(timer_number, prescaler=83, period=0x0fffffff)
+    def __init__(self, pin, timer=pyb.Timer(8, prescaler=83, period=0xffff)):
+        self.pulseCounter = timer
+        self.tickConversion = 1e6/(self.pulseCounter.freq()*self.pulseCounter.period())
+        input("Any key to continue configuring external interrupts")
         self.pin = pin
-        self.channel = timer.channel(timer_channel_number,
-                                    pyb.Timer.IC,
-                                    pin=self.pin,
-                                    polarity=pyb.Timer.BOTH)
-        self.channel.callback(self.callback)
+        self.interrupt = pyb.ExtInt(self.pin, pyb.ExtInt.IRQ_RISING_FALLING, pyb.Pin.PULL_NONE, self.callback)
+        self.interrupt.enable()
+        print("External Interrupt Set up on Line: ", self.interrupt.line())
 
-    def callback(self, timer):
-        #print("interrupt")
+    def callback(self, line):
+        now = self.pulseCounter.counter()
         if self.pin.value(): 
-            #print("HI")
-            self.start = self.channel.capture()
+            self.start = now
         else: 
-            #print("LO")
-            self.width = (self.channel.capture() - self.start) & 0x0fffffff
+            self.width = (now - self.start) & 0xffff
 
     def get_width(self):
-        w = self.width
+        w = self.width*self.tickConversion
         # print(w)
         self.last_width = w if w > 950 and w < 1950 else self.last_width
         return self.last_width
 
     def __del__(self):
         self.timer.deinit()
+        self.interrupt.disable()
 
 
 class TimerHelper:
