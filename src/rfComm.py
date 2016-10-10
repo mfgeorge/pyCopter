@@ -68,9 +68,11 @@ purposes
 class ServoPulse:
     start = width = last_width = 0
 
-    def __init__(self, pin):
+    def __init__(self, pin, index=0):
         timer_dict = TimerHelper()
-        timer_number, timer_channel_number = timer_dict.get_timer(pin)
+        timer_number, timer_channel_number = timer_dict.get_timer(pin,index)
+        print("Timer: ", timer_number, "\t Channel: ", timer_channel_number)
+        input("Any key to continue")
         timer = pyb.Timer(timer_number, prescaler=83, period=0x0fffffff)
         self.pin = pin
         self.channel = timer.channel(timer_channel_number,
@@ -80,11 +82,17 @@ class ServoPulse:
         self.channel.callback(self.callback)
 
     def callback(self, timer):
-        if self.pin.value(): self.start = self.channel.capture()
-        else: self.width = self.channel.capture() - self.start & 0x0fffffff
+        #print("interrupt")
+        if self.pin.value(): 
+            #print("HI")
+            self.start = self.channel.capture()
+        else: 
+            #print("LO")
+            self.width = (self.channel.capture() - self.start) & 0x0fffffff
 
     def get_width(self):
         w = self.width
+        # print(w)
         self.last_width = w if w > 950 and w < 1950 else self.last_width
         return self.last_width
 
