@@ -76,9 +76,14 @@ class SpektrumController(RFController6CH):
 
 """
 A servo_pulse Class written by wagnerc4 on github and modified by michael george for our
-purposes
+purposes. Instead of using IC interrupts here which limits the pin choice 
+(trouble with timer 8 and 1 identified, may be others not working either)
+we use external interrupts so that this can be done on any pin, given they
+do not have the same CPU port NUMBER. ie PBn and PAn cannot both be used
+to measure servo pulses.
 """
 class ServoPulse:
+    'A class to measure servo pulse widths'
     start = width = last_width = 0
 
     def __init__(self, pin, timer=pyb.Timer(8, prescaler=83, period=0xffff)):
