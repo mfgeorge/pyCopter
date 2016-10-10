@@ -41,39 +41,61 @@ class rfController6CH:
 class spektrumController(rfController6CH):
     'A class for a specific 6 channel Spektrum radio module.'
 
-	def __init__(self, thro_pin, aile_pin, elev_pin, rudd_pin, gear_pin, aux1_pin, global_varible):
-        self.thro_pin = thro_pin
-        self.aile_pin = aile_pin
-        self.elev_pin = elev_pin
-        self.rudd_pin = rudd_pin
-        self.gear_pin = gear_pin
-        self.aux1_pin = aux1_pin
-        self.last_pulse_width = {}
-        self.last_pulse_start = {}
-
-    def initialize_pin_timer(self, pin, timer_index=0):
-        timer_number, timer_channel = TimerHelper.get_timer(pin, timer_index)
-        timer = pyb.Timer(timer_number, prescaler=83, period=0x0fffffff)
-        input_capture = timer.channel(timer_channel, pyb.Timer.IC, pin=ic_pin, polarity=pyb.Timer.RISING, callback=self.get_pulse_width)
-        self.last_pulse_start[input_capture] = 0
-        self.last_pulse_width[input_capture] = 0
-
-
-    def get_pulse_width(self, timer):
-        # Read the GPIO pin to figure out if this was a rising or falling edge
-        if ic_pin.value():
-            # Rising edge - start of the pulse
-            ic_start = ic.capture()
-        else:
-            # Falling edge - end of the pulse
-            ic_width = ic.capture() - ic_start & 0x0fffffff
-
+	def __init__(self, thro_pin, aile_pin, elev_pin, rudd_pin, gear_pin, aux1_pin):
+        self.thro_pulse = ServoPulse(thro_pin)
+        self.aile_pulse = ServoPulse(aile_pin)
+        self.elev_pulse = ServoPulse(elev_pin)
+        self.rudd_pulse = ServoPulse(rudd_pin)
+        self.gear_pulse = ServoPulse(gear_pin)
+        self.aux1_pulse = ServoPulse(aux1_pin)
 
     def get_thrust(self):
-        return 
+        return self.thro_pulse.get_width()
 
-class myTimer(pyb.Timer):
-    def __init__(self, timer_number, )
+    def get_roll(self):
+        return self.aile_pulse.get_width()
+
+    def get_pitch(self):
+        return self.elev_pulse.get_width()
+
+    def get_yaw(self):
+        return self.rudd_pulse.get_width()
+
+    def get_switch1(self):
+        return self.gear_pulse.get_width()
+
+    def get_switch2(self):
+        return self.aux1_pulse.get_width()
+
+"""
+A servo_pulse Class written by wagnerc4 on github and modified by michael george for our
+purposes
+"""
+class ServoPulse:
+    start = width = last_width = 0
+
+    def __init__(self, pin):
+        timer_number, timer_channel_number = TimerHelper.get_timer(pin)
+        timer = pyb.Timer(timer_number, prescaler=83, period=0x0fffffff)
+        self.pin = pin
+        self.channel = timer.channel(timer_channel_number,
+                                    Timer.IC,
+                                    pin=self.pin,
+                                    polarity=Timer.BOTH)
+        self.channel.callback(self.callback)
+
+    def callback(self, timer):
+        if self.pin.value(): self.start = self.channel.capture()
+        else: self.width = self.channel.capture() - self.start & 0x0fffffff
+
+    def get_width(self):
+        w = self.width
+        self.last_width = w if w > 950 and w < 1950 else self.last_width
+        return self.last_width
+
+    def __del__(self):
+        self.timer.deinit()
+
 
 class TimerHelper:
     'A simple class for helping pick timers and channels based upon pin number'
