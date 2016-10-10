@@ -3,6 +3,7 @@
 from pyb import Servo
 from motor_control import Motor_Control
 from BNO055_lib import BNO055
+import time
 
 def main():
     ss1 = 50
@@ -19,6 +20,7 @@ def main():
 
     IMU = BNO055()
     while True:
+        '''
         try:
             speeds = tuple(map(int,input("\n Enter Motor Speeds in format ss1,ss2,ss3,ss4 \n").split(',')))
             controller.motor_task(speeds[0], speeds[1], speeds[2], speeds[3])
@@ -29,10 +31,15 @@ def main():
         except IndexError:
             print(" \n \n Please provide at least 4 input paramters for all motors \n \n")
             pass
+        '''
 
         pitch = IMU.get_pitch()
         roll = IMU.get_roll()
         yaw = IMU.get_yaw()
+        speeds = [abs(pitch*10),abs(pitch*10),abs(roll*10),abs(roll*10)]
+        time.sleep(0.01)
+        print(speeds)
+        controller.motor_task(speeds[0], speeds[1], speeds[2], speeds[3])
 
 if __name__ == '__main__':
     main()
