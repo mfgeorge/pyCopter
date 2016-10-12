@@ -1,5 +1,3 @@
-# main.py -- put your code here!
-
 from pyb import I2C
 import time
 
