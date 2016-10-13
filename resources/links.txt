@@ -5,3 +5,7 @@ https://forum.micropython.org/viewtopic.php?t=726
 Another micropython quadcopter project i found:
 https://github.com/wagnerc4/flight_controller
 
+Information about GPS NMEA sentences:
+http://aprs.gids.nl/nmea/
+
+
