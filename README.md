@@ -1,4 +1,4 @@
-<h1>pyCopter <\h1><br>
+<h1>pyCopter </h1><br>
 <br>
 A multi-roter copter firmware written in micropython for a LoPy 
 microcontroller (ESP32). The hardware designs used to make the flight 
