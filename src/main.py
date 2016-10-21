@@ -1,5 +1,4 @@
 # main.py -- put your code here!
-
 import micropython
 from pyb import Servo, millis
 from motor_control import Motor_Control
@@ -23,6 +22,7 @@ def main():
         print("Communication Error with the BNO055. \n")
         print("Error Exception", e)
         time.sleep(2)
+        sys.exit()
 
     while True:
 

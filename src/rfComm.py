@@ -95,7 +95,7 @@ class ServoPulse:
         self.interrupt.enable()
         print("External Interrupt Set up on Line: ", self.interrupt.line())
 
-   @micropython.native
+    @micropython.native
     def callback(self, line):
         now = self.pulseCounter.counter()
         if self.pin.value(): 

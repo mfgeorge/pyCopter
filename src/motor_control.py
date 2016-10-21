@@ -1,5 +1,3 @@
-# main.py -- put your code here!
-
 from pyb import Servo
 import time
 
