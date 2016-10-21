@@ -1,7 +1,7 @@
 from pyb import UART
 from micropyGPS import MicropyGPS
 
-uart = UART(3, 9600)
+uart = UART(6, 9600)
 
 my_gps = MicropyGPS()
 
