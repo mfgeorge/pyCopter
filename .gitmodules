@@ -1,0 +1,6 @@
+[submodule "resources/MTK_commands"]
+	path = resources/MTK_commands
+	url = https://github.com/inmcm/MTK_commands.git
+[submodule "resources/micropyGPS"]
+	path = resources/micropyGPS
+	url = https://github.com/inmcm/micropyGPS.git
