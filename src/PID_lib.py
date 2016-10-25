@@ -112,3 +112,19 @@ class PID:
         Based on a pre-determined sampe time, the PID decides if it should compute or return immediately.
         """
         self.sample_time = sample_time
+
+    def setMemberData(self, P, I, D, windup_guard, sample_time):
+        """
+        A function for setting all the member data of the controller all at once
+        :param P: Proportional gain
+        :param I: Integral gain
+        :param D: Differential gain
+        :param windup_guard: windup gain
+        :param sample_time: sample time of controller
+        :return: None
+        """
+        self.P = P
+        self.I = I
+        self.D = D
+        self.windup_guard = windup_guard
+        self.sample_time = sample_time
