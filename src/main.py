@@ -1,6 +1,6 @@
 # main.py -- put your code here!
 import micropython
-from pyb import Servo, millis
+from pyb import Servo, millis, I2C
 from motor_control import Motor_Control
 from BNO055_lib import BNO055
 import time
@@ -31,7 +31,7 @@ def main():
         IMU = BNO055()
     except OSError as e:
         print("Communication Error with the BNO055. \n")
-        print("Error Exception", e)
+        print("Exception: OSError ", e)
         time.sleep(2)
         sys.exit()
 
@@ -39,27 +39,32 @@ def main():
     pid_controller = PIDControl(gain_dict)
     sensor_reading_dict = {}
     set_point_dict = {}
-    while True:
+    try:
+        while True:
+            t = time.ticks_us()
+            sensor_reading_dict["pitch"] = IMU.get_pitch()
+            sensor_reading_dict["roll"] = IMU.get_roll()
+            sensor_reading_dict["yaw"] = IMU.get_yaw_rate()
+            print(sensor_reading_dict["yaw"])
 
-        sensor_reading_dict["pitch"] = IMU.get_pitch()
-        sensor_reading_dict["roll"] = IMU.get_roll()
-        sensor_reading_dict["yaw"] = IMU.get_yaw()
+            set_point_dict["pitch"] = 0
+            set_point_dict["roll"] = 0
+            set_point_dict["yaw"] = 0
+            set_point_dict["thrust"] = 0
 
-        set_point_dict["pitch"] = 0
-        set_point_dict["roll"] = 0
-        set_point_dict["yaw"] = 0
-        set_point_dict["thrust"] = 0
+            speeds = pid_controller.run(sensor_reading_dict, set_point_dict)
 
-        speeds = pid_controller.run(sensor_reading_dict, set_point_dict)
+            # print(speeds)
 
-        motor_controller.motor_task(speeds[0], speeds[1], speeds[2], speeds[3])
+            motor_controller.motor_task(speeds[0], speeds[1], speeds[2], speeds[3])
 
-        print ("Pitch: ")
-        print (pitch)
-        print ("Roll: ")
-        print (roll)
-
-        #os.system('cls')
+            # print ("Pitch: ", sensor_reading_dict["pitch"], "\tRoll: ", sensor_reading_dict["roll"])
+            delta = time.ticks_diff(t, time.ticks_us())
+            #print("delta = ", delta/1000, " ms")
+    except:
+        motor_controller.motor_task(0,0,0,0)
+        IMU.deinit_i2c()
+        raise
 
 if __name__ == '__main__':
     main()

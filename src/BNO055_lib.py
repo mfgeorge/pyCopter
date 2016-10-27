@@ -200,6 +200,7 @@ class BNO055:
         self.i2c = i2c
         self.address = address
 
+
     def get_pitch(self):
         tempL = int.from_bytes(self.i2c.mem_read(1, self.address, BNO055_EULER_P_LSB_ADDR))
         tempH = int.from_bytes(self.i2c.mem_read(1, self.address, BNO055_EULER_P_MSB_ADDR))
@@ -226,3 +227,16 @@ class BNO055:
         if out > 360:   #check if the value is overflowing
             out = out - 4095.9375
         return out
+
+    def get_yaw_rate(self):
+        tempL = int.from_bytes(self.i2c.mem_read(1, self.address, BNO055_GYRO_DATA_Z_LSB_ADDR))
+        tempH = int.from_bytes(self.i2c.mem_read(1, self.address, BNO055_GYRO_DATA_Z_MSB_ADDR))
+        out = int((tempH << 8) | tempL)  # bitshifting
+        out = out / 16  # divide all angles by 16 to get true angle in deg
+        if out > 360:  # check if the value is overflowing
+            out = out - 4095.9375
+        return out
+
+    def deinit_i2c(self):
+        self.i2c.deinit()
+

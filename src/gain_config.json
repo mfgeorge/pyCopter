@@ -1,9 +1,23 @@
 {
   "pitch":{
-    "P": 10.0,
+    "P": 2.0,
     "I": 0.0,
     "D": 0.0,
     "windup_guard": 0.0,
-    "sample_time": 0.005
+    "sample_time": 5000
+  },
+  "roll":{
+    "P": 2.0,
+    "I": 0.0,
+    "D": 0.0,
+    "windup_guard": 0.0,
+    "sample_time": 5000
+  },
+  "yaw":{
+    "P": 0.10,
+    "I": 0.0,
+    "D": 0.0,
+    "windup_guard": 0.0,
+    "sample_time": 5000
   }
 }
