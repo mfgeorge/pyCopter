@@ -60,8 +60,8 @@ class PID:
         """
         error = self.SetPoint - feedback_value
 
-        self.current_time = time.time()
-        delta_time = self.current_time - self.last_time
+        self.current_time = time.ticks_us()
+        delta_time = time.ticks_diff(self.last_time, self.current_time)
         delta_error = error - self.last_error
 
         if (delta_time >= self.sample_time):
@@ -123,8 +123,12 @@ class PID:
         :param sample_time: sample time of controller
         :return: None
         """
-        self.P = P
-        self.I = I
-        self.D = D
+        print("Setting Member Data to: ")
+        print("P = ", P)
+        print("I = ", I)
+        print("D = ", D)
+        self.Kp = P
+        self.Ki = I
+        self.Kd = D
         self.windup_guard = windup_guard
         self.sample_time = sample_time

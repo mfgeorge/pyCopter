@@ -37,7 +37,7 @@ def main():
         IMU = BNO055()
     except OSError as e:
         print("Communication Error with the BNO055. \n")
-        print("Error Exception", e)
+        print("Exception: OSError ", e)
         time.sleep(2)
         sys.exit()
 
@@ -45,21 +45,24 @@ def main():
     pid_controller = PIDControl(gain_dict)
     sensor_reading_dict = {}
     set_point_dict = {}
-    while True:
+    try:
+        while True:
+            t = time.ticks_us()
+            sensor_reading_dict["pitch"] = IMU.get_pitch()
+            sensor_reading_dict["roll"] = IMU.get_roll()
+            sensor_reading_dict["yaw"] = IMU.get_yaw_rate()
+            print(sensor_reading_dict["yaw"])
 
-        sensor_reading_dict["pitch"] = IMU.get_pitch()
-        sensor_reading_dict["roll"] = IMU.get_roll()
-        sensor_reading_dict["yaw"] = IMU.get_yaw()
+            set_point_dict["pitch"] = 0
+            set_point_dict["roll"] = 0
+            set_point_dict["yaw"] = 0
+            set_point_dict["thrust"] = 0
 
-        set_point_dict["pitch"] = 0
-        set_point_dict["roll"] = 0
-        set_point_dict["yaw"] = 0
-        set_point_dict["thrust"] = 0
+            speeds = pid_controller.run(sensor_reading_dict, set_point_dict)
 
-        speeds = pid_controller.run(sensor_reading_dict, set_point_dict)
+            # print(speeds)
 
-        motor_controller.motor_task(speeds[0], speeds[1], speeds[2], speeds[3])
-
+<<<<<<< HEAD
         '''
         print ("Pitch: ")
         print (pitch)
@@ -71,6 +74,17 @@ def main():
         p = bmp180.pressure
         altitude = bmp180.altitude
         print(temp, p, altitude)
+=======
+            motor_controller.motor_task(speeds[0], speeds[1], speeds[2], speeds[3])
+
+            # print ("Pitch: ", sensor_reading_dict["pitch"], "\tRoll: ", sensor_reading_dict["roll"])
+            delta = time.ticks_diff(t, time.ticks_us())
+            #print("delta = ", delta/1000, " ms")
+    except:
+        motor_controller.motor_task(0,0,0,0)
+        IMU.deinit_i2c()
+        raise
+>>>>>>> 769e2fcec71f46440c980093c0b946c7892761c1
 
 if __name__ == '__main__':
     main()

@@ -1,5 +1,6 @@
 #!/bin/python
-from pyb import Pin 
+import pyb
+import time
 """
 Miscillaneous file for classes that help get things done.
 """
@@ -104,3 +105,14 @@ class TimerHelper:
             timer_channel_number = TimerHelper.channel_dict[str(pin)]
 
         return (timer_number, timer_channel_number)
+
+
+def timed_function(f, *args, **kwargs):
+    myname = str(f).split(' ')[1]
+    def new_func(*args, **kwargs):
+        t = time.ticks_us()
+        result = f(*args, **kwargs)
+        delta = time.ticks_diff(t, time.ticks_us())
+        print('Function {} Time = {:6.3f}ms'.format(myname, delta/1000))
+        return result
+    return new_func
