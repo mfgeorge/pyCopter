@@ -4,3 +4,6 @@
 [submodule "resources/micropyGPS"]
 	path = resources/micropyGPS
 	url = https://github.com/inmcm/micropyGPS.git
+[submodule "resources/Adafruit-Ultimate-GPS-FeatherWing-PCB"]
+	path = resources/Adafruit-Ultimate-GPS-FeatherWing-PCB
+	url = https://github.com/adafruit/Adafruit-Ultimate-GPS-FeatherWing-PCB.git
