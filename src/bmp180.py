@@ -40,10 +40,10 @@ class BMP180():
     # init
     def __init__(self):
 
-        # create i2c obect
+        # create i2c object
         _bmp_addr = self._bmp_addr
         self.bus = pyb.I2C(1, pyb.I2C.MASTER, baudrate=100000)
-       #self._bmp_i2c = pyb.I2C(side, pyb.I2C.MASTER)
+        #self._bmp_i2c = pyb.I2C(side, pyb.I2C.MASTER)
         self.chip_id = self.bus.mem_read(1, _bmp_addr, 0xD0)
         # read calibration data from EEPROM
         self._AC1 = unp('>h', self.bus.mem_read(1, _bmp_addr, 0xAA))[0]

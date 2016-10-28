@@ -8,7 +8,7 @@ from rfComm import SpektrumController, ServoPulse
 from controller_task import PIDControl
 import sys
 import json
-#import os
+from bmp180 import BMP180
 
 def load_config_file(config_file):
     with open(config_file, mode='r') as file:
@@ -27,6 +27,12 @@ def main():
     servo4 = pyb.Servo(4)
 
     motor_controller = Motor_Control(servo1, servo2, servo3, servo4)
+    #BMP = BMP180()
+    #bus = I2C(1, baudrate=100000)  # on pyboard
+    bmp180 = BMP180()
+    bmp180.oversample_sett = 2
+    bmp180.baseline = 101325
+
     try:
         IMU = BNO055()
     except OSError as e:
@@ -56,6 +62,19 @@ def main():
 
             # print(speeds)
 
+<<<<<<< HEAD
+        '''
+        print ("Pitch: ")
+        print (pitch)
+        print ("Roll: ")
+        print (roll)
+        '''
+
+        temp = bmp180.temperature
+        p = bmp180.pressure
+        altitude = bmp180.altitude
+        print(temp, p, altitude)
+=======
             motor_controller.motor_task(speeds[0], speeds[1], speeds[2], speeds[3])
 
             # print ("Pitch: ", sensor_reading_dict["pitch"], "\tRoll: ", sensor_reading_dict["roll"])
@@ -65,6 +84,7 @@ def main():
         motor_controller.motor_task(0,0,0,0)
         IMU.deinit_i2c()
         raise
+>>>>>>> 769e2fcec71f46440c980093c0b946c7892761c1
 
 if __name__ == '__main__':
     main()
