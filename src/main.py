@@ -1,6 +1,6 @@
 # main.py -- put your code here!
 import micropython
-from pyb import Servo, millis
+from pyb import Servo, millis, I2C
 from motor_control import Motor_Control
 from BNO055_lib import BNO055
 import time
@@ -8,7 +8,7 @@ from rfComm import SpektrumController, ServoPulse
 from controller_task import PIDControl
 import sys
 import json
-#import os
+from bmp180 import BMP180
 
 def load_config_file(config_file):
     with open(config_file, mode='r') as file:
@@ -27,6 +27,12 @@ def main():
     servo4 = pyb.Servo(4)
 
     motor_controller = Motor_Control(servo1, servo2, servo3, servo4)
+    #BMP = BMP180()
+    #bus = I2C(1, baudrate=100000)  # on pyboard
+    bmp180 = BMP180()
+    bmp180.oversample_sett = 2
+    bmp180.baseline = 101325
+
     try:
         IMU = BNO055()
     except OSError as e:
@@ -54,12 +60,17 @@ def main():
 
         motor_controller.motor_task(speeds[0], speeds[1], speeds[2], speeds[3])
 
+        '''
         print ("Pitch: ")
         print (pitch)
         print ("Roll: ")
         print (roll)
+        '''
 
-        #os.system('cls')
+        temp = bmp180.temperature
+        p = bmp180.pressure
+        altitude = bmp180.altitude
+        print(temp, p, altitude)
 
 if __name__ == '__main__':
     main()
