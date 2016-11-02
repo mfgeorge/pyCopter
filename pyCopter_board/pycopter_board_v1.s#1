@@ -3600,6 +3600,7 @@ will go to TX on our uController</text>
 which is one pin from the edge on the 
 GPS</text>
 <text x="137.16" y="25.4" size="1.778" layer="91" rot="R90">ALL N.C. (JUST MOUNTING HEADERS)</text>
+<text x="86.36" y="7.62" size="1.778" layer="91">Spektrum Reciever Headers</text>
 </plain>
 <instances>
 <instance part="U1" gate="G$1" x="-5.08" y="68.58"/>

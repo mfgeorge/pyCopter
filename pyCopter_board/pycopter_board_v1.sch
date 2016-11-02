@@ -3601,6 +3601,11 @@ which is one pin from the edge on the
 GPS</text>
 <text x="137.16" y="25.4" size="1.778" layer="91" rot="R90">ALL N.C. (JUST MOUNTING HEADERS)</text>
 <text x="86.36" y="7.62" size="1.778" layer="91">Spektrum Reciever Headers</text>
+<text x="78.74" y="5.08" size="1.778" layer="91">Connect to external interrupt pins on LoPy</text>
+<text x="60.96" y="48.26" size="1.778" layer="91">N.C.</text>
+<text x="60.96" y="45.72" size="1.778" layer="91">N.C.</text>
+<text x="60.96" y="43.18" size="1.778" layer="91">N.C.</text>
+<text x="60.96" y="55.88" size="1.778" layer="91">LoPy LED</text>
 </plain>
 <instances>
 <instance part="U1" gate="G$1" x="-5.08" y="68.58"/>
@@ -3899,12 +3904,22 @@ GPS</text>
 <wire x1="154.94" y1="60.96" x2="149.86" y2="60.96" width="0.1524" layer="91"/>
 <label x="144.78" y="60.96" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="JP1" gate="G$1" pin="10"/>
+<wire x1="60.96" y1="53.34" x2="66.04" y2="53.34" width="0.1524" layer="91"/>
+<label x="60.96" y="53.34" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="GPS_RX" class="0">
 <segment>
 <pinref part="J2" gate="G$1" pin="2"/>
 <wire x1="154.94" y1="58.42" x2="149.86" y2="58.42" width="0.1524" layer="91"/>
 <label x="144.78" y="58.42" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP1" gate="G$1" pin="9"/>
+<wire x1="60.96" y1="50.8" x2="66.04" y2="50.8" width="0.1524" layer="91"/>
+<label x="60.96" y="50.8" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
