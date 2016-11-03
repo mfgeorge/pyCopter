@@ -4381,18 +4381,18 @@ Standard 15-pin 0.1" header. Use with straight break away headers (SKU : PRT-001
 </device>
 </devices>
 </deviceset>
-<deviceset name="M03" prefix="J" uservalue="yes">
+<deviceset name="M03" prefix="JP" uservalue="yes">
 <description>&lt;b&gt;Header 3&lt;/b&gt;
 Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-00116), right angle break away headers (PRT-00553), swiss pins (PRT-00743), machine pins (PRT-00117), and female headers (PRT-00115). Molex polarized connector foot print use with SKU : PRT-08232 with associated crimp pins and housings.</description>
 <gates>
-<gate name="J$1" symbol="M03" x="-2.54" y="0"/>
+<gate name="G$1" symbol="M03" x="-2.54" y="0"/>
 </gates>
 <devices>
 <device name="PTH" package="1X03">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4400,9 +4400,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="POLAR" package="MOLEX-1X3">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4410,9 +4410,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="SCREW" package="SCREWTERMINAL-3.5MM-3">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name="">
@@ -4422,9 +4422,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="LOCK" package="1X03_LOCK">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4432,9 +4432,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="LOCK_LONGPADS" package="1X03_LOCK_LONGPADS">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4442,9 +4442,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="POLAR_LOCK" package="MOLEX-1X3_LOCK">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4452,9 +4452,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="SCREW_LOCK" package="SCREWTERMINAL-3.5MM-3_LOCK.007S">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name="">
@@ -4464,9 +4464,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="1X03_NO_SILK" package="1X03_NO_SILK">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4474,9 +4474,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="LONGPADS" package="1X03_LONGPADS">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4484,9 +4484,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="JST-PTH" package="JST-3-PTH">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name="">
@@ -4496,9 +4496,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="POGO_PIN_HOLES_ONLY" package="1X03_PP_HOLES_ONLY">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4506,9 +4506,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="-SCREW-5MM" package="SCREWTERMINAL-5MM-3">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name="">
@@ -4518,9 +4518,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="LOCK_NO_SILK" package="1X03_LOCK_NO_SILK">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4528,9 +4528,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="JST-SMD" package="JST-3-SMD">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name="">
@@ -4541,9 +4541,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="SMD" package="1X03-1MM-RA">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4551,9 +4551,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="SMD_RA_FEMALE" package="1X03_SMD_RA_FEMALE">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name="">
@@ -4564,9 +4564,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="SMD_RA_MALE" package="1X03_SMD_RA_MALE">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name="">
@@ -4576,9 +4576,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="SMD_RA_MALE_POST" package="1X03_SMD_RA_MALE_POST">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4586,9 +4586,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="JST-PTH-VERT" package="JST-3-PTH-VERT">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4596,9 +4596,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="1X03_SMD_RA_MALE_POST_SMALLER" package="1X03_SMD_RA_MALE_POST_SMALLER">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4606,9 +4606,9 @@ Standard 3-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </device>
 <device name="1X03_SMD_RA_MALE_POST_SMALLEST" package="1X03_SMD_RA_MALE_POST_SMALLEST">
 <connects>
-<connect gate="J$1" pin="1" pad="1"/>
-<connect gate="J$1" pin="2" pad="2"/>
-<connect gate="J$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -6798,6 +6798,10 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <part name="ESC2" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="ESC3" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="ESC4" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
+<part name="JP1" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
+<part name="JP2" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
+<part name="JP3" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
+<part name="JP4" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
 </parts>
 <sheets>
 <sheet>
@@ -6843,12 +6847,12 @@ GPS</text>
 <instance part="C6" gate="G$1" x="60.96" y="-2.54"/>
 <instance part="GPSLEFT" gate="G$1" x="124.46" y="48.26"/>
 <instance part="GPSRIGHT" gate="G$1" x="165.1" y="43.18" rot="R180"/>
-<instance part="J3" gate="J$1" x="91.44" y="-22.86" rot="R90"/>
-<instance part="J4" gate="J$1" x="91.44" y="-7.62" rot="R90"/>
-<instance part="J5" gate="J$1" x="91.44" y="-38.1" rot="R90"/>
-<instance part="J6" gate="J$1" x="109.22" y="-38.1" rot="R90"/>
-<instance part="J7" gate="J$1" x="109.22" y="-22.86" rot="R90"/>
-<instance part="J8" gate="J$1" x="109.22" y="-7.62" rot="R90"/>
+<instance part="J3" gate="G$1" x="91.44" y="-22.86" rot="R90"/>
+<instance part="J4" gate="G$1" x="91.44" y="-7.62" rot="R90"/>
+<instance part="J5" gate="G$1" x="91.44" y="-38.1" rot="R90"/>
+<instance part="J6" gate="G$1" x="109.22" y="-38.1" rot="R90"/>
+<instance part="J7" gate="G$1" x="109.22" y="-22.86" rot="R90"/>
+<instance part="J8" gate="G$1" x="109.22" y="-7.62" rot="R90"/>
 <instance part="IMUBREAK" gate="G$1" x="180.34" y="-7.62"/>
 <instance part="BMP180BREAK" gate="G$1" x="139.7" y="-7.62"/>
 <instance part="EXTRALOPYHEAD" gate="G$1" x="142.24" y="-33.02"/>
@@ -6860,6 +6864,10 @@ GPS</text>
 <instance part="ESC2" gate="G$1" x="175.26" y="-38.1"/>
 <instance part="ESC3" gate="G$1" x="193.04" y="-25.4"/>
 <instance part="ESC4" gate="G$1" x="193.04" y="-38.1"/>
+<instance part="JP1" gate="G$1" x="177.8" y="-50.8"/>
+<instance part="JP2" gate="G$1" x="200.66" y="-50.8"/>
+<instance part="JP3" gate="G$1" x="177.8" y="-63.5"/>
+<instance part="JP4" gate="G$1" x="200.66" y="-63.5"/>
 </instances>
 <busses>
 </busses>
@@ -6963,7 +6971,7 @@ GPS</text>
 <label x="154.94" y="-7.62" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J3" gate="J$1" pin="3"/>
+<pinref part="J3" gate="G$1" pin="3"/>
 <wire x1="88.9" y1="-15.24" x2="88.9" y2="-12.7" width="0.1524" layer="91"/>
 <label x="86.36" y="-15.24" size="1.778" layer="95"/>
 </segment>
@@ -6971,6 +6979,26 @@ GPS</text>
 <pinref part="EXTRALOPYHEAD" gate="G$1" pin="7"/>
 <wire x1="147.32" y1="-25.4" x2="149.86" y2="-25.4" width="0.1524" layer="91"/>
 <label x="149.86" y="-25.4" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="ESC2" gate="G$1" pin="1"/>
+<wire x1="182.88" y1="-38.1" x2="185.42" y2="-38.1" width="0.1524" layer="91"/>
+<label x="185.42" y="-38.1" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="ESC4" gate="G$1" pin="1"/>
+<wire x1="200.66" y1="-38.1" x2="203.2" y2="-38.1" width="0.1524" layer="91"/>
+<label x="203.2" y="-38.1" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="ESC3" gate="G$1" pin="1"/>
+<wire x1="200.66" y1="-25.4" x2="205.74" y2="-25.4" width="0.1524" layer="91"/>
+<label x="205.74" y="-25.4" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="ESC1" gate="G$1" pin="1"/>
+<wire x1="182.88" y1="-25.4" x2="185.42" y2="-25.4" width="0.1524" layer="91"/>
+<label x="185.42" y="-25.4" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="3.3V" class="0">
@@ -7045,7 +7073,7 @@ GPS</text>
 <label x="154.94" y="-2.54" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J3" gate="J$1" pin="2"/>
+<pinref part="J3" gate="G$1" pin="2"/>
 <wire x1="91.44" y1="-15.24" x2="91.44" y2="-12.7" width="0.1524" layer="91"/>
 <label x="88.9" y="-12.7" size="1.778" layer="95"/>
 </segment>
@@ -7238,7 +7266,7 @@ GPS</text>
 </net>
 <net name="THRO" class="0">
 <segment>
-<pinref part="J3" gate="J$1" pin="1"/>
+<pinref part="J3" gate="G$1" pin="1"/>
 <wire x1="93.98" y1="-15.24" x2="93.98" y2="-12.7" width="0.1524" layer="91"/>
 <label x="93.98" y="-15.24" size="1.778" layer="95"/>
 </segment>
@@ -7250,7 +7278,7 @@ GPS</text>
 </net>
 <net name="ELEV" class="0">
 <segment>
-<pinref part="J5" gate="J$1" pin="1"/>
+<pinref part="J5" gate="G$1" pin="1"/>
 <wire x1="93.98" y1="-30.48" x2="93.98" y2="-27.94" width="0.1524" layer="91"/>
 <label x="93.98" y="-27.94" size="1.778" layer="95"/>
 </segment>
@@ -7262,31 +7290,31 @@ GPS</text>
 </net>
 <net name="RUDD" class="0">
 <segment>
-<pinref part="J6" gate="J$1" pin="1"/>
+<pinref part="J6" gate="G$1" pin="1"/>
 <wire x1="111.76" y1="-30.48" x2="111.76" y2="-27.94" width="0.1524" layer="91"/>
 <label x="111.76" y="-27.94" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="LOPYRIGHT" gate="G$1" pin="8"/>
-<wire x1="86.36" y1="45.72" x2="81.28" y2="45.72" width="0.1524" layer="91"/>
-<label x="78.74" y="45.72" size="1.778" layer="95"/>
+<pinref part="LOPYRIGHT" gate="G$1" pin="11"/>
+<wire x1="86.36" y1="38.1" x2="83.82" y2="38.1" width="0.1524" layer="91"/>
+<label x="81.28" y="38.1" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GEAR" class="0">
 <segment>
-<pinref part="J7" gate="J$1" pin="1"/>
+<pinref part="J7" gate="G$1" pin="1"/>
 <wire x1="111.76" y1="-15.24" x2="111.76" y2="-12.7" width="0.1524" layer="91"/>
 <label x="111.76" y="-12.7" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="LOPYRIGHT" gate="G$1" pin="7"/>
-<wire x1="86.36" y1="48.26" x2="81.28" y2="48.26" width="0.1524" layer="91"/>
-<label x="78.74" y="48.26" size="1.778" layer="95"/>
+<pinref part="LOPYRIGHT" gate="G$1" pin="12"/>
+<wire x1="86.36" y1="35.56" x2="83.82" y2="35.56" width="0.1524" layer="91"/>
+<label x="81.28" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="AUX1" class="0">
 <segment>
-<pinref part="J8" gate="J$1" pin="1"/>
+<pinref part="J8" gate="G$1" pin="1"/>
 <wire x1="111.76" y1="0" x2="111.76" y2="2.54" width="0.1524" layer="91"/>
 <label x="111.76" y="2.54" size="1.778" layer="95"/>
 </segment>
@@ -7298,7 +7326,7 @@ GPS</text>
 </net>
 <net name="AILE" class="0">
 <segment>
-<pinref part="J4" gate="J$1" pin="1"/>
+<pinref part="J4" gate="G$1" pin="1"/>
 <wire x1="93.98" y1="0" x2="93.98" y2="2.54" width="0.1524" layer="91"/>
 <label x="96.52" y="2.54" size="1.778" layer="95"/>
 </segment>
@@ -7319,6 +7347,11 @@ GPS</text>
 <wire x1="147.32" y1="-33.02" x2="149.86" y2="-33.02" width="0.1524" layer="91"/>
 <label x="152.4" y="-33.02" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="ESC3" gate="G$1" pin="2"/>
+<wire x1="200.66" y1="-22.86" x2="205.74" y2="-22.86" width="0.1524" layer="91"/>
+<label x="205.74" y="-20.32" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="P22" class="0">
 <segment>
@@ -7330,6 +7363,11 @@ GPS</text>
 <pinref part="EXTRALOPYHEAD" gate="G$1" pin="3"/>
 <wire x1="147.32" y1="-35.56" x2="149.86" y2="-35.56" width="0.1524" layer="91"/>
 <label x="149.86" y="-35.56" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="ESC4" gate="G$1" pin="2"/>
+<wire x1="200.66" y1="-35.56" x2="203.2" y2="-35.56" width="0.1524" layer="91"/>
+<label x="203.2" y="-35.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="P17" class="0">
@@ -7360,6 +7398,30 @@ GPS</text>
 <pinref part="EXTRALOPYHEAD" gate="G$1" pin="2"/>
 <wire x1="147.32" y1="-38.1" x2="152.4" y2="-38.1" width="0.1524" layer="91"/>
 <label x="152.4" y="-38.1" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="P20" class="0">
+<segment>
+<pinref part="LOPYRIGHT" gate="G$1" pin="7"/>
+<wire x1="86.36" y1="48.26" x2="81.28" y2="48.26" width="0.1524" layer="91"/>
+<label x="78.74" y="48.26" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="ESC2" gate="G$1" pin="2"/>
+<wire x1="182.88" y1="-35.56" x2="185.42" y2="-35.56" width="0.1524" layer="91"/>
+<label x="185.42" y="-35.56" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="P19" class="0">
+<segment>
+<pinref part="LOPYRIGHT" gate="G$1" pin="8"/>
+<wire x1="86.36" y1="45.72" x2="81.28" y2="45.72" width="0.1524" layer="91"/>
+<label x="78.74" y="45.72" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="ESC1" gate="G$1" pin="2"/>
+<wire x1="182.88" y1="-22.86" x2="185.42" y2="-22.86" width="0.1524" layer="91"/>
+<label x="185.42" y="-22.86" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>

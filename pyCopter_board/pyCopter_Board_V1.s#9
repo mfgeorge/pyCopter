@@ -6357,12 +6357,22 @@ GPS</text>
 <wire x1="93.98" y1="-15.24" x2="93.98" y2="-12.7" width="0.1524" layer="91"/>
 <label x="93.98" y="-15.24" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="LOPYLEFT" gate="G$1" pin="5"/>
+<wire x1="60.96" y1="40.64" x2="66.04" y2="40.64" width="0.1524" layer="91"/>
+<label x="66.04" y="40.64" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="ELEV" class="0">
 <segment>
 <pinref part="J5" gate="J$1" pin="1"/>
 <wire x1="93.98" y1="-30.48" x2="93.98" y2="-27.94" width="0.1524" layer="91"/>
 <label x="93.98" y="-27.94" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="LOPYLEFT" gate="G$1" pin="1"/>
+<wire x1="60.96" y1="30.48" x2="66.04" y2="30.48" width="0.1524" layer="91"/>
+<label x="66.04" y="30.48" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="RUDD" class="0">
@@ -6371,12 +6381,22 @@ GPS</text>
 <wire x1="111.76" y1="-30.48" x2="111.76" y2="-27.94" width="0.1524" layer="91"/>
 <label x="111.76" y="-27.94" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="LOPYRIGHT" gate="G$1" pin="8"/>
+<wire x1="86.36" y1="45.72" x2="81.28" y2="45.72" width="0.1524" layer="91"/>
+<label x="78.74" y="45.72" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="GEAR" class="0">
 <segment>
 <pinref part="J7" gate="J$1" pin="1"/>
 <wire x1="111.76" y1="-15.24" x2="111.76" y2="-12.7" width="0.1524" layer="91"/>
 <label x="111.76" y="-12.7" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="LOPYRIGHT" gate="G$1" pin="7"/>
+<wire x1="86.36" y1="48.26" x2="81.28" y2="48.26" width="0.1524" layer="91"/>
+<label x="78.74" y="48.26" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="AUX1" class="0">
@@ -6391,6 +6411,11 @@ GPS</text>
 <pinref part="J4" gate="J$1" pin="1"/>
 <wire x1="93.98" y1="0" x2="93.98" y2="2.54" width="0.1524" layer="91"/>
 <label x="96.52" y="2.54" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="LOPYLEFT" gate="G$1" pin="2"/>
+<wire x1="60.96" y1="33.02" x2="66.04" y2="33.02" width="0.1524" layer="91"/>
+<label x="66.04" y="33.02" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="P23" class="0">
@@ -6439,6 +6464,12 @@ GPS</text>
 <pinref part="EXTRALOPYHEAD" gate="G$1" pin="1"/>
 <wire x1="147.32" y1="-40.64" x2="152.4" y2="-40.64" width="0.1524" layer="91"/>
 <label x="152.4" y="-40.64" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$9" class="0">
+<segment>
+<pinref part="LOPYRIGHT" gate="G$1" pin="9"/>
+<wire x1="86.36" y1="43.18" x2="81.28" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
