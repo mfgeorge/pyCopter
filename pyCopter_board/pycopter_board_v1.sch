@@ -6788,7 +6788,7 @@ GPS</text>
 <approved hash="108,1,-50.8,83.82,GND,,,,,"/>
 <approved hash="108,1,-5.08,15.24,GND,,,,,"/>
 <approved hash="113,1,57.7427,48.4547,LOPYLEFT,,,,,"/>
-<approved hash="113,1,89.2186,45.5253,LOPYRIGHT,,,,,"/>
+<approved hash="113,1,89.4256,45.5253,LOPYRIGHT,,,,,"/>
 <approved hash="113,1,131.403,48.4547,GPSLEFT,,,,,"/>
 <approved hash="113,1,158.157,41.7153,GPSRIGHT,,,,,"/>
 <approved hash="113,1,89.9753,-18.4573,THRO,,,,,"/>
@@ -6798,8 +6798,8 @@ GPS</text>
 <approved hash="113,1,107.755,-18.4573,GEAR,,,,,"/>
 <approved hash="113,1,107.755,-3.21733,AUX1,,,,,"/>
 <approved hash="113,1,182.203,-4.88527,IMUBREAK,,,,,"/>
-<approved hash="113,1,146.349,-6.15527,BMP180BREAK,,,,,"/>
-<approved hash="113,1,148.277,-30.2853,EXTRALOPYHEAD,,,,,"/>
+<approved hash="113,1,146.164,-6.15527,BMP180BREAK,,,,,"/>
+<approved hash="113,1,147.802,-30.2853,EXTRALOPYHEAD,,,,,"/>
 <approved hash="113,1,179.663,-23.9353,ESC1,,,,,"/>
 <approved hash="113,1,179.663,-36.6353,ESC2,,,,,"/>
 <approved hash="113,1,202.523,-23.9353,ESC3,,,,,"/>
