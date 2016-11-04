@@ -6723,6 +6723,11 @@ GPS</text>
 <wire x1="147.32" y1="-33.02" x2="149.86" y2="-33.02" width="0.1524" layer="91"/>
 <label x="152.4" y="-33.02" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="ESC3" gate="J$1" pin="3"/>
+<wire x1="205.74" y1="-22.86" x2="210.82" y2="-20.32" width="0.1524" layer="91"/>
+<label x="210.82" y="-20.32" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="P22" class="0">
 <segment>
@@ -6734,6 +6739,11 @@ GPS</text>
 <pinref part="EXTRALOPYHEAD" gate="G$1" pin="3"/>
 <wire x1="147.32" y1="-35.56" x2="149.86" y2="-35.56" width="0.1524" layer="91"/>
 <label x="149.86" y="-35.56" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="ESC4" gate="J$1" pin="3"/>
+<wire x1="205.74" y1="-35.56" x2="208.28" y2="-33.02" width="0.1524" layer="91"/>
+<label x="208.28" y="-33.02" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="P17" class="0">
@@ -6773,9 +6783,9 @@ GPS</text>
 <label x="78.74" y="48.26" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="ESC3" gate="J$1" pin="3"/>
-<wire x1="205.74" y1="-22.86" x2="210.82" y2="-20.32" width="0.1524" layer="91"/>
-<label x="210.82" y="-20.32" size="1.778" layer="95"/>
+<pinref part="ESC2" gate="J$1" pin="3"/>
+<wire x1="182.88" y1="-35.56" x2="185.42" y2="-33.02" width="0.1524" layer="91"/>
+<label x="185.42" y="-33.02" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="P19" class="0">
@@ -6788,20 +6798,6 @@ GPS</text>
 <pinref part="ESC1" gate="J$1" pin="3"/>
 <wire x1="182.88" y1="-22.86" x2="185.42" y2="-20.32" width="0.1524" layer="91"/>
 <label x="185.42" y="-20.32" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$8" class="0">
-<segment>
-<pinref part="ESC4" gate="J$1" pin="3"/>
-<wire x1="205.74" y1="-35.56" x2="208.28" y2="-33.02" width="0.1524" layer="91"/>
-<label x="208.28" y="-33.02" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$10" class="0">
-<segment>
-<pinref part="ESC2" gate="J$1" pin="3"/>
-<wire x1="182.88" y1="-35.56" x2="185.42" y2="-33.02" width="0.1524" layer="91"/>
-<label x="185.42" y="-33.02" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
