@@ -6239,21 +6239,6 @@ GPS</text>
 <wire x1="182.88" y1="-25.4" x2="185.42" y2="-22.86" width="0.1524" layer="91"/>
 <label x="185.42" y="-22.86" size="1.778" layer="95"/>
 </segment>
-<segment>
-<pinref part="ESC3" gate="J$1" pin="2"/>
-<wire x1="205.74" y1="-25.4" x2="210.82" y2="-22.86" width="0.1524" layer="91"/>
-<label x="210.82" y="-22.86" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="ESC4" gate="J$1" pin="2"/>
-<wire x1="205.74" y1="-38.1" x2="208.28" y2="-35.56" width="0.1524" layer="91"/>
-<label x="208.28" y="-35.56" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="ESC2" gate="J$1" pin="2"/>
-<wire x1="182.88" y1="-38.1" x2="185.42" y2="-35.56" width="0.1524" layer="91"/>
-<label x="185.42" y="-35.56" size="1.778" layer="95"/>
-</segment>
 </net>
 <net name="GND" class="0">
 <segment>
@@ -6633,13 +6618,6 @@ GPS</text>
 <label x="60.96" y="50.8" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$7" class="0">
-<segment>
-<pinref part="BMP180BREAK" gate="G$1" pin="4"/>
-<wire x1="147.32" y1="-5.08" x2="154.94" y2="-5.08" width="0.1524" layer="91"/>
-<label x="154.94" y="-5.08" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="THRO" class="0">
 <segment>
 <pinref part="J3" gate="J$1" pin="1"/>
@@ -6758,12 +6736,6 @@ GPS</text>
 <label x="152.4" y="-40.64" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$9" class="0">
-<segment>
-<pinref part="LOPYRIGHT" gate="G$1" pin="9"/>
-<wire x1="86.36" y1="43.18" x2="81.28" y2="43.18" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="P0" class="0">
 <segment>
 <pinref part="LOPYLEFT" gate="G$1" pin="13"/>
@@ -6803,6 +6775,36 @@ GPS</text>
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="104,1,15.24,81.28,U1,VDD,3.3V,,,"/>
+<approved hash="104,1,15.24,63.5,U1,PIN10,GND,,,"/>
+<approved hash="104,1,15.24,60.96,U1,PIN15,GND,,,"/>
+<approved hash="104,1,15.24,58.42,U1,PIN16,GND,,,"/>
+<approved hash="104,1,15.24,55.88,U1,GNDIO,GND,,,"/>
+<approved hash="104,1,15.24,78.74,U1,VDDIO,3.3V,,,"/>
+<approved hash="104,1,50.8,-5.08,U3,VDDIO,3.3V,,,"/>
+<approved hash="104,1,50.8,-7.62,U3,VDD,3.3V,,,"/>
+<approved hash="106,1,60.96,63.5,LOPY_RST,,,,,"/>
+<approved hash="108,1,-50.8,83.82,GND,,,,,"/>
+<approved hash="108,1,-5.08,15.24,GND,,,,,"/>
+<approved hash="113,1,57.7427,48.4547,LOPYLEFT,,,,,"/>
+<approved hash="113,1,89.2186,45.5253,LOPYRIGHT,,,,,"/>
+<approved hash="113,1,131.403,48.4547,GPSLEFT,,,,,"/>
+<approved hash="113,1,158.157,41.7153,GPSRIGHT,,,,,"/>
+<approved hash="113,1,89.9753,-18.4573,J3,,,,,"/>
+<approved hash="113,1,89.9753,-3.21733,J4,,,,,"/>
+<approved hash="113,1,89.9753,-33.6973,J5,,,,,"/>
+<approved hash="113,1,107.755,-33.6973,J6,,,,,"/>
+<approved hash="113,1,107.755,-18.4573,J7,,,,,"/>
+<approved hash="113,1,107.755,-3.21733,J8,,,,,"/>
+<approved hash="113,1,182.203,-4.88527,IMUBREAK,,,,,"/>
+<approved hash="113,1,146.349,-6.15527,BMP180BREAK,,,,,"/>
+<approved hash="113,1,148.277,-30.2853,EXTRALOPYHEAD,,,,,"/>
+<approved hash="113,1,179.663,-23.9353,ESC1,,,,,"/>
+<approved hash="113,1,179.663,-36.6353,ESC2,,,,,"/>
+<approved hash="113,1,202.523,-23.9353,ESC3,,,,,"/>
+<approved hash="113,1,202.523,-36.6353,ESC4,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 <compatibility>
