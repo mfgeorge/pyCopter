@@ -6145,12 +6145,12 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <part name="C6" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="10uF"/>
 <part name="GPSLEFT" library="SparkFun-Connectors" deviceset="M12" device="PTH"/>
 <part name="GPSRIGHT" library="SparkFun-Connectors" deviceset="M15" device=""/>
-<part name="J3" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
-<part name="J4" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
-<part name="J5" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
-<part name="J6" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
-<part name="J7" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
-<part name="J8" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
+<part name="THRO" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
+<part name="AILE" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
+<part name="ELEV" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
+<part name="RUDD" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
+<part name="GEAR" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
+<part name="AUX1" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
 <part name="IMUBREAK" library="SparkFun-Connectors" deviceset="M06" device="SILK_FEMALE_PTH"/>
 <part name="BMP180BREAK" library="SparkFun-Connectors" deviceset="M05" device="PTH"/>
 <part name="EXTRALOPYHEAD" library="SparkFun-Connectors" deviceset="M08" device="SILK_FEMALE_PTH"/>
@@ -6207,12 +6207,12 @@ GPS</text>
 <instance part="C6" gate="G$1" x="60.96" y="-2.54"/>
 <instance part="GPSLEFT" gate="G$1" x="124.46" y="48.26"/>
 <instance part="GPSRIGHT" gate="G$1" x="165.1" y="43.18" rot="R180"/>
-<instance part="J3" gate="J$1" x="91.44" y="-22.86" rot="R90"/>
-<instance part="J4" gate="J$1" x="91.44" y="-7.62" rot="R90"/>
-<instance part="J5" gate="J$1" x="91.44" y="-38.1" rot="R90"/>
-<instance part="J6" gate="J$1" x="109.22" y="-38.1" rot="R90"/>
-<instance part="J7" gate="J$1" x="109.22" y="-22.86" rot="R90"/>
-<instance part="J8" gate="J$1" x="109.22" y="-7.62" rot="R90"/>
+<instance part="THRO" gate="J$1" x="91.44" y="-22.86" rot="R90"/>
+<instance part="AILE" gate="J$1" x="91.44" y="-7.62" rot="R90"/>
+<instance part="ELEV" gate="J$1" x="91.44" y="-38.1" rot="R90"/>
+<instance part="RUDD" gate="J$1" x="109.22" y="-38.1" rot="R90"/>
+<instance part="GEAR" gate="J$1" x="109.22" y="-22.86" rot="R90"/>
+<instance part="AUX1" gate="J$1" x="109.22" y="-7.62" rot="R90"/>
 <instance part="IMUBREAK" gate="G$1" x="180.34" y="-7.62"/>
 <instance part="BMP180BREAK" gate="G$1" x="139.7" y="-7.62"/>
 <instance part="EXTRALOPYHEAD" gate="G$1" x="142.24" y="-33.02"/>
@@ -6332,7 +6332,7 @@ GPS</text>
 <label x="154.94" y="-7.62" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J3" gate="J$1" pin="3"/>
+<pinref part="THRO" gate="J$1" pin="3"/>
 <wire x1="88.9" y1="-15.24" x2="88.9" y2="-12.7" width="0.1524" layer="91"/>
 <label x="86.36" y="-15.24" size="1.778" layer="95"/>
 </segment>
@@ -6434,7 +6434,7 @@ GPS</text>
 <label x="154.94" y="-2.54" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J3" gate="J$1" pin="2"/>
+<pinref part="THRO" gate="J$1" pin="2"/>
 <wire x1="91.44" y1="-15.24" x2="91.44" y2="-12.7" width="0.1524" layer="91"/>
 <label x="88.9" y="-12.7" size="1.778" layer="95"/>
 </segment>
@@ -6620,7 +6620,7 @@ GPS</text>
 </net>
 <net name="THRO" class="0">
 <segment>
-<pinref part="J3" gate="J$1" pin="1"/>
+<pinref part="THRO" gate="J$1" pin="1"/>
 <wire x1="93.98" y1="-15.24" x2="93.98" y2="-12.7" width="0.1524" layer="91"/>
 <label x="93.98" y="-15.24" size="1.778" layer="95"/>
 </segment>
@@ -6632,7 +6632,7 @@ GPS</text>
 </net>
 <net name="ELEV" class="0">
 <segment>
-<pinref part="J5" gate="J$1" pin="1"/>
+<pinref part="ELEV" gate="J$1" pin="1"/>
 <wire x1="93.98" y1="-30.48" x2="93.98" y2="-27.94" width="0.1524" layer="91"/>
 <label x="93.98" y="-27.94" size="1.778" layer="95"/>
 </segment>
@@ -6644,7 +6644,7 @@ GPS</text>
 </net>
 <net name="RUDD" class="0">
 <segment>
-<pinref part="J6" gate="J$1" pin="1"/>
+<pinref part="RUDD" gate="J$1" pin="1"/>
 <wire x1="111.76" y1="-30.48" x2="111.76" y2="-27.94" width="0.1524" layer="91"/>
 <label x="111.76" y="-27.94" size="1.778" layer="95"/>
 </segment>
@@ -6656,7 +6656,7 @@ GPS</text>
 </net>
 <net name="GEAR" class="0">
 <segment>
-<pinref part="J7" gate="J$1" pin="1"/>
+<pinref part="GEAR" gate="J$1" pin="1"/>
 <wire x1="111.76" y1="-15.24" x2="111.76" y2="-12.7" width="0.1524" layer="91"/>
 <label x="111.76" y="-12.7" size="1.778" layer="95"/>
 </segment>
@@ -6668,7 +6668,7 @@ GPS</text>
 </net>
 <net name="AUX1" class="0">
 <segment>
-<pinref part="J8" gate="J$1" pin="1"/>
+<pinref part="AUX1" gate="J$1" pin="1"/>
 <wire x1="111.76" y1="0" x2="111.76" y2="2.54" width="0.1524" layer="91"/>
 <label x="111.76" y="2.54" size="1.778" layer="95"/>
 </segment>
@@ -6680,7 +6680,7 @@ GPS</text>
 </net>
 <net name="AILE" class="0">
 <segment>
-<pinref part="J4" gate="J$1" pin="1"/>
+<pinref part="AILE" gate="J$1" pin="1"/>
 <wire x1="93.98" y1="0" x2="93.98" y2="2.54" width="0.1524" layer="91"/>
 <label x="96.52" y="2.54" size="1.778" layer="95"/>
 </segment>
@@ -6791,12 +6791,12 @@ GPS</text>
 <approved hash="113,1,89.2186,45.5253,LOPYRIGHT,,,,,"/>
 <approved hash="113,1,131.403,48.4547,GPSLEFT,,,,,"/>
 <approved hash="113,1,158.157,41.7153,GPSRIGHT,,,,,"/>
-<approved hash="113,1,89.9753,-18.4573,J3,,,,,"/>
-<approved hash="113,1,89.9753,-3.21733,J4,,,,,"/>
-<approved hash="113,1,89.9753,-33.6973,J5,,,,,"/>
-<approved hash="113,1,107.755,-33.6973,J6,,,,,"/>
-<approved hash="113,1,107.755,-18.4573,J7,,,,,"/>
-<approved hash="113,1,107.755,-3.21733,J8,,,,,"/>
+<approved hash="113,1,89.9753,-18.4573,THRO,,,,,"/>
+<approved hash="113,1,89.9753,-3.21733,AILE,,,,,"/>
+<approved hash="113,1,89.9753,-33.6973,ELEV,,,,,"/>
+<approved hash="113,1,107.755,-33.6973,RUDD,,,,,"/>
+<approved hash="113,1,107.755,-18.4573,GEAR,,,,,"/>
+<approved hash="113,1,107.755,-3.21733,AUX1,,,,,"/>
 <approved hash="113,1,182.203,-4.88527,IMUBREAK,,,,,"/>
 <approved hash="113,1,146.349,-6.15527,BMP180BREAK,,,,,"/>
 <approved hash="113,1,148.277,-30.2853,EXTRALOPYHEAD,,,,,"/>
