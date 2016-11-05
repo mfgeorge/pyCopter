@@ -1,3 +1,6 @@
 *.inf
 *.idea
 *.s#*
+*.b#*
+*.job
+*.pro
