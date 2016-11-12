@@ -45,7 +45,7 @@ from enum import Enum
 
 class ProtectedData:
     """
-    Class to facilitate thread safe variables.
+    Class to facilitate thread safe variables of primitive data type.
     """
     def __init__(self, data):
         """
@@ -59,19 +59,16 @@ class ProtectedData:
 
     def getData(self):
         """
-
-        :param self:
-        :return:
+        Method to lock protected data and return it's value
+        :return: the protected data
         """
         with self.lock:
             return self.data
 
     def putData(self, new_data):
         """
-
-        :param self:
-        :param new_data:
-        :return:
+        Method to lock protected data and reassign it's data
+        :param new_data: the new data to reassign
         """
         with self.lock:
             self.data = new_data
@@ -98,6 +95,9 @@ class TaskManager:
     Class to manage task's timing, exit flags, and thread instantiation.
     """
     class info(Enum):
+        """
+        Enum meant to be used with the thread_dict to keep track of placement
+        """
         task = 0
         runs = 1
         timing = 2
@@ -106,9 +106,13 @@ class TaskManager:
         # Each entry has task name as key and a list of [task_object, run_count, timing, exit flag]
         self.thread_dict = {}
 
-
-
     def add_new_task(self, task_name, timing, task_object):
+        """
+        Adds a new Task object to the TaskManager, and starts it's thread.
+        :param task_name: Name to identify the task with
+        :param timing: The timing that the task must run at
+        :param task_object: The previously defined task object whose .run() method will be called
+        """
         if task_name not in self.thread_dict.keys():
             exit_flag = ProtectedData(False)
             run_count = ProtectedData(0)
@@ -120,6 +124,11 @@ class TaskManager:
             print("please alter to have a unique name")
 
     def wrapped_callback(self, task_name):
+        """
+        A wrapped callback for the task threads to use which facilitate using the correct exit_flag, incrementing runs,
+        and the timing required.
+        :param task_name: The name to identify the task by
+        """
         task = self.thread_dict[task_name][0]
         run_count = self.thread_dict[task_name][1]
         timing = self.thread_dict[task_name][2]
@@ -133,13 +142,32 @@ class TaskManager:
             time.sleep(timing)
         print("Ending thread for Task: ", task_name)
 
+    def get_thread_dict(self):
+        """
+        A method for getting the thread dictionary that the TaskManager uses
+        :return: the task manager thread_dict
+        """
+        return self.thread_dict
+
     def end_task(self, task_name):
+        """
+        Ends a specific task as identified by it's task_name
+        :param task_name: the string name of the task to end
+        """
         self.thread_dict[task_name][3].putData(True)
 
     def get_runs(self, task_name):
+        """
+        Gets the number of runs that a specific task has ran as identified by it's task_name
+        :param task_name: the string name of the task whose runs to get
+        :return:
+        """
         return self.thread_dict[task_name][1].getData()
 
     def kill_all_tasks(self):
+        """
+        A method for killing all of the tasks being managed by the TaskManager
+        """
         for exit_flag in self.thread_dict.values():
             exit_flag[3].putData(True)
         print("All tasks were flagged to end")
@@ -154,6 +182,7 @@ The test function below illustrates a simple example of how this module should b
 as tests its functionality
 """
 def test():
+    # Create a task class that extends Task
     class add_by_1_task(Task):
         def __init__(self, protected_number):
             self.number = protected_number
@@ -162,10 +191,17 @@ def test():
             number += 1
             self.number.putData(number)
 
+    # Create a number that will be used by the add_by_1_task
     shared_number = ProtectedData(0)
+    # Instantiate the task
     task_1 = add_by_1_task(shared_number)
+    # Instantiate a TaskManager to manage tasks
     task_manager = TaskManager()
+    # Add the add_by_1_task to the TaskManager
     task_manager.add_new_task("add by 1", .1, task_1)
+    # Print the dictionary of the TaskManager to see what it contains
+    print(task_manager.get_thread_dict())
+    # Run a main thread loop which simply reports stats about the add_by_1_task
     while True:
         try:
             time.sleep(1)
