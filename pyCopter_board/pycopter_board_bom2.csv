@@ -1,0 +1,17 @@
+"Qty";"Value";"Device";"Package";"Parts";"Description";"AVAILABILITY";"DESCRIPTION";"MF";"MP";"MPN";"OC_FARNELL";"OC_NEWARK";"PACKAGE";"PRICE";"PROD_ID";
+"10";"";"M03PTH";"1X03";"AILE, AUX1, ELEV, ESC1, ESC2, ESC3, ESC4, GEAR, RUDD, THRO";"Header 3";"";"";"";"";"";"";"";"";"";"";
+"1";"";"M05PTH";"1X05";"BMP180BREAK";"Header 5";"";"";"";"";"";"";"";"";"";"";
+"1";"";"M06SILK_FEMALE_PTH";"1X06";"IMUBREAK";"Header 6";"";"";"";"";"";"";"";"";"";"CONN-08437";
+"1";"";"M08SILK_FEMALE_PTH";"1X08";"EXTRALOPYHEAD";"Header 8";"";"";"";"";"";"";"";"";"";"CONN-08438";
+"1";"";"M12PTH";"1X12";"GPSLEFT";"Header 12";"";"";"";"";"";"";"";"";"";"";
+"2";"";"M14";"1X14";"LOPYLEFT, LOPYRIGHT";"Header 14";"";"";"";"";"";"";"";"";"";"";
+"1";"";"M15";"1X15";"GPSRIGHT";"Header 15";"";"";"";"";"";"";"";"";"";"";
+"2";"0.1uF";"CAP0402-CAP";"0402-CAP";"C2, C3";"Capacitor";"";"";"";"";"";"";"";"";"";"";
+"4";"10K";"RESISTOR0402-RES";"0402-RES";"R1, R2, R3, R4";"Resistor";"";"";"";"";"";"";"";"";"";"";
+"2";"10uF";"CAP0402-CAP";"0402-CAP";"C1, C6";"Capacitor";"";"";"";"";"";"";"";"";"";"";
+"2";"2.2k";"RESISTOR0402-RES";"0402-RES";"R5, R6";"Resistor";"";"";"";"";"";"";"";"";"";"";
+"2";"22pF";"CAP0402-CAP";"0402-CAP";"C4, C5";"Capacitor";"";"";"";"";"";"";"";"";"";"";
+"1";"32.768kHz";"CRYSTALTC38H";"TC38H";"Q1";"CRYSTAL";"";"";"";"";"";"unknown";"unknown";"";"";"";
+"1";"BMP180";"BMP180EXT";"BMP180_EXTENDED";"U3";"BMP180 Digital Pressure Sensor";"";"";"";"";"";"";"";"";"";"";
+"1";"BNO055";"BNO055";"LGA28R50P4X10_380X520X100";"U1";"BNO055 9-axis Absolute Orientation Sensor ( SiP ) w/Sensors and Sensor Fusion";"Good";"BNO055 9-axis Absolute Orientation Sensor ( SiP ) w/Sensors and Sensor Fusion";"Bosch";"BNO055";"";"";"";"LGA-28 Bosch";"9.48 USD";"";
+"4";"MOUNT-HOLE3.0";"MOUNT-HOLE3.0";"3,0";"H5, H6, H7, H8";"MOUNTING HOLE with drill center marker";"";"";"";"";"";"";"";"";"";"";
