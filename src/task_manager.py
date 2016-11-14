@@ -72,6 +72,92 @@ class ProtectedData:
         """
         with self.lock:
             self.data = new_data
+            return new_data
+
+    # Container operator definition so that using container data types is easy
+    def __getitem__(self, key):
+        """
+        Gets the item located at key in the dictionary
+        :param key: the index or key of the item to get
+        :return: the item at the specified key
+        """
+        with self.lock:
+            return self.data[key]
+
+
+    def __setitem__(self, key, value):
+        """
+        Sets the item located at key to the value specified
+        :param key: the index or key of the item to set
+        :param value: the value to set the item to
+        :return: self so that object is preserved
+        """
+        with self.lock:
+            self.data[key] = value
+            return self
+
+    def append(self, value):
+        with self.lock:
+            self.data.append(value)
+
+    # Numeric Operator definition so using primitive numeric data types is easy
+    def __eq__(self, other):
+        """
+        Test that the other value is equal to the data
+        :param other: other value to compare with
+        :return: boolean if data matches
+        """
+        return self.getData() == other
+
+    def __iadd__(self, other):
+        """
+        Perform inline addition on the data present
+        :param other: the value to add to the existing data
+        :return: self so that the object is preserved
+        """
+        with self.lock:
+            self.data += other
+            return self
+
+    def __lt__(self, other):
+        """
+        Perform less than comparison with data
+        :param other: value to compare data with
+        :return: boolean of the comparison
+        """
+        return self.getData() < other
+
+    def ___le__(self, other):
+        """
+        Perform less than/ equal to comparison with data
+        :param other: value to compare data with
+        :return: boolean of the comparison
+        """
+        return self.getData() <= other
+
+    def __ne__(self, other):
+        """
+        Perform not equal comparison with data
+        :param other: value to compare data with
+        :return: boolean of the comparison
+        """
+        return self.getData() != other
+
+    def __gt__(self, other):
+        """
+        Perform greater than comparison with data
+        :param other: value to compare data with
+        :return: boolean of the comparison
+        """
+        return self.getData() > other
+
+    def __ge__(self, other):
+        """
+        Perform greater than/equal to comparison with data
+        :param other: value to compare data with
+        :return: boolean of the comparison
+        """
+        return self.getData() >= other
 
 class Task:
     """
@@ -102,6 +188,7 @@ class TaskManager:
         runs = 1
         timing = 2
         exit = 3
+
     def __init__(self):
         # Each entry has task name as key and a list of [task_object, run_count, timing, exit flag]
         self.thread_dict = {}
@@ -186,13 +273,17 @@ def test():
     class add_by_1_task(Task):
         def __init__(self, protected_number):
             self.number = protected_number
+            self.number.append(0)
         def run(self):
-            number = self.number.getData()
-            number += 1
-            self.number.putData(number)
+            self.number[0] += 1
+            # new_number = self.number.getData()
+            # new_number += 1
+            # self.number.putData(new_number)
 
+    # list to house the number
+    list = []
     # Create a number that will be used by the add_by_1_task
-    shared_number = ProtectedData(0)
+    shared_number = ProtectedData(list)
     # Instantiate the task
     task_1 = add_by_1_task(shared_number)
     # Instantiate a TaskManager to manage tasks
