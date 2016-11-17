@@ -22,7 +22,9 @@ TODO:
 
 # All of the required libraries:
 import micropython
-from pyb import Servo, millis, I2C  # ****** To change as we port to the LoPy
+#from pyb import Servo, millis#, I2C  # ****** To change as we port to the LoPy
+from machine import I2C,PWM,Pin
+from servo_lib import Servo
 from motor_control_task import MotorControlTask
 from BNO055_lib import BNO055
 import time
@@ -59,10 +61,10 @@ def main():
 
     # Instantiate servo objects which are connected to the ESCs that control the electric motors that
     # generate thrust for the quadcopter
-    servo1 = pyb.Servo(1)
-    servo2 = pyb.Servo(2)
-    servo3 = pyb.Servo(3)
-    servo4 = pyb.Servo(4)
+    servo1 = Servo(machine.Pin(1))
+    servo2 = Servo(machine.Pin(2))
+    servo3 = Servo(machine.Pin(3))
+    servo4 = Servo(machine.Pin(4))
 
     # Instantiate the protected data classes for data that will be shared between tasks
     # Load in the initial configuration data
@@ -73,13 +75,14 @@ def main():
 
     # Instantiate the necessary sensors required for quadcopter control
     # Pressure Sensor
-    bmp180 = BMP180()
+    i2c_bus = I2C(0)
+    bmp180 = BMP180(i2c_bus)
     bmp180.oversample_sett = 2
     bmp180.baseline = 101325
 
     # 9 DOF IMU sensor for craft attitude readings
     try:
-        imu = BNO055()
+        imu = BNO055(i2c_bus)
     except OSError as e:
         print("Communication Error with the BNO055. \n")
         print("Exception: OSError ", e)
