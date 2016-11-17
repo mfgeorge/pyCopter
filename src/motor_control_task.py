@@ -1,4 +1,4 @@
-from pyb import Servo
+#from pyb import Servo
 import time
 from task_manager import Task
 
@@ -11,10 +11,10 @@ class MotorControlTask(Task):
 
         self.speed_list = speed_list
 
-        self.servo1.calibration()
-        self.servo2.calibration()
-        self.servo3.calibration()
-        self.servo4.calibration()
+        #self.servo1.calibration()
+        #self.servo2.calibration()
+        #self.servo3.calibration()
+        #self.servo4.calibration()
         self.offset = offset
         time.sleep(3)
 
