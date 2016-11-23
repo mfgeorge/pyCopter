@@ -25,13 +25,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
 
+"""
+List of problems that may be occuring:
+    * The writeto_mem function is not working properly
+    * The start sequence is not being sent properly
+    * The read is misinterpretting the number recieved
+"""
+
 from ustruct import unpack as unp
 from machine import I2C, Pin
 import math
 import time
 
 # BMP180 class
-class BMP180():
+class BMP180:
     '''
     Module for the BMP180 pressure sensor.
     '''
@@ -44,7 +51,7 @@ class BMP180():
         # create i2c obect
         _bmp_addr = self._bmp_addr
         self._bmp_i2c = i2c_bus
-        self._bmp_i2c.start()
+        #self._bmp_i2c.start()
         self.chip_id = self._bmp_i2c.readfrom_mem(_bmp_addr, 0xD0, 2)
         # read calibration data from EEPROM
         self._AC1 = unp('>h', self._bmp_i2c.readfrom_mem(_bmp_addr, 0xAA, 2))[0]
@@ -94,7 +101,9 @@ class BMP180():
                 yield None
             try:
                 self.UT_raw = self._bmp_i2c.readfrom_mem(self._bmp_addr, 0xF6, 2)
+                print("Temperature updated, raw value is: ", self.UT_raw)
             except:
+                print("Exception encountered trying to read temperature")
                 yield None
             self._bmp_i2c.writeto_mem(self._bmp_addr, 0xF4, bytearray([0x34+(self.oversample_setting << 6)]))
             t_pressure_ready = delays[self.oversample_setting]
@@ -106,12 +115,16 @@ class BMP180():
                 self.LSB_raw = self._bmp_i2c.readfrom_mem(self._bmp_addr, 0xF7, 1)
                 self.XLSB_raw = self._bmp_i2c.readfrom_mem(self._bmp_addr, 0xF8, 1)
             except:
+                print("Exception encountered trying to read MSB to LSB Registers")
                 yield None
             yield True
 
     def blocking_read(self):
         if next(self.gauge) is not None: # Discard old data
+            print("Old Data Discarded")
             pass
+        else:
+            print("Old Data was None already")
         while next(self.gauge) is None:
             pass
 
@@ -167,8 +180,10 @@ class BMP180():
         B4 = abs(self._AC4)*(X3+32768)/2**15
         B7 = (abs(UP)-B3) * (50000 >> self.oversample_setting)
         if B7 < 0x80000000:
+            print("Register B4 is: ", B4)
             pressure = (B7*2)/B4
         else:
+            print("Register B4 is: ", B4)
             pressure = (B7/B4)*2
         X1 = (pressure/2**8)**2
         X1 = (X1*3038)/2**16

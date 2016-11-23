@@ -8,6 +8,7 @@ from network import Server
 
 known_nets = {
     # SSID : PSK (passphrase)
+    'George Network' : 'snickers',
     'Google Fiber': 'ifuckinglovetacos'
 } # change this dict to match your WiFi settings
 
@@ -46,3 +47,8 @@ if machine.reset_cause() != machine.SOFT_RESET:
         # wl.auth(custom_auth)
         print("SSID: ", wl.ssid())
         print("PASS: ", wl.auth())
+    last_time = time.time()
+    while not wl.isconnected() and time.time()-last_time < 5000:
+        time.sleep(0.5)
+    print("Configuration: ")
+    print(wl.ifconfig())

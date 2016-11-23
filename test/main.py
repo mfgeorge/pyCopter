@@ -26,8 +26,7 @@ from machine import I2C
 import sys
 from bmp180 import BMP180
 import time
-
-bus = I2C(0, baudrate=100000)  
+ 
 # ----------------------------------------------------------------------
 def main():
     """
@@ -38,16 +37,22 @@ def main():
     bmp180 = BMP180(bus)
     bmp180.oversample_sett = 2
     bmp180.baseline = 101325
-
-    while True:
-
-        temp = bmp180.temperature
-        p = bmp180.pressure
-        altitude = bmp180.altitude
-        print(temp, p, altitude)
-	time.sleep(500)
-
+    try:
+        while True:
+            temp = bmp180.temperature
+            p = bmp180.pressure
+            altitude = bmp180.altitude
+            print(temp, p, altitude)
+            time.sleep(.5)
+    except KeyboardInterrupt:
+        print("Ending Program...")
 
 
 if __name__ == '__main__':
+    for i in range(2):
+        try:
+            bus = I2C(0, baudrate=100000)
+            break
+        except:
+            print("I2C Bus resource failed... Trying once more")
     main()
