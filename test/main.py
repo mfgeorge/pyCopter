@@ -35,8 +35,7 @@ def main():
     # Instantiate the necessary sensors required for quadcopter control
     # Pressure Sensor
     bmp180 = BMP180(bus)
-    bmp180.oversample_sett = 2
-    bmp180.baseline = 101325
+    bmp180.oversample_sett = 3
     try:
         while True:
             temp = bmp180.temperature

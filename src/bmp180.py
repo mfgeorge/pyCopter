@@ -68,7 +68,6 @@ class BMP180:
 
         # settings to be adjusted by user
         self.oversample_setting = 3
-        self.baseline = 101325.0
 
         # output raw
         self.UT_raw = None
@@ -80,6 +79,12 @@ class BMP180:
         for _ in range(128):
             next(self.gauge)
             time.sleep_ms(1)
+        # First get a temperature reading
+        t = self.temperature
+        # The baseline pressure is the starting pressure
+        self.baseline = 101637.9
+        print("BMP180 Baseline Pressure set to: ", self.baseline)
+
 
     def compvaldump(self):
         '''
@@ -101,7 +106,7 @@ class BMP180:
                 yield None
             try:
                 self.UT_raw = self._bmp_i2c.readfrom_mem(self._bmp_addr, 0xF6, 2)
-                print("Temperature updated, raw value is: ", self.UT_raw)
+                #print("Temperature updated, raw value is: ", self.UT_raw)
             except:
                 print("Exception encountered trying to read temperature")
                 yield None
@@ -180,10 +185,10 @@ class BMP180:
         B4 = abs(self._AC4)*(X3+32768)/2**15
         B7 = (abs(UP)-B3) * (50000 >> self.oversample_setting)
         if B7 < 0x80000000:
-            print("Register B4 is: ", B4)
+            #print("Register B4 is: ", B4)
             pressure = (B7*2)/B4
         else:
-            print("Register B4 is: ", B4)
+            #print("Register B4 is: ", B4)
             pressure = (B7/B4)*2
         X1 = (pressure/2**8)**2
         X1 = (X1*3038)/2**16
@@ -197,6 +202,7 @@ class BMP180:
         '''
         try:
             p = -7990.0*math.log(self.pressure/self.baseline)
+            # p = 44330.0*(1-self.pressure/self.baseline**(1/5.255))
         except:
             p = 0.0
         return p
