@@ -1,28 +1,35 @@
 #!/usr/bin/python3           # This is server.py file
-import socket                                         
+import socket
+from network import WLAN
+import time
 
-# create a socket object
-serversocket = socket.socket(
-	        socket.AF_INET, socket.SOCK_STREAM) 
 
-# get local machine name
-host = '192.168.4.1'                        
+def socket_test():
+    # create a socket object
+    serversocket = socket.socket(
+                socket.AF_INET, socket.SOCK_STREAM)
 
-port = 9999                                           
+    # get local machine name
+    wl = WLAN()
+    host = wl.ifconfig()[0]
 
-# bind to the port
-print('testing')
-serversocket.bind((host, port))                                  
+    port = 9999
 
-# queue up to 5 requests
-serversocket.listen(5)                                           
+    # bind to the port
+    print('testing')
+    serversocket.bind((host, port))
 
-    # establish a connection
-clientsocket,addr = serversocket.accept()      
+    # queue up to 5 requests
+    serversocket.listen(5)
 
-print("Got a connection from %s" % str(addr))
-    
-msg='Thank you for connecting'+ "\r\n"
-clientsocket.send(msg.encode('ascii'))
-while True:
-    clientsocket.recv(1024)
+        # establish a connection
+    clientsocket,addr = serversocket.accept()
+
+    print("Got a connection from %s" % str(addr))
+
+    msg='Thank you for connecting'+ "\r\n"
+    clientsocket.send(msg.encode('ascii'))
+    while True:
+        recieved = clientsocket.recv(1024)
+        print(recieved)
+        time.sleep(.2)

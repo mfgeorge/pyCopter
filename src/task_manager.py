@@ -40,7 +40,6 @@ task has received. The task manager is also able to kill all tasks if necessary.
 
 import _thread
 import time
-from enum import Enum
 
 
 class ProtectedData:
@@ -180,14 +179,14 @@ class TaskManager:
     """
     Class to manage task's timing, exit flags, and thread instantiation.
     """
-    class info(Enum):
-        """
-        Enum meant to be used with the thread_dict to keep track of placement
-        """
-        task = 0
-        runs = 1
-        timing = 2
-        exit = 3
+    # class info(Enum):
+    #     """
+    #     Enum meant to be used with the thread_dict to keep track of placement
+    #     """
+    #     task = 0
+    #     runs = 1
+    #     timing = 2
+    #     exit = 3
 
     def __init__(self):
         # Each entry has task name as key and a list of [task_object, run_count, timing, exit flag]
