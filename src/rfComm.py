@@ -1,5 +1,5 @@
 #!/bin/python
-import pyb
+import machine
 
 """
 Parent Class for any rf controller available 
@@ -86,16 +86,16 @@ class ServoPulse:
     """
     start = width = last_width = 0
 
-    def __init__(self, pin, timer=pyb.Timer(8, prescaler=83, period=0xffff)):
+    def __init__(self, pin, timer=machine.Timer(8, prescaler=83, period=0xffff)):
         self.pulseCounter = timer
         self.tickConversion = 1e6/(self.pulseCounter.freq()*self.pulseCounter.period())
         # input("Any key to continue configuring external interrupts")
         self.pin = pin
-        self.interrupt = pyb.ExtInt(self.pin, pyb.ExtInt.IRQ_RISING_FALLING, pyb.Pin.PULL_NONE, self.callback)
+        self.interrupt = machine.ExtInt(self.pin, machine.ExtInt.IRQ_RISING_FALLING, machine.Pin.PULL_NONE, self.callback)
         self.interrupt.enable()
         print("External Interrupt Set up on Line: ", self.interrupt.line())
 
-    @micropython.native
+    #@micropython.native
     def callback(self, line):
         now = self.pulseCounter.counter()
         if self.pin.value(): 
@@ -103,7 +103,7 @@ class ServoPulse:
         else: 
             self.width = (now - self.start) & 0xffff
 
-    @micropython.native
+    #@micropython.native
     def get_width(self):
         self.interrupt.disable()
         w = self.width

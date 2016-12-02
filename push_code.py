@@ -90,10 +90,12 @@ def main():
 
     print("\nWriting Files from folder: "+ args.dir)
     print("\nFile currently being written: ")
-    for file in files_to_write:
-        print(file)
+    for num, file in enumerate(files_to_write):
         with open(args.dir+"/"+file, mode='rb') as file_to_send:
             ftp.storbinary("STOR "+file, file_to_send)
+        print(file + " done." + "\t" + str(num+1) + "/" + str(len(files_to_write)))
+
+    print("Transfer complete!")
 
     ftp.quit()
     ftp.close()
