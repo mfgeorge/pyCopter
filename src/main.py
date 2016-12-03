@@ -28,13 +28,14 @@ from servo_lib import Servo
 from motor_control_task import MotorControlTask
 from BNO055_lib import BNO055
 import time
-from rfComm import SpektrumController, ServoPulse
+# from rfComm import SpektrumController, ServoPulse
 from pid_controller_task import PIDControlTask
 from imu_task import IMUTask
 import sys
 import json
 from bmp180 import BMP180
 from task_manager import TaskManager, ProtectedData
+from ground_control import GroundControlSocketTask
 
 
 # ----------------------------------------------------------------------
@@ -61,10 +62,10 @@ def main():
 
     # Instantiate servo objects which are connected to the ESCs that control the electric motors that
     # generate thrust for the quadcopter
-    servo1 = Servo(machine.Pin(1))
-    servo2 = Servo(machine.Pin(2))
-    servo3 = Servo(machine.Pin(3))
-    servo4 = Servo(machine.Pin(4))
+    servo1 = Servo('P19')
+    servo2 = Servo('P20')
+    servo3 = Servo('P23')
+    servo4 = Servo('P22')
 
     # Instantiate the protected data classes for data that will be shared between tasks
     # Load in the initial configuration data
@@ -72,6 +73,7 @@ def main():
     sensor_reading_dict = ProtectedData({})
     set_point_dict = ProtectedData({})
     speed_list = ProtectedData([0, 0, 0, 0])
+    setpoint_string = ProtectedData('p_0;r_0;t_0;y_0;')
 
     # Instantiate the necessary sensors required for quadcopter control
     # Pressure Sensor
@@ -85,7 +87,7 @@ def main():
         imu = BNO055(i2c_bus)
     except OSError as e:
         print("Communication Error with the BNO055. \n")
-        print("Exception: OSError ", e)
+        print("Exception: ", e)
         time.sleep(2)
         sys.exit()
 
@@ -96,7 +98,8 @@ def main():
     motor_task = MotorControlTask(servo1, servo2, servo3, servo4, speed_list)
     # Instantiate the PID control task which will update the outputs to the motors
     pid_task = PIDControlTask(gain_dict, sensor_reading_dict, set_point_dict, speed_list)
-
+    # Instantiate the ground control socket task
+    ground_control_task = GroundControlSocketTask(setpoint_string)
     # Make a task manager to add tasks to
     task_manager = TaskManager()
     # Add all of the tasks to the task_manager
@@ -105,15 +108,31 @@ def main():
     # task_manager.add_new_task("pid task", .005, pid_task)
     try:
         while True:
-            t = time.ticks_us()
+            # t = time.ticks_us()
 
             imu_task.run()
 
+            ground_control_task.run()
+
+            command_string = str(setpoint_string.getData(), 'utf-8')
+            # print(command_string)
+
+            command_list = command_string.split(';')
+            # Pop off the empty element
+            command_list.remove('')
+            command_dict = {}
+            for command in command_list:
+                command = command.split('_')
+                command[1] = float(command[1])
+                command_dict[command[0]] = command[1]
+
+            print(command_dict)
+
             # Set setpoint to 0 for tests
-            set_point_dict["pitch"] = 0
-            set_point_dict["roll"] = 0
-            set_point_dict["yaw"] = 0
-            set_point_dict["thrust"] = 0
+            set_point_dict["pitch"] = command_dict['p']*180
+            set_point_dict["roll"] = command_dict['r']*180
+            set_point_dict["yaw"] = command_dict['y']*180
+            set_point_dict["thrust"] = command_dict['t']*180
 
             pid_task.run()
 
@@ -124,8 +143,12 @@ def main():
 
             motor_task.run()
 
+
+
+
+
             # print ("Pitch: ", sensor_reading_dict["pitch"], "\tRoll: ", sensor_reading_dict["roll"])
-            delta = time.ticks_diff(t, time.ticks_us())
+            # delta = time.ticks_diff(t, time.ticks_us())
             #print("delta = ", delta/1000, " ms")
     except:
         task_manager.kill_all_tasks()
@@ -134,7 +157,10 @@ def main():
         # Run the motor task a last time to output 0 speed to motors
         motor_task.run()
         # Deinitialize the IMU so that the i2c bus doesn't get messed up
-        IMU.deinit_i2c()
+        # imu.deinit_i2c()
+
+        # wait for user input so that bug is printed to user
+        input("Press any button for error")
         # Re-raise the exception for debugging purposes
         raise
 

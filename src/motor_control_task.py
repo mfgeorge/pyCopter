@@ -22,10 +22,10 @@ class MotorControlTask(Task):
 
         # print("Speeds: ", ss1, ", ", ss2, ", ", ss3, ", ", ss4)
 
-        self.servo1.speed(speed_list[0] + self.offset)
+        self.servo1.speed(self.speed_list[0] + self.offset)
         
-        self.servo2.speed(speed_list[1] +self.offset)
+        self.servo2.speed(self.speed_list[1] +self.offset)
 
-        self.servo3.speed(speed_list[2] +self.offset)
+        self.servo3.speed(self.speed_list[2] +self.offset)
 
-        self.servo4.speed(speed_list[3] +self.offset)
+        self.servo4.speed(self.speed_list[3] +self.offset)

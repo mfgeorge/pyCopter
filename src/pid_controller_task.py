@@ -17,7 +17,7 @@ TODO
 
 import PID_lib
 from task_manager import Task
-from misc import timed_function
+# from misc import timed_function
 
 class PIDControlTask(Task):
     """

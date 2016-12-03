@@ -60,8 +60,8 @@ class PID:
         """
         error = self.SetPoint - feedback_value
 
-        self.current_time = time.ticks_us()
-        delta_time = time.ticks_diff(self.last_time, self.current_time)
+        self.current_time = time.ticks_ms()
+        delta_time = self.last_time - self.current_time
         delta_error = error - self.last_error
 
         if (delta_time >= self.sample_time):

@@ -5,19 +5,22 @@ class Servo:
     '''
     Basic Servo replacement class since machine has no servo library
     '''
+    next_channel = 0
     def __init__(self,pin):
-        self.servo_control = PWM(pin,freq=50)
-
+        pwm = PWM(0,frequency=50)
+        self.servo_control = pwm.channel(Servo.next_channel, pin = pin, duty_cycle=1)
+        Servo.next_channel += 1
 
     def calibration(self):
         self.speed(180)
-        time.sleep(5)
+        time.sleep(.5)
         self.speed(0)
-        time.sleep(5)
+        time.sleep(.5)
         # Now servos should be ready to go
 
 
     def speed(self,speedin):
         #Servo pwm goes from 40 to 115, must convert from 0 to 180
-        pwm = 40 + (speedin)*(115-40)/180 #Linear interpolation
-        self.servo_control.duty(pwm)
+        # pwm = 40 + (speedin)*(115-40)/180 #Linear interpolation
+        pwm = .01 + speedin*.09/180
+        self.servo_control.duty_cycle(pwm)
