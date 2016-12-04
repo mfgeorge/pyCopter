@@ -16,7 +16,6 @@ class MotorControlTask(Task):
         self.servo3.calibration()
         self.servo4.calibration()
         self.offset = offset
-        time.sleep(3)
 
     def run(self):
 

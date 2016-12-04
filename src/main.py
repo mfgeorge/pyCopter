@@ -38,6 +38,10 @@ from task_manager import TaskManager, ProtectedData
 from ground_control import GroundControlSocketTask
 
 
+# Set debugging to true for a lot of printing and waiting for input
+global debugging
+debugging = True
+
 # ----------------------------------------------------------------------
 def load_config_file(config_file):
     """
@@ -59,6 +63,11 @@ def main():
     """
     Function which contains the main code to run and from which all subsequent processes will branch from.
     """
+    global debugging
+
+    if debugging:
+        # for debugging, wait till a user hits enter
+        input("Press any key to continue main")
 
     # Instantiate servo objects which are connected to the ESCs that control the electric motors that
     # generate thrust for the quadcopter
@@ -73,7 +82,6 @@ def main():
     sensor_reading_dict = ProtectedData({})
     set_point_dict = ProtectedData({})
     speed_list = ProtectedData([0, 0, 0, 0])
-    setpoint_string = ProtectedData('p_0;r_0;t_0;y_0;')
 
     # Instantiate the necessary sensors required for quadcopter control
     # Pressure Sensor
@@ -99,7 +107,8 @@ def main():
     # Instantiate the PID control task which will update the outputs to the motors
     pid_task = PIDControlTask(gain_dict, sensor_reading_dict, set_point_dict, speed_list)
     # Instantiate the ground control socket task
-    ground_control_task = GroundControlSocketTask(setpoint_string)
+    setpoint_command_map = {"p": "pitch", "r": "roll", "y": "yaw", "t": "thrust"}
+    ground_control_task = GroundControlSocketTask(set_point_dict, setpoint_command_map)
     # Make a task manager to add tasks to
     task_manager = TaskManager()
     # Add all of the tasks to the task_manager
@@ -114,25 +123,8 @@ def main():
 
             ground_control_task.run()
 
-            command_string = str(setpoint_string.getData(), 'utf-8')
-            # print(command_string)
-
-            command_list = command_string.split(';')
-            # Pop off the empty element
-            command_list.remove('')
-            command_dict = {}
-            for command in command_list:
-                command = command.split('_')
-                command[1] = float(command[1])
-                command_dict[command[0]] = command[1]
-
-            print(command_dict)
-
-            # Set setpoint to 0 for tests
-            set_point_dict["pitch"] = command_dict['p']*180
-            set_point_dict["roll"] = command_dict['r']*180
-            set_point_dict["yaw"] = command_dict['y']*180
-            set_point_dict["thrust"] = command_dict['t']*180
+            if debugging:
+                print("Set-point from main: ",  set_point_dict.getData())
 
             pid_task.run()
 
@@ -142,14 +134,11 @@ def main():
             # print(temp, p, altitude)
 
             motor_task.run()
-
-
-
-
-
-            # print ("Pitch: ", sensor_reading_dict["pitch"], "\tRoll: ", sensor_reading_dict["roll"])
-            # delta = time.ticks_diff(t, time.ticks_us())
-            #print("delta = ", delta/1000, " ms")
+            if debugging:
+                # print("Speeds: ", speed_list.getData())
+                print ("Pitch: ", sensor_reading_dict["pitch"], "\tRoll: ", sensor_reading_dict["roll"])
+                # delta = time.ticks_diff(t, time.ticks_us())
+                #print("delta = ", delta/1000, " ms")
     except:
         task_manager.kill_all_tasks()
         # Make sure to kill motors at zero speed
@@ -159,8 +148,13 @@ def main():
         # Deinitialize the IMU so that the i2c bus doesn't get messed up
         # imu.deinit_i2c()
 
-        # wait for user input so that bug is printed to user
-        input("Press any button for error")
+        # Close the ground control sockets
+        ground_control_task.close_socket()
+
+        if debugging:
+            # wait for user input so that bug is printed to user
+            input("Press any button for error")
+
         # Re-raise the exception for debugging purposes
         raise
 

@@ -13,14 +13,14 @@ class Servo:
 
     def calibration(self):
         self.speed(180)
-        time.sleep(.5)
+        time.sleep(2)
         self.speed(0)
-        time.sleep(.5)
+        time.sleep(2)
         # Now servos should be ready to go
 
 
     def speed(self,speedin):
         #Servo pwm goes from 40 to 115, must convert from 0 to 180
         # pwm = 40 + (speedin)*(115-40)/180 #Linear interpolation
-        pwm = .01 + speedin*.09/180
+        pwm = .05 + speedin*.05/180
         self.servo_control.duty_cycle(pwm)

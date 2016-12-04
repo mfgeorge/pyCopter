@@ -82,8 +82,8 @@ class BMP180:
         # First get a temperature reading
         t = self.temperature
         # The baseline pressure is the starting pressure
-        self.baseline = 101637.9
-        print("BMP180 Baseline Pressure set to: ", self.baseline)
+        self.baseline = self.pressure
+        # print("BMP180 Baseline Pressure set to: ", self.baseline)
 
 
     def compvaldump(self):

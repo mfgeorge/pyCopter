@@ -62,14 +62,17 @@ class PIDControlTask(Task):
         :return fused_output: A list of fused output of all the sub-controllers
         """
         # update the setpoint of each controller
-        temp_set_point_dict = self.set_point_dict.getData()
+        temp_set_point_dict = self.set_point_dict.getData().copy()
+
+        # print("Setpoint from PID ctl: ", temp_set_point_dict)
+
         self.pitch_controller.SetPoint = temp_set_point_dict["pitch"]
         self.roll_controller.SetPoint = temp_set_point_dict["roll"]
         self.yaw_controller.SetPoint = temp_set_point_dict["yaw"]
 
 
         # update the feedback values of each controller
-        temp_sensor_reading_dict = self.sensor_reading_dict.getData()
+        temp_sensor_reading_dict = self.sensor_reading_dict.getData().copy()
         self.pitch_controller.update(temp_sensor_reading_dict["pitch"])
         self.roll_controller.update(temp_sensor_reading_dict["roll"])
         self.yaw_controller.update(temp_sensor_reading_dict["yaw"])
@@ -79,6 +82,9 @@ class PIDControlTask(Task):
                         self.pitch_controller.output + self.roll_controller.output + self.yaw_controller.output,
                         -self.pitch_controller.output + self.roll_controller.output - self.yaw_controller.output,
                         -self.pitch_controller.output - self.roll_controller.output + self.yaw_controller.output]
+
+        # add thrust on top of everything
+        output_list = [output + temp_set_point_dict["thrust"] for output in output_list]
 
         self.output_list.putData(output_list)
 
@@ -91,7 +97,7 @@ class PIDControlTask(Task):
         :return: None
         """
         # Grab the new shared gain dictionary
-        gain_dict = self.gain_dict.getData()
+        gain_dict = self.gain_dict.getData().copy()
         self.pitch_controller.setMemberData(**gain_dict["pitch"])
         self.roll_controller.setMemberData(**gain_dict["roll"])
         self.yaw_controller.setMemberData(**gain_dict["yaw"])
