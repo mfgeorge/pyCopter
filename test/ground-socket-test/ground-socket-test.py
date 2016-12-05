@@ -14,7 +14,7 @@ import time
 def main():
 
     # address parameters of socket
-    host = "192.168.1.178"
+    host = "192.168.43.15"
     port = 9999
 
     # 0 message to send to the drone

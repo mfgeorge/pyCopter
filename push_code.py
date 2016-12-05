@@ -76,7 +76,11 @@ def main():
     files_to_write = os.listdir(args.dir)
 
     if not args.b:
-        files_to_write.remove("boot.py")
+        try:
+            files_to_write.remove("boot.py")
+        except ValueError:
+            # it wasn't there anyways
+            pass
 
     if args.exclude:
         print("\nExcluding ", args.exclude, " files")

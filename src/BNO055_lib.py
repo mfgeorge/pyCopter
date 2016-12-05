@@ -191,18 +191,18 @@ class BNO055:
         #i2c.mem_write('xy', 0x42, 0x10) # write 2 bytes to slave 0x42, slave memory 0x10
 
         self.address = BNO055_ADDRESS_A
-
+        time.sleep(100)
         for i in range(2):
             try:
                 i2c.writeto_mem(self.address, BNO055_PWR_MODE_ADDR, bytearray([POWER_MODE_NORMAL]) )
-                time.sleep_ms(10)
+                time.sleep_ms(100)
             except:
                 pass
 
         for i in range(2):
             try:
                 i2c.writeto_mem(self.address, BNO055_OPR_MODE_ADDR, bytearray([OPERATION_MODE_NDOF]) )
-                time.sleep_ms(20)
+                time.sleep_ms(100)
             except:
                 pass
         
@@ -211,14 +211,19 @@ class BNO055:
 
     def get_pitch(self):
         recieved = False
+        tries = 0
         while not recieved:
             try:
+                time.sleep(20)
                 tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_P_LSB_ADDR, 1))
+                time.sleep_ms(20)
                 tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_P_MSB_ADDR, 1))
                 recieved = True
             except:
                 pass
+                tries += 1
 
+        print("tries for get_pitch: ", tries)
         out = int((tempH << 8) | tempL) #bitshifting
         out = out/16 # divide all angles by 16 to get true angle in deg
         if out > 180:   #check if the value is overflowing

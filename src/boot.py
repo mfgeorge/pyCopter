@@ -4,7 +4,8 @@ import time
 import os
 from network import WLAN
 from network import Server
-
+from servo_lib import Servo
+import pycom
 
 known_nets = {
     # SSID : PSK (passphrase)
@@ -12,12 +13,22 @@ known_nets = {
     'Google Fiber': 'ifuckinglovetacos'
 } # change this dict to match your WiFi settings
 
-# Do not change these two lines
+# Do not change these two lines- This allows uart to gain a REPL prompt
 uart = machine.UART(0, 115200)
 os.dupterm(uart)
 
 custom_ssid = 'pyCopter Dev 1'
 custom_auth = (WLAN.WPA2, 'calpoly123')
+
+# to keep the ESCs quiet while testing...
+esc_pins = ['P19', 'P20', 'P22', 'P23']
+escs = [Servo(pin) for pin in esc_pins]
+for esc in escs:
+    # set all the speeds to 0
+    esc.speed(0)
+
+# Turn the heartbeat LED off to investigate if it is the source of i2c noise...
+pycom.heartbeat(False)
 
 # test needed to avoid losing connection after a soft reboot
 if machine.reset_cause() != machine.SOFT_RESET: 
@@ -47,8 +58,8 @@ if machine.reset_cause() != machine.SOFT_RESET:
         # wl.auth(custom_auth)
         print("SSID: ", wl.ssid())
         print("PASS: ", wl.auth())
-    last_time = time.time()
-    while not wl.isconnected() and time.time()-last_time < 5000:
+    last_time = time.time_ms()
+    while not wl.isconnected() and time.time_ms()-last_time < 5000:
         time.sleep(0.5)
     print("Configuration: ")
     print(wl.ifconfig())

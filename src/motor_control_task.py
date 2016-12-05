@@ -3,7 +3,7 @@ import time
 from task_manager import Task
 
 class MotorControlTask(Task):
-    def __init__(self, s1, s2, s3, s4, speed_list, offset=10):
+    def __init__(self, s1, s2, s3, s4, speed_list, offset=0):
         self.servo1 = s1
         self.servo2 = s2
         self.servo3 = s3
@@ -11,10 +11,16 @@ class MotorControlTask(Task):
 
         self.speed_list = speed_list
 
-        self.servo1.calibration()
-        self.servo2.calibration()
-        self.servo3.calibration()
-        self.servo4.calibration()
+        # self.servo1.calibration()
+        # self.servo2.calibration()
+        # self.servo3.calibration()
+        # self.servo4.calibration()
+
+        s1.speed(0)
+        s2.speed(0)
+        s3.speed(0)
+        s4.speed(0)
+
         self.offset = offset
 
     def run(self):
