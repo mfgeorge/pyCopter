@@ -191,39 +191,40 @@ class BNO055:
         #i2c.mem_write('xy', 0x42, 0x10) # write 2 bytes to slave 0x42, slave memory 0x10
 
         self.address = BNO055_ADDRESS_A
-        time.sleep(100)
-        for i in range(2):
+
+        no_error = False
+        for i in range(4):
             try:
-                i2c.writeto_mem(self.address, BNO055_PWR_MODE_ADDR, bytearray([POWER_MODE_NORMAL]) )
                 time.sleep_ms(100)
+                i2c.writeto_mem(self.address, BNO055_PWR_MODE_ADDR, bytearray([POWER_MODE_NORMAL]) )
+                break
             except:
                 pass
 
-        for i in range(2):
+        for i in range(4):
             try:
-                i2c.writeto_mem(self.address, BNO055_OPR_MODE_ADDR, bytearray([OPERATION_MODE_NDOF]) )
                 time.sleep_ms(100)
+                i2c.writeto_mem(self.address, BNO055_OPR_MODE_ADDR, bytearray([OPERATION_MODE_NDOF]) )
+                print("BNO: Successful Instantiation! ")
+                no_error = True
+                break
             except:
                 pass
-        
+
         self.i2c = i2c
+
+        if not no_error:
+            print("Error During Instantiation")
+            self.i2c =  None
 
 
     def get_pitch(self):
-        recieved = False
-        tries = 0
-        while not recieved:
-            try:
-                time.sleep(20)
-                tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_P_LSB_ADDR, 1))
-                time.sleep_ms(20)
-                tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_P_MSB_ADDR, 1))
-                recieved = True
-            except:
-                pass
-                tries += 1
 
-        print("tries for get_pitch: ", tries)
+        time.sleep_ms(20)
+        tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_P_LSB_ADDR, 1))
+        time.sleep_ms(20)
+        tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_P_MSB_ADDR, 1))
+
         out = int((tempH << 8) | tempL) #bitshifting
         out = out/16 # divide all angles by 16 to get true angle in deg
         if out > 180:   #check if the value is overflowing
@@ -231,14 +232,11 @@ class BNO055:
         return out
 
     def get_roll(self):
-        recieved = False
-        while not recieved:
-            try:
-                tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_R_LSB_ADDR, 1))
-                tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_R_MSB_ADDR, 1))
-                recieved = True
-            except:
-                pass
+
+        time.sleep_ms(20)
+        tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_R_LSB_ADDR, 1))
+        time.sleep_ms(20)
+        tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_R_MSB_ADDR, 1))
 
         out = int((tempH << 8) | tempL) #bitshifting
         out = out/16 # divide all angles by 16 to get true angle in deg
@@ -247,14 +245,11 @@ class BNO055:
         return out
 
     def get_yaw(self):
-        recieved = False
-        while not recieved:
-            try:
-                tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_H_LSB_ADDR, 1))
-                tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_H_MSB_ADDR, 1))
-                recieved = True
-            except:
-                pass
+
+        time.sleep_ms(20)
+        tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_H_LSB_ADDR, 1))
+        time.sleep_ms(20)
+        tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_H_MSB_ADDR, 1))
 
         out = int((tempH << 8) | tempL) #bitshifting
         out = out/16 # divide all angles by 16 to get true angle in deg
@@ -263,14 +258,11 @@ class BNO055:
         return out
 
     def get_yaw_rate(self):
-        recieved = False
-        while not recieved:
-            try:
-                tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_GYRO_DATA_Z_LSB_ADDR, 1))
-                tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_GYRO_DATA_Z_MSB_ADDR, 1))
-                recieved = True
-            except:
-                pass
+
+        time.sleep_ms(20)
+        tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_GYRO_DATA_Z_LSB_ADDR, 1))
+        time.sleep_ms(20)
+        tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_GYRO_DATA_Z_MSB_ADDR, 1))
 
         out = int((tempH << 8) | tempL)  # bitshifting
         out = out / 16  # divide all angles by 16 to get true angle in deg
