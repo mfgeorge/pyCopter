@@ -21,9 +21,9 @@ def main():
 
     try:
         while True:
-            pitch = bno.get_pitch()
-            print("Pitch from sensor: ", pitch)
-            utime.sleep_ms(100)
+            print("Pitch: %0.3f" % bno.get_pitch(), "\t Roll: %0.3f" % bno.get_roll(), end='\r')
+            utime.sleep_ms(200)
+            sys.stdout.write("\033[K")  # Clear the old text
     except KeyboardInterrupt:
         print("Ending BNO UART Test Program")
         pass
