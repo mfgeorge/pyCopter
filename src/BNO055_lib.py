@@ -338,6 +338,12 @@ class BNO055:
         out = out / 16  # divide all angles by 16 to get true angle in deg
         if out > 360:  # check if the value is overflowing
             out = out - 4095.9375
+
+        if out > 500:
+            out = self.last_yaw_rate
+
+        self.last_yaw_rate = out
+
         return out
 
     def deinit_uart(self):

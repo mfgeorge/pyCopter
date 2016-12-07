@@ -40,7 +40,9 @@ from ground_control import GroundControlSocketTask
 
 # Set debugging to true for a lot of printing and waiting for input
 global debugging
+global calibrate_esc
 debugging = True
+calibrate_esc = False
 
 # ----------------------------------------------------------------------
 def load_config_file(config_file):
@@ -64,6 +66,7 @@ def main():
     Function which contains the main code to run and from which all subsequent processes will branch from.
     """
     global debugging
+    global calibrate_esc
 
     if debugging:
         # for debugging, wait till a user hits enter
@@ -80,7 +83,7 @@ def main():
     # Load in the initial configuration data
     gain_dict = ProtectedData(load_config_file("gain_config.json"))
     sensor_reading_dict = ProtectedData({})
-    set_point_dict = ProtectedData({})
+    set_point_dict = ProtectedData({"pitch": 0, "roll":0, "yaw":0, "thrust":0})
     speed_list = ProtectedData([0, 0, 0, 0])
 
     # Instantiate the necessary sensors required for quadcopter control
@@ -90,20 +93,16 @@ def main():
     bmp180.oversample_sett = 2
     bmp180.baseline = 101325
 
+
     # 9 DOF IMU sensor for craft attitude readings
-    try:
-        imu = BNO055(i2c_bus)
-    except OSError as e:
-        print("Communication Error with the BNO055. \n")
-        print("Exception: ", e)
-        time.sleep(2)
-        sys.exit()
+    uart_bus = machine.UART(1, 115200)
+    imu = BNO055(uart_bus)
 
     # Instantiate the tasks:
     # Instantiate the IMUSensorTask which will update the sensor_reading_dict
     imu_task = IMUTask(imu, sensor_reading_dict)
     # Instantiate the Motor Control Task which will be responsible for updating the output to the motors
-    motor_task = MotorControlTask(servo1, servo2, servo3, servo4, speed_list)
+    motor_task = MotorControlTask(servo1, servo2, servo3, servo4, speed_list, calibrate=calibrate_esc)
     # Instantiate the PID control task which will update the outputs to the motors
     pid_task = PIDControlTask(gain_dict, sensor_reading_dict, set_point_dict, speed_list)
     # Instantiate the ground control socket task
@@ -123,8 +122,8 @@ def main():
 
             ground_control_task.run()
 
-            if debugging:
-                print("Set-point from main: ",  set_point_dict.getData())
+            # if debugging:
+            #     print("Set-point from main: ",  set_point_dict.getData())
 
             pid_task.run()
 
@@ -134,9 +133,10 @@ def main():
             # print(temp, p, altitude)
 
             motor_task.run()
-            if debugging:
+            # if debugging:
                 # print("Speeds: ", speed_list.getData())
-                print ("Pitch: ", sensor_reading_dict["pitch"], "\tRoll: ", sensor_reading_dict["roll"])
+                # print ("Pitch: ", sensor_reading_dict["pitch"], "\tRoll: ", sensor_reading_dict["roll"],
+                #       "Yaw: ", sensor_reading_dict["yaw"])
                 # delta = time.ticks_diff(t, time.ticks_us())
                 #print("delta = ", delta/1000, " ms")
     except:
@@ -151,9 +151,9 @@ def main():
         # Close the ground control sockets
         ground_control_task.close_socket()
 
-        if debugging:
-            # wait for user input so that bug is printed to user
-            input("Press any button for error")
+        # if debugging:
+        #     # wait for user input so that bug is printed to user
+        #     input("Press any button for error")
 
         # Re-raise the exception for debugging purposes
         raise

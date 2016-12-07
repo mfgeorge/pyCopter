@@ -12,7 +12,7 @@ class Servo:
         Servo.next_channel += 1
 
     def calibration(self):
-        self.speed(180)
+        self.speed(185)
         time.sleep(2)
         self.speed(0)
         time.sleep(2)
@@ -22,5 +22,9 @@ class Servo:
     def speed(self,speedin):
         #Servo pwm goes from 40 to 115, must convert from 0 to 180
         # pwm = 40 + (speedin)*(115-40)/180 #Linear interpolation
+        if speedin > 180:
+            speedin = 180
+        elif speedin <= 0:
+            speedin = 0
         pwm = .05 + speedin*.05/180
         self.servo_control.duty_cycle(pwm)

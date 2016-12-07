@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import time
+import utime
 
 class PID:
     """PID Controller"""
@@ -26,7 +26,7 @@ class PID:
         self.Kd = D
 
         self.sample_time = 0.00
-        self.current_time = time.time()
+        self.current_time = utime.ticks_ms()
         self.last_time = self.current_time
 
         self.clear()
@@ -60,11 +60,12 @@ class PID:
         """
         error = self.SetPoint - feedback_value
 
-        self.current_time = time.ticks_ms()
-        delta_time = self.last_time - self.current_time
+        self.current_time = utime.ticks_ms()
+        delta_time = self.current_time - self.last_time
         delta_error = error - self.last_error
 
         if (delta_time >= self.sample_time):
+            # print("calculating control loop")
             self.PTerm = self.Kp * error
             self.ITerm += error * delta_time
 

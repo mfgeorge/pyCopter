@@ -28,9 +28,6 @@ for esc in escs:
     # set all the speeds to 0
     esc.speed(0)
 
-# Turn the heartbeat LED off to investigate if it is the source of i2c noise...
-pycom.heartbeat(False)
-
 # test needed to avoid losing connection after a soft reboot
 if machine.reset_cause() != machine.SOFT_RESET: 
     wl = WLAN()

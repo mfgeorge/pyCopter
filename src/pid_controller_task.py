@@ -62,7 +62,7 @@ class PIDControlTask(Task):
         :return fused_output: A list of fused output of all the sub-controllers
         """
         # update the setpoint of each controller
-        temp_set_point_dict = self.set_point_dict.getData().copy()
+        temp_set_point_dict = self.set_point_dict.getData()
 
         # print("Setpoint from PID ctl: ", temp_set_point_dict)
 
@@ -72,7 +72,10 @@ class PIDControlTask(Task):
 
 
         # update the feedback values of each controller
-        temp_sensor_reading_dict = self.sensor_reading_dict.getData().copy()
+        temp_sensor_reading_dict = self.sensor_reading_dict.getData()
+
+        # print("Sensor dict in task pid: ", temp_sensor_reading_dict)
+
         self.pitch_controller.update(temp_sensor_reading_dict["pitch"])
         self.roll_controller.update(temp_sensor_reading_dict["roll"])
         self.yaw_controller.update(temp_sensor_reading_dict["yaw"])
@@ -85,6 +88,14 @@ class PIDControlTask(Task):
 
         # add thrust on top of everything
         output_list = [output + temp_set_point_dict["thrust"] for output in output_list]
+
+        # Saturate everything to 180 and 0
+        for index, output in enumerate(output_list):
+            if output > 180:
+                output_list[index] = 180
+            elif output < 0:
+                output_list[index] = 0
+        #print("Output list is: ", output_list)
 
         self.output_list.putData(output_list)
 

@@ -14,7 +14,7 @@ import time
 def main():
 
     # address parameters of socket
-    host = "192.168.43.15"
+    host = "192.168.4.1"
     port = 9999
 
     # 0 message to send to the drone
@@ -37,7 +37,7 @@ def main():
     print("Press crtl-c to end")
 
     # thrust profile to send to drone
-    profile = MotionProfile(ramp_profile)
+    profile = MotionProfile(zero_profile)
     try:
         while True:
             message = profile.get_profile()
@@ -70,6 +70,8 @@ class MotionProfile:
 def ramp_profile(the_time):
     return 20/180*the_time
 
+def zero_profile(the_time):
+    return 0
 
 if __name__ == "__main__":
     main()
