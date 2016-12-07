@@ -1,6 +1,7 @@
 import machine
 import network
 import time
+import utime
 import os
 from network import WLAN
 from network import Server
@@ -58,8 +59,8 @@ if machine.reset_cause() != machine.SOFT_RESET:
         # wl.auth(custom_auth)
         print("SSID: ", wl.ssid())
         print("PASS: ", wl.auth())
-    last_time = time.time_ms()
-    while not wl.isconnected() and time.time_ms()-last_time < 5000:
+    last_time = utime.ticks_ms()
+    while not wl.isconnected() and utime.ticks_ms()-last_time < 5000:
         time.sleep(0.5)
     print("Configuration: ")
     print(wl.ifconfig())

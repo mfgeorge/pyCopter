@@ -1,5 +1,5 @@
 from machine import I2C
-import time
+import utime
 
 # I2C addresses
 BNO055_ADDRESS_A                     = 0x28
@@ -181,88 +181,158 @@ OPERATION_MODE_NDOF_FMC_OFF          = 0X0B
 OPERATION_MODE_NDOF                  = 0X0C
 
 class BNO055:
-    def __init__(self,i2c_bus):
-        i2c = i2c_bus #I2C(1, I2C.MASTER, baudrate=100000)
-        #i2c.start()
-        #i2c.scan() # returns list of slave addresses
-        #i2c.send('hello', 0x42) # send 5 bytes to slave with address 0x42
-        #i2c.recv(5, 0x42) # receive 5 bytes from slave
-        #i2c.mem_read(2, 0x42, 0x10) # read 2 bytes from slave 0x42, slave memory 0x10
-        #i2c.mem_write('xy', 0x42, 0x10) # write 2 bytes to slave 0x42, slave memory 0x10
+    command_response_dict = {0x01: "WRITE_SUCCESS",
+                            0x03: "WRITE_FAIL",
+                            0x04: "REGMAP_INVALID_ADDRESS",
+                            0x05: "REGMAP_WRITE_DISABLED",
+                            0x06: "WRONG_START_BYTE",
+                            0x07: "BUS_OVER_RUN_ERROR",
+                            0X08: "MAX_LENGTH_ERROR",
+                            0x09: "MIN_LENGTH_ERROR",
+                            0x0A: "RECEIVE_CHARACTER_TIMEOUT"}
 
-        self.address = BNO055_ADDRESS_A
+    read_response_dict = {0x02: "READ_FAIL",
+                            0x04: "REGMAP_INVALID_ADDRESS",
+                            0x05: "REGMAP_WRITE_DISABLED",
+                            0x06: "WRONG_START_BYTE",
+                            0x07: "BUS_OVER_RUN_ERROR",
+                            0X08: "MAX_LENGTH_ERROR",
+                            0x09: "MIN_LENGTH_ERROR",
+                            0x0A: "RECEIVE_CHARACTER_TIMEOUT"}
 
-        no_error = False
-        for i in range(4):
+    def __init__(self, uart_bus):
+        self.uart = uart_bus
+        self.uart.init(baudrate = 115200, parity= None, stop=1)
+
+        self.write_register(BNO055_OPR_MODE_ADDR, OPERATION_MODE_CONFIG)
+
+        self.write_register(BNO055_PWR_MODE_ADDR, POWER_MODE_NORMAL)
+
+        self.write_register(BNO055_OPR_MODE_ADDR, OPERATION_MODE_NDOF)
+
+        # store a set of last values in case a huge reading occurs
+        # (as seen in testing) then the last value can be returned instead
+        self.last_pitch = None
+        self.last_roll = None
+        self.last_yaw = None
+        self.last_yaw_rate = None
+
+        self.last_pitch = self.get_pitch()
+        self.last_roll = self.get_roll()
+        self.last_yaw = self.get_yaw()
+        self.last_yaw_rate = self.get_yaw_rate()
+
+    def write_register(self, register_adr, data):
+        write_success = False
+        tries = 0
+        while (not write_success) and (tries < 20):
+            command = bytearray([0xAA, 0x00, register_adr, 0x01, data])
+            self.uart.write(command)
+            # Found that a sleep of 10 ms helped the writes not fail...
+            utime.sleep_ms(10)
+            response = self.uart.readall()
             try:
-                time.sleep_ms(100)
-                i2c.writeto_mem(self.address, BNO055_PWR_MODE_ADDR, bytearray([POWER_MODE_NORMAL]) )
-                break
-            except:
+                if response[1] == 0x01:
+                    # print("Write to reg ", register_adr, " success!")
+                    # print("Tries: ", tries)
+                    write_success = True
+                    break
+
+            except TypeError:
                 pass
 
-        for i in range(4):
+            tries += 1
+
+        if not write_success:
+            print("BNO: Response for write to reg ", register_adr, " is : ", BNO055.command_response_dict[response[1]])
+            print("BNO: Write to reg ", register_adr, " failed")
+
+        return write_success
+
+    def read_register(self, register_adr, num_bytes):
+        read_success = False
+        tries = 0
+        while (not read_success) and (tries < 20):
+            command = bytearray([0xAA, 0x01, register_adr, num_bytes])
+            self.uart.write(command)
+            utime.sleep_us(3500)
+            response = self.uart.readall()
             try:
-                time.sleep_ms(100)
-                i2c.writeto_mem(self.address, BNO055_OPR_MODE_ADDR, bytearray([OPERATION_MODE_NDOF]) )
-                print("BNO: Successful Instantiation! ")
-                no_error = True
-                break
-            except:
+                if response[0] == 0xBB:
+                    # print("Read from reg ", register_adr, " success!")
+                    # print("Tries: ", tries)
+                    read_success = True
+                    break
+
+            except TypeError:
                 pass
 
-        self.i2c = i2c
+            tries += 1
 
-        if not no_error:
-            print("Error During Instantiation")
-            self.i2c =  None
+        if not read_success:
+            print("BNO: Response for read from reg ", register_adr, " is : ", BNO055.read_response_dict[response[1]])
+            print("BNO: Read from reg ", register_adr, " failed")
 
+        return int.from_bytes(response[2:])
 
     def get_pitch(self):
 
-        time.sleep_ms(20)
-        tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_P_LSB_ADDR, 1))
-        time.sleep_ms(20)
-        tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_P_MSB_ADDR, 1))
+        tempL = self.read_register(BNO055_EULER_P_LSB_ADDR, 1)
+        tempH = self.read_register(BNO055_EULER_P_MSB_ADDR, 1)
 
         out = int((tempH << 8) | tempL) #bitshifting
         out = out/16 # divide all angles by 16 to get true angle in deg
         if out > 180:   #check if the value is overflowing
             out = out - 4095.9375
+
+        # if still not between the -180, then return the last value
+        if not -180<out<180:
+            out = self.last_pitch
+
+        self.last_pitch = out
+
         return out
 
     def get_roll(self):
 
-        time.sleep_ms(20)
-        tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_R_LSB_ADDR, 1))
-        time.sleep_ms(20)
-        tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_R_MSB_ADDR, 1))
+        tempL = self.read_register(BNO055_EULER_R_LSB_ADDR, 1)
+        tempH = self.read_register(BNO055_EULER_R_MSB_ADDR, 1)
 
         out = int((tempH << 8) | tempL) #bitshifting
         out = out/16 # divide all angles by 16 to get true angle in deg
         if out > 180:   #check if the value is overflowing
             out = out - 4095.9375
+
+        # if still not between the -180, then return the last value
+        if not -180 < out < 180:
+            out = self.last_roll
+
+        self.last_roll = out
+
         return out
 
     def get_yaw(self):
 
-        time.sleep_ms(20)
-        tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_H_LSB_ADDR, 1))
-        time.sleep_ms(20)
-        tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_EULER_H_MSB_ADDR, 1))
+        tempL = self.read_register(BNO055_EULER_H_LSB_ADDR, 1)
+        tempH = self.read_register(BNO055_EULER_H_MSB_ADDR, 1)
 
         out = int((tempH << 8) | tempL) #bitshifting
         out = out/16 # divide all angles by 16 to get true angle in deg
         if out > 180:   #check if the value is overflowing
             out = out - 4095.9375
+
+        # if still not between the -180, then return the last value
+        if not -180 < out < 180:
+            out = self.last_yaw
+
+        self.last_yaw = out
+
         return out
 
     def get_yaw_rate(self):
 
-        time.sleep_ms(20)
-        tempL = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_GYRO_DATA_Z_LSB_ADDR, 1))
-        time.sleep_ms(20)
-        tempH = int.from_bytes(self.i2c.readfrom_mem(self.address, BNO055_GYRO_DATA_Z_MSB_ADDR, 1))
+        tempL = self.read_register(BNO055_GYRO_DATA_Z_LSB_ADDR, 1)
+        tempH = self.read_register(BNO055_GYRO_DATA_Z_MSB_ADDR, 1)
 
         out = int((tempH << 8) | tempL)  # bitshifting
         out = out / 16  # divide all angles by 16 to get true angle in deg
@@ -270,6 +340,6 @@ class BNO055:
             out = out - 4095.9375
         return out
 
-    def deinit_i2c(self):
-        self.i2c.deinit()
+    def deinit_uart(self):
+        self.uart.deinit()
 
