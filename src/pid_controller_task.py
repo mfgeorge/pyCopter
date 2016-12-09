@@ -77,7 +77,7 @@ class PIDControlTask(Task):
         # print("Sensor dict in task pid: ", temp_sensor_reading_dict)
 
         self.pitch_controller.update(temp_sensor_reading_dict["pitch"])
-        self.roll_controller.update(temp_sensor_reading_dict["roll"])
+        self.roll_controller.update(-1*temp_sensor_reading_dict["roll"])
         self.yaw_controller.update(temp_sensor_reading_dict["yaw"])
 
         # fuse all the outputs of the controllers together and return it in a length 4 list

@@ -22,7 +22,7 @@ TODO:
 
 # All of the required libraries:
 import micropython
-#from pyb import Servo, millis#, I2C  # ****** To change as we port to the LoPy
+# from pyb import Servo, millis#, I2C  # ****** To change as we port to the LoPy
 from machine import I2C,PWM,Pin
 from servo_lib import Servo
 from motor_control_task import MotorControlTask
@@ -36,6 +36,7 @@ import json
 from bmp180 import BMP180
 from task_manager import TaskManager, ProtectedData
 from ground_control import GroundControlSocketTask
+import gc
 
 
 # Set debugging to true for a lot of printing and waiting for input
@@ -68,15 +69,20 @@ def main():
     global debugging
     global calibrate_esc
 
+    # Enable garbage collection
+    gc.enable()
+
     if debugging:
         # for debugging, wait till a user hits enter
         input("Press any key to continue main")
 
     # Instantiate servo objects which are connected to the ESCs that control the electric motors that
     # generate thrust for the quadcopter
-    servo1 = Servo('P19')
+    # Had to swap servo 1 and 3 different from thier labels on the PCB due
+    # to mismatches.
+    servo1 = Servo('P23')
     servo2 = Servo('P20')
-    servo3 = Servo('P23')
+    servo3 = Servo('P19')
     servo4 = Servo('P22')
 
     # Instantiate the protected data classes for data that will be shared between tasks
@@ -114,6 +120,9 @@ def main():
     # task_manager.add_new_task("imu task", .005, imu_task)
     # task_manager.add_new_task("motor task", .01, motor_task)
     # task_manager.add_new_task("pid task", .005, pid_task)
+
+    runs = 0
+    last_runs = 0
     try:
         while True:
             # t = time.ticks_us()
@@ -139,6 +148,16 @@ def main():
                 #       "Yaw: ", sensor_reading_dict["yaw"])
                 # delta = time.ticks_diff(t, time.ticks_us())
                 #print("delta = ", delta/1000, " ms")
+
+            runs += 1
+            if runs - last_runs >10:
+                print(set_point_dict.getData())
+                print(sensor_reading_dict.getData())
+                print("Memory Allocated: ", gc.mem_alloc(),
+                      "  Memory Free: ", gc.mem_free())
+                last_runs = runs
+                gc.collect()
+
     except:
         task_manager.kill_all_tasks()
         # Make sure to kill motors at zero speed

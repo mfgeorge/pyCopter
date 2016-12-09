@@ -37,7 +37,7 @@ def main():
     print("Press crtl-c to end")
 
     # thrust profile to send to drone
-    profile = MotionProfile(zero_profile)
+    profile = MotionProfile(ramp_profile)
     try:
         while True:
             message = profile.get_profile()
@@ -68,7 +68,7 @@ class MotionProfile:
 
 
 def ramp_profile(the_time):
-    return 20/180*the_time
+    return 5/180*the_time
 
 def zero_profile(the_time):
     return 0

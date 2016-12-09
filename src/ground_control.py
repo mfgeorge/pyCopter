@@ -34,7 +34,7 @@ class GroundControlSocketTask(task_manager.Task):
     def run(self):
         try:
 
-                self.command_string_in = self.clientsocket.recv(1024)
+                self.command_string_in = self.clientsocket.recv(100)
                 # self.now = time.ticks_ms()
                 # print("time difference: " + str(self.now-self.last_time))
                 # self.last_time = now

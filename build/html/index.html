@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to pyCopter’s documentation! &#8212; pyCopter 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-pycopter-s-documentation">
+<h1>Welcome to pyCopter&#8217;s documentation!<a class="headerlink" href="#welcome-to-pycopter-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+<div class="section" id="module-task_manager">
+<span id="source-code"></span><h1>Source Code<a class="headerlink" href="#module-task_manager" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="task-manager-py">
+<h2>task_manager.py<a class="headerlink" href="#task-manager-py" title="Permalink to this headline">¶</a></h2>
+<p>Michael George
+11/10/16</p>
+<p>A module for micropython which utilizes the primitive _thread module to schedule tasks, and keep track of their
+exit flag.</p>
+<dl class="docutils">
+<dt>The ProtectedData class should be used by any class that needs to share any data between threads/ other tasks</dt>
+<dd><dl class="first last docutils">
+<dt>example: shared_int = ProtectedData(some_integer)</dt>
+<dd><dl class="first last docutils">
+<dt>Access in tasks using:</dt>
+<dd>shared_int.putData(new_int)
+current_shared_int = shared_int.getData()</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>The Task class should be extended by all classes which are classified as tasks. The task class is a pure virtual task,
+meaning that it only lays out the methods that need to be defined and overriden in order for the Task to be called
+by the task manager. This consists of:</p>
+<blockquote>
+<div><blockquote>
+<div><ul class="simple">
+<li>The constructor</li>
+<li>The .run() method</li>
+</ul>
+</div></blockquote>
+<dl class="docutils">
+<dt>minimum example:: my_task_class(Task):</dt>
+<dd><dl class="first last docutils">
+<dt>def __init__(self, <a href="#id1"><span class="problematic" id="id2">*</span></a>args):</dt>
+<dd># Some unique initialization specific to that task</dd>
+<dt>def run(self):</dt>
+<dd># The code that will be performed upon each call of the task
+# DO NOT PLACE ANY BLOCKING CODE HERE OR ANYTHING THAT SLEEPS, THIS CODE MUST
+# BE INTENDED TO BE USED IN A COOPERATIVE MULTITASKING ENVIRONMENT (YES, EVEN THOUGH
+# THREADING IS BEING USED). THE TASK MANAGER WILL CONTROL THE TIMING AND SLEEP CALLS.</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<p>The TaskManager class should be used (preferably only one constructed for the project) to manage all of the tasks.
+Most importantly, the TaskManager is in control of the timing of each task, and calls each task&#8217;s .run() method
+It stores exit flags so that tasks can be ended if necessary, as well as keeps track of the amount of calls that a
+task has received. The task manager is also able to kill all tasks if necessary.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>example:</dt>
+<dd>some_task = SomeTaskConstructor(<a href="#id3"><span class="problematic" id="id4">*</span></a>args)
+my_manager = TaskManager()
+my_manager.addTask(&#8220;Some Task Name&#8221;, some_task, some_task_timing_ms)</dd>
+</dl>
+</div></blockquote>
+<dl class="class">
+<dt id="task_manager.ProtectedData">
+<em class="property">class </em><code class="descclassname">task_manager.</code><code class="descname">ProtectedData</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to facilitate thread safe variables of primitive data type.</p>
+<dl class="method">
+<dt id="task_manager.ProtectedData.getData">
+<code class="descname">getData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.getData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to lock protected data and return it&#8217;s value
+:return: the protected data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.ProtectedData.putData">
+<code class="descname">putData</code><span class="sig-paren">(</span><em>new_data</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.putData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to lock protected data and reassign it&#8217;s data
+:param new_data: the new data to reassign</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="task_manager.Task">
+<em class="property">class </em><code class="descclassname">task_manager.</code><code class="descname">Task</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.Task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pure Virtual Class to extend for each class. Each child task can then be added to TaskManager for running.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="task_manager.TaskManager">
+<em class="property">class </em><code class="descclassname">task_manager.</code><code class="descname">TaskManager</code><a class="headerlink" href="#task_manager.TaskManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to manage task&#8217;s timing, exit flags, and thread instantiation.</p>
+<dl class="method">
+<dt id="task_manager.TaskManager.add_new_task">
+<code class="descname">add_new_task</code><span class="sig-paren">(</span><em>task_name</em>, <em>timing</em>, <em>task_object</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.TaskManager.add_new_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new Task object to the TaskManager, and starts it&#8217;s thread.
+:param task_name: Name to identify the task with
+:param timing: The timing that the task must run at
+:param task_object: The previously defined task object whose .run() method will be called</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.TaskManager.end_task">
+<code class="descname">end_task</code><span class="sig-paren">(</span><em>task_name</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.TaskManager.end_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ends a specific task as identified by it&#8217;s task_name
+:param task_name: the string name of the task to end</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.TaskManager.get_runs">
+<code class="descname">get_runs</code><span class="sig-paren">(</span><em>task_name</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.TaskManager.get_runs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the number of runs that a specific task has ran as identified by it&#8217;s task_name
+:param task_name: the string name of the task whose runs to get
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.TaskManager.get_thread_dict">
+<code class="descname">get_thread_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.TaskManager.get_thread_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method for getting the thread dictionary that the TaskManager uses
+:return: the task manager thread_dict</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.TaskManager.kill_all_tasks">
+<code class="descname">kill_all_tasks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.TaskManager.kill_all_tasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method for killing all of the tasks being managed by the TaskManager</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.TaskManager.wrapped_callback">
+<code class="descname">wrapped_callback</code><span class="sig-paren">(</span><em>task_name</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.TaskManager.wrapped_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapped callback for the task threads to use which facilitate using the correct exit_flag, incrementing runs,
+and the timing required.
+:param task_name: The name to identify the task by</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to pyCopter&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#module-task_manager">Source Code</a><ul>
+<li><a class="reference internal" href="#task-manager-py">task_manager.py</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Chad Bickle, Oscar Ruiz, Michael George.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

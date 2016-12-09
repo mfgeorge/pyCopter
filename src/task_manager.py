@@ -18,7 +18,7 @@ meaning that it only lays out the methods that need to be defined and overriden 
 by the task manager. This consists of:
                     * The constructor
                     * The .run() method
-        minimum example: my_task_class(Task):
+        minimum example:: my_task_class(Task):
                             def __init__(self, *args):
                                 # Some unique initialization specific to that task
                             def run(self):

@@ -1,4 +1,3 @@
-from machine import I2C
 import utime
 
 # I2C addresses
