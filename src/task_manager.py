@@ -3,18 +3,21 @@
     :platform: Pycom LoPy
     :synopsis: A module for performing task management and facilitating inter-task communication
 
-..  moduleauthor:: Michael George <michaelgeorge180@gmail.com>
+..  topic:: Author
+
+    Michael George
 
 A module for micropython which utilizes the primitive _thread module to schedule tasks, and keep track of their
 exit flag.
 
 The ProtectedData class should be used by any class that needs to share any data between threads/ other tasks
-        :Example:
 
-                | shared_int = ProtectedData(some_integer)
-                |    # Access in tasks using:
-                |    shared_int.putData(new_int)
-                |    current_shared_int = shared_int.getData()
+Example::
+
+    shared_int = ProtectedData(some_integer)
+    # Access in tasks using:
+    shared_int.putData(new_int)
+    current_shared_int = shared_int.getData()
 
 The Task class should be extended by all classes which are classified as tasks. The task class is a pure virtual task,
 meaning that it only lays out the methods that need to be defined and overriden in order for the Task to be called
@@ -23,27 +26,27 @@ by the task manager. This consists of:
     * The constructor
     * The .run() method
 
-        :Example:
+Minimum Extension Example::
 
-               | my_task_class(Task):
-               |     def __init__(self, \*args):
-               |         #: Some unique initialization specific to that task
-               |     def run(self):
-               |         #: The code that will be performed upon each call of the task
-               |         #: DO NOT PLACE ANY BLOCKING CODE HERE OR ANYTHING THAT SLEEPS, THIS CODE MUST
-               |         #: BE INTENDED TO BE USED IN A COOPERATIVE MULTITASKING ENVIRONMENT (YES, EVEN THOUGH
-               |         #: THREADING IS BEING USED). THE TASK MANAGER WILL CONTROL THE TIMING AND SLEEP CALLS.
+    my_task_class(Task):
+        def __init__(self, \*args):
+            # Some unique initialization specific to that task
+        def run(self):
+            # The code that will be performed upon each call of the task
+            # DO NOT PLACE ANY BLOCKING CODE HERE OR ANYTHING THAT SLEEPS, THIS CODE MUST
+            # BE INTENDED TO BE USED IN A COOPERATIVE MULTITASKING ENVIRONMENT (YES, EVEN THOUGH
+            # THREADING IS BEING USED). THE TASK MANAGER WILL CONTROL THE TIMING AND SLEEP CALLS.
 
 The TaskManager class should be used (preferably only one constructed for the project) to manage all of the tasks.
 Most importantly, the TaskManager is in control of the timing of each task, and calls each task's .run() method
 It stores exit flags so that tasks can be ended if necessary, as well as keeps track of the amount of calls that a
 task has received. The task manager is also able to kill all tasks if necessary.
 
-        :Example:
+Example::
 
-               | some_task = SomeTaskConstructor(\*args)
-               | my_manager = TaskManager()
-               | my_manager.addTask("Some Task Name", some_task, some_task_timing_ms)
+    some_task = SomeTaskConstructor(\*args)
+    my_manager = TaskManager()
+    my_manager.addTask("Some Task Name", some_task, some_task_timing_ms)
 
 """
 

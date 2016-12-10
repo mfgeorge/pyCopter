@@ -673,7 +673,7 @@ class MicropyGPS(object):
         Create a readable string of the current latitude data
         :return: string
         """
-        lat_string = str(self.latitude[0]) + '° ' + str(self.latitude[1]) + "' " + str(self.latitude[2])
+        lat_string = str(self.latitude[0]) + ' deg ' + str(self.latitude[1]) + "' " + str(self.latitude[2])
         return lat_string
 
     def longitude_string(self):
@@ -681,7 +681,7 @@ class MicropyGPS(object):
         Create a readable string of the current longitude data
         :return: string
         """
-        lat_string = str(self.longitude[0]) + '° ' + str(self.longitude[1]) + "' " + str(self.longitude[2])
+        lat_string = str(self.longitude[0]) + ' deg ' + str(self.longitude[1]) + "' " + str(self.longitude[2])
         return lat_string
 
     def speed_string(self, unit='kph'):

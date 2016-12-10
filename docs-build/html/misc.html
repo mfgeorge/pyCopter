@@ -56,8 +56,55 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="misc-module">
-<h1>misc module<a class="headerlink" href="#misc-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-misc">
+<span id="misc-module"></span><h1>misc module<a class="headerlink" href="#module-misc" title="Permalink to this headline">¶</a></h1>
+<p>Miscillaneous file for classes that help get things done.</p>
+<dl class="class">
+<dt id="misc.TimerHelper">
+<em class="property">class </em><code class="descclassname">misc.</code><code class="descname">TimerHelper</code><a class="headerlink" href="#misc.TimerHelper" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple class for helping pick timers and channels based upon pin number</p>
+<dl class="attribute">
+<dt id="misc.TimerHelper.channel_dict">
+<code class="descname">channel_dict</code><em class="property"> = {'(4, 11)': (4, 1), '(2, 8)': (1, 1), 'None': None, '4': 2, '(1, 8)': (3, 3), '13': 1, '1': 1, '2': 4, '(1, 8, 12)': (3, 3, 2), '(2, 5, 9)': (4, 4, 2), '8': 2, '(1, 8, 14)': (1, 1, 1), '(2, 5)': (2, 2), '(4, 10)': (3, 1)}</em><a class="headerlink" href="#misc.TimerHelper.channel_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="misc.TimerHelper.get_timer">
+<code class="descname">get_timer</code><span class="sig-paren">(</span><em>pin</em>, <em>index=0</em><span class="sig-paren">)</span><a class="headerlink" href="#misc.TimerHelper.get_timer" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pin</strong> &#8211; </li>
+<li><strong>index</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="misc.TimerHelper.timer_avail">
+<code class="descname">timer_avail</code><em class="property"> = {}</em><a class="headerlink" href="#misc.TimerHelper.timer_avail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="misc.TimerHelper.timer_dict">
+<code class="descname">timer_dict</code><em class="property"> = {'(4, 11)': (4, 11), '(2, 8)': (2, 8), 'None': None, '4': 4, '(1, 8)': (1, 8), '13': 13, '1': 1, '2': 2, '(1, 8, 12)': (1, 8, 12), '(2, 5, 9)': (2, 5, 9), '8': 8, '(1, 8, 14)': (1, 8, 14), '(2, 5)': (2, 5), '(4, 10)': (4, 10)}</em><a class="headerlink" href="#misc.TimerHelper.timer_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="misc.timed_function">
+<code class="descclassname">misc.</code><code class="descname">timed_function</code><span class="sig-paren">(</span><em>f</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#misc.timed_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 

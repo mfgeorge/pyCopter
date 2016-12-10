@@ -56,8 +56,58 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="bno055-lib-module">
-<h1>BNO055_lib module<a class="headerlink" href="#bno055-lib-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-BNO055_lib">
+<span id="bno055-lib-module"></span><h1>BNO055_lib module<a class="headerlink" href="#module-BNO055_lib" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="BNO055_lib.BNO055">
+<em class="property">class </em><code class="descclassname">BNO055_lib.</code><code class="descname">BNO055</code><span class="sig-paren">(</span><em>uart_bus</em><span class="sig-paren">)</span><a class="headerlink" href="#BNO055_lib.BNO055" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="BNO055_lib.BNO055.command_response_dict">
+<code class="descname">command_response_dict</code><em class="property"> = {1: 'WRITE_SUCCESS', 3: 'WRITE_FAIL', 4: 'REGMAP_INVALID_ADDRESS', 5: 'REGMAP_WRITE_DISABLED', 6: 'WRONG_START_BYTE', 7: 'BUS_OVER_RUN_ERROR', 8: 'MAX_LENGTH_ERROR', 9: 'MIN_LENGTH_ERROR', 10: 'RECEIVE_CHARACTER_TIMEOUT'}</em><a class="headerlink" href="#BNO055_lib.BNO055.command_response_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="BNO055_lib.BNO055.deinit_uart">
+<code class="descname">deinit_uart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BNO055_lib.BNO055.deinit_uart" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="BNO055_lib.BNO055.get_pitch">
+<code class="descname">get_pitch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BNO055_lib.BNO055.get_pitch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="BNO055_lib.BNO055.get_roll">
+<code class="descname">get_roll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BNO055_lib.BNO055.get_roll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="BNO055_lib.BNO055.get_yaw">
+<code class="descname">get_yaw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BNO055_lib.BNO055.get_yaw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="BNO055_lib.BNO055.get_yaw_rate">
+<code class="descname">get_yaw_rate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BNO055_lib.BNO055.get_yaw_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="BNO055_lib.BNO055.read_register">
+<code class="descname">read_register</code><span class="sig-paren">(</span><em>register_adr</em>, <em>num_bytes</em><span class="sig-paren">)</span><a class="headerlink" href="#BNO055_lib.BNO055.read_register" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="BNO055_lib.BNO055.read_response_dict">
+<code class="descname">read_response_dict</code><em class="property"> = {2: 'READ_FAIL', 4: 'REGMAP_INVALID_ADDRESS', 5: 'REGMAP_WRITE_DISABLED', 6: 'WRONG_START_BYTE', 7: 'BUS_OVER_RUN_ERROR', 8: 'MAX_LENGTH_ERROR', 9: 'MIN_LENGTH_ERROR', 10: 'RECEIVE_CHARACTER_TIMEOUT'}</em><a class="headerlink" href="#BNO055_lib.BNO055.read_response_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="BNO055_lib.BNO055.write_register">
+<code class="descname">write_register</code><span class="sig-paren">(</span><em>register_adr</em>, <em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#BNO055_lib.BNO055.write_register" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 
 

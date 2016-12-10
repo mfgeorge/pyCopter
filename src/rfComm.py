@@ -1,5 +1,14 @@
 #!/bin/python
-import machine
+
+# Handle the case where we aren't in micropython for documentation
+# generation
+try:
+    import machine
+except ImportError:
+    import sys
+    # Add some dummy libraries
+    sys.path.insert(0, '../dummy_libraries')
+    from dummy_libraries import machine
 
 """
 Parent Class for any rf controller available 

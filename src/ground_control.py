@@ -5,10 +5,19 @@ ground_control.py
 Module for hosting connections to ground control on the LoPy
 """
 import socket
-from network import WLAN
 import time
 import task_manager
 import sys
+
+# Handle the case where we aren't in micropython for documentation
+# generation
+try:
+    from network import WLAN
+except ImportError:
+    import sys
+    # Add some dummy libraries
+    sys.path.insert(0, '../dummy_libraries')
+    from dummy_libraries.network import WLAN
 
 
 class GroundControlSocketTask(task_manager.Task):

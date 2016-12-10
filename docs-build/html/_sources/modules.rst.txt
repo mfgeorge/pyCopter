@@ -5,7 +5,6 @@ src
    :maxdepth: 4
 
    BNO055_lib
-   PID_lib
    bmp180
    boot
    ground_control

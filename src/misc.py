@@ -1,10 +1,18 @@
 #!/bin/python
-import pyb
-import time
-import utime
 """
 Miscillaneous file for classes that help get things done.
 """
+
+# Handle the case where we aren't in micropython for documentation
+# generation
+try:
+    import pyb
+    import utime
+except ImportError:
+    import sys
+    # Add some dummy libraries
+    sys.path.insert(0, '../dummy_libraries')
+    from dummy_libraries import utime, pyb
 
 class TimerHelper:
     'A simple class for helping pick timers and channels based upon pin number'

@@ -14,7 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import utime
+# Handle the case where we aren't in micropython for documentation
+# generation
+try:
+    import utime
+except ImportError:
+    import sys
+    # Add dummy libraries
+    sys.path.insert(0, '../dummy_libraries')
+    from dummy_libraries import utime
+
 
 class PID:
     """PID Controller"""

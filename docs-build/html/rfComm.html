@@ -56,8 +56,117 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="rfcomm-module">
-<h1>rfComm module<a class="headerlink" href="#rfcomm-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-rfComm">
+<span id="rfcomm-module"></span><h1>rfComm module<a class="headerlink" href="#module-rfComm" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="rfComm.RFController6CH">
+<em class="property">class </em><code class="descclassname">rfComm.</code><code class="descname">RFController6CH</code><a class="headerlink" href="#rfComm.RFController6CH" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic parent class for a 6 channel radio module</p>
+<dl class="method">
+<dt id="rfComm.RFController6CH.get_pitch">
+<code class="descname">get_pitch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.RFController6CH.get_pitch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="rfComm.RFController6CH.get_roll">
+<code class="descname">get_roll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.RFController6CH.get_roll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="rfComm.RFController6CH.get_switch1">
+<code class="descname">get_switch1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.RFController6CH.get_switch1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="rfComm.RFController6CH.get_switch2">
+<code class="descname">get_switch2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.RFController6CH.get_switch2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="rfComm.RFController6CH.get_thrust">
+<code class="descname">get_thrust</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.RFController6CH.get_thrust" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="rfComm.RFController6CH.get_yaw">
+<code class="descname">get_yaw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.RFController6CH.get_yaw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="rfComm.ServoPulse">
+<em class="property">class </em><code class="descclassname">rfComm.</code><code class="descname">ServoPulse</code><span class="sig-paren">(</span><em>pin</em>, <em>timer=&lt;dummy_libraries.machine.Timer instance&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.ServoPulse" title="Permalink to this definition">¶</a></dt>
+<dd><p>A servo_pulse Class written by wagnerc4 on github and modified by michael george for our
+purposes. Instead of using IC interrupts here which limits the pin choice
+(trouble with timer 8 and 1 identified, may be others not working either)
+we use external interrupts so that this can be done on any pin, given they
+do not have the same CPU port NUMBER. ie PBn and PAn cannot both be used
+to measure servo pulses.</p>
+<dl class="method">
+<dt id="rfComm.ServoPulse.callback">
+<code class="descname">callback</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.ServoPulse.callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="rfComm.ServoPulse.get_width">
+<code class="descname">get_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.ServoPulse.get_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="rfComm.ServoPulse.last_width">
+<code class="descname">last_width</code><em class="property"> = 0</em><a class="headerlink" href="#rfComm.ServoPulse.last_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="rfComm.ServoPulse.start">
+<code class="descname">start</code><em class="property"> = 0</em><a class="headerlink" href="#rfComm.ServoPulse.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="rfComm.ServoPulse.width">
+<code class="descname">width</code><em class="property"> = 0</em><a class="headerlink" href="#rfComm.ServoPulse.width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="rfComm.SpektrumController">
+<em class="property">class </em><code class="descclassname">rfComm.</code><code class="descname">SpektrumController</code><span class="sig-paren">(</span><em>thro_pin</em>, <em>aile_pin</em>, <em>elev_pin</em>, <em>rudd_pin</em>, <em>gear_pin</em>, <em>aux1_pin</em>, <em>smoothing_factor=1</em><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rfComm.RFController6CH" title="rfComm.RFController6CH"><code class="xref py py-class docutils literal"><span class="pre">rfComm.RFController6CH</span></code></a></p>
+<p>A class for a specific 6 channel Spektrum radio module.</p>
+<dl class="method">
+<dt id="rfComm.SpektrumController.get_pitch">
+<code class="descname">get_pitch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController.get_pitch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="rfComm.SpektrumController.get_roll">
+<code class="descname">get_roll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController.get_roll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="rfComm.SpektrumController.get_switch1">
+<code class="descname">get_switch1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController.get_switch1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="rfComm.SpektrumController.get_switch2">
+<code class="descname">get_switch2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController.get_switch2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="rfComm.SpektrumController.get_thrust">
+<code class="descname">get_thrust</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController.get_thrust" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="rfComm.SpektrumController.get_yaw">
+<code class="descname">get_yaw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController.get_yaw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 
 

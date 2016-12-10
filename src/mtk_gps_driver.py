@@ -5,8 +5,8 @@
 
 """
 
-from micropyGPS.micropyGPS import MicropyGPS
-from MTK_commands import mtk
+from micropyGPS import MicropyGPS
+import mtk
 
 class MTKGPS:
     """

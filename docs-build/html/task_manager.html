@@ -54,84 +54,50 @@
             
   <div class="section" id="module-task_manager">
 <span id="task-manager-module"></span><h1>task_manager module<a class="headerlink" href="#module-task_manager" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-task_manager.py"></span><p>A module for micropython which utilizes the primitive _thread module to schedule tasks, and keep track of their
+<span class="target" id="module-task_manager.py"></span><div class="topic">
+<p class="topic-title first">Author</p>
+<p>Michael George</p>
+</div>
+<p>A module for micropython which utilizes the primitive _thread module to schedule tasks, and keep track of their
 exit flag.</p>
-<dl class="docutils">
-<dt>The ProtectedData class should be used by any class that needs to share any data between threads/ other tasks</dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><div class="first last line-block">
-<div class="line">shared_int = ProtectedData(some_integer)</div>
-<div class="line-block">
-<div class="line"># Access in tasks using:</div>
-<div class="line">shared_int.putData(new_int)</div>
-<div class="line">current_shared_int = shared_int.getData()</div>
+<p>The ProtectedData class should be used by any class that needs to share any data between threads/ other tasks</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">shared_int</span> <span class="o">=</span> <span class="n">ProtectedData</span><span class="p">(</span><span class="n">some_integer</span><span class="p">)</span>
+<span class="c1"># Access in tasks using:</span>
+<span class="n">shared_int</span><span class="o">.</span><span class="n">putData</span><span class="p">(</span><span class="n">new_int</span><span class="p">)</span>
+<span class="n">current_shared_int</span> <span class="o">=</span> <span class="n">shared_int</span><span class="o">.</span><span class="n">getData</span><span class="p">()</span>
+</pre></div>
 </div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</dd>
-</dl>
 <p>The Task class should be extended by all classes which are classified as tasks. The task class is a pure virtual task,
 meaning that it only lays out the methods that need to be defined and overriden in order for the Task to be called
 by the task manager. This consists of:</p>
 <blockquote>
-<div><ul>
-<li><p class="first">The constructor</p>
-</li>
-<li><p class="first">The .run() method</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><div class="first last line-block">
-<div class="line">my_task_class(Task):</div>
-<div class="line-block">
-<div class="line">def __init__(self, *args):</div>
-<div class="line-block">
-<div class="line">#: Some unique initialization specific to that task</div>
-</div>
-<div class="line">def run(self):</div>
-<div class="line-block">
-<div class="line">#: The code that will be performed upon each call of the task</div>
-<div class="line">#: DO NOT PLACE ANY BLOCKING CODE HERE OR ANYTHING THAT SLEEPS, THIS CODE MUST</div>
-<div class="line">#: BE INTENDED TO BE USED IN A COOPERATIVE MULTITASKING ENVIRONMENT (YES, EVEN THOUGH</div>
-<div class="line">#: THREADING IS BEING USED). THE TASK MANAGER WILL CONTROL THE TIMING AND SLEEP CALLS.</div>
-</div>
-</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
-</li>
+<div><ul class="simple">
+<li>The constructor</li>
+<li>The .run() method</li>
 </ul>
 </div></blockquote>
+<p>Minimum Extension Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">my_task_class</span><span class="p">(</span><span class="n">Task</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> \<span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="c1"># Some unique initialization specific to that task</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># The code that will be performed upon each call of the task</span>
+        <span class="c1"># DO NOT PLACE ANY BLOCKING CODE HERE OR ANYTHING THAT SLEEPS, THIS CODE MUST</span>
+        <span class="c1"># BE INTENDED TO BE USED IN A COOPERATIVE MULTITASKING ENVIRONMENT (YES, EVEN THOUGH</span>
+        <span class="c1"># THREADING IS BEING USED). THE TASK MANAGER WILL CONTROL THE TIMING AND SLEEP CALLS.</span>
+</pre></div>
+</div>
 <p>The TaskManager class should be used (preferably only one constructed for the project) to manage all of the tasks.
 Most importantly, the TaskManager is in control of the timing of each task, and calls each task&#8217;s .run() method
 It stores exit flags so that tasks can be ended if necessary, as well as keeps track of the amount of calls that a
 task has received. The task manager is also able to kill all tasks if necessary.</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><div class="first last line-block">
-<div class="line">some_task = SomeTaskConstructor(*args)</div>
-<div class="line">my_manager = TaskManager()</div>
-<div class="line">my_manager.addTask(&#8220;Some Task Name&#8221;, some_task, some_task_timing_ms)</div>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">some_task</span> <span class="o">=</span> <span class="n">SomeTaskConstructor</span><span class="p">(</span>\<span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="n">my_manager</span> <span class="o">=</span> <span class="n">TaskManager</span><span class="p">()</span>
+<span class="n">my_manager</span><span class="o">.</span><span class="n">addTask</span><span class="p">(</span><span class="s2">&quot;Some Task Name&quot;</span><span class="p">,</span> <span class="n">some_task</span><span class="p">,</span> <span class="n">some_task_timing_ms</span><span class="p">)</span>
+</pre></div>
 </div>
-</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
 <dl class="class">
 <dt id="task_manager.ProtectedData">
 <em class="property">class </em><code class="descclassname">task_manager.</code><code class="descname">ProtectedData</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData" title="Permalink to this definition">¶</a></dt>

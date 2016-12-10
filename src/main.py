@@ -2,15 +2,19 @@
 ..  module:: main.py
     : platform: Pycom LoPy
     :synopsis: pyCopter - the micropython quadcopter main file
-..  moduleauthor:: Chad Bickel
-..  moduleauthor:: Oscar Ruiz
-..  moduleauthor:: Michael George
+
+..  topic:: Authors
+
+    | Chad Bickel
+    | Oscar Ruiz
+    | Michael George
+
 
 In this file you will find the main code which makes use of the libraries and tasks that we have written to run the
 quadcopter. It is from this file that the all of the task objects are made and the task_manager is ran.
 
-TODO/BUGS:
-**********
+..  topic:: TODO/BUGS
+
     * Speed up implementation by switching many datatypes from dict to array
     * Implement many Enums for cases where dictionaries were being used
     * Speed up ground control socket by popping backwards till all setpoints are good.

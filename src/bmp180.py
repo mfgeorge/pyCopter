@@ -25,17 +25,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
 
-"""
-List of problems that may be occuring:
-    * The writeto_mem function is not working properly
-    * The start sequence is not being sent properly
-    * The read is misinterpretting the number recieved
-"""
+# Handle the case that we are not in micropython for
+# documentation generation
+try:
+    from ustruct import unpack as unp
+    from machine import I2C, Pin
+    import math
+    import time
+except ImportError:
+    import sys
+    import math
+    import time
+    from struct import unpack as unp
+    # Add some dummy libraries
+    sys.path.insert(0, '../dummy_libraries')
+    from dummy_libraries.machine import I2C, Pin
 
-from ustruct import unpack as unp
-from machine import I2C, Pin
-import math
-import time
+
 
 # BMP180 class
 class BMP180:
