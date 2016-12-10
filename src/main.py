@@ -125,7 +125,7 @@ def main():
     last_runs = 0
     try:
         while True:
-            # t = time.ticks_us()
+            t = utime.ticks_ms()
 
             imu_task.run()
 
@@ -151,6 +151,7 @@ def main():
 
             runs += 1
             if runs - last_runs >10:
+                print("Loop time diff: ", utime.ticks_ms() - t, "ms")
                 print(set_point_dict.getData())
                 print(sensor_reading_dict.getData())
                 print("Memory Allocated: ", gc.mem_alloc(),

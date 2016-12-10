@@ -6,10 +6,21 @@
 Welcome to pyCopter's documentation!
 ====================================
 
+The quadcopter that runs on micropython using the Pycom LoPy!
+
 ..  toctree::
     :maxdepth: 2
     :caption: Contents:
 
+task_manager
+************
+
+..  automodule:: task_manager
+    :members:
+    :special-members:
+    :private-members:
+    :inherited-members:
+    :show-inheritance:
 
 Indices and tables
 ==================
@@ -17,8 +28,3 @@ Indices and tables
 *   :ref:`genindex`
 *   :ref:`modindex`
 *   :ref:`search`
-
-Source Code
-===========
-..  automodule:: task_manager
-    :members:

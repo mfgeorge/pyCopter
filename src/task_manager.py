@@ -1,40 +1,46 @@
 """
-task_manager.py
-***************
-Michael George
-11/10/16
+..  module:: task_manager.py
+..  moduleauthor:: Michael George <michaelgeorge180@gmail.com>
 
 A module for micropython which utilizes the primitive _thread module to schedule tasks, and keep track of their
 exit flag.
 
 The ProtectedData class should be used by any class that needs to share any data between threads/ other tasks
-        example: shared_int = ProtectedData(some_integer)
-                Access in tasks using:
-                        shared_int.putData(new_int)
-                        current_shared_int = shared_int.getData()
+        :Example:
+
+                | shared_int = ProtectedData(some_integer)
+                |    # Access in tasks using:
+                |    shared_int.putData(new_int)
+                |    current_shared_int = shared_int.getData()
 
 The Task class should be extended by all classes which are classified as tasks. The task class is a pure virtual task,
 meaning that it only lays out the methods that need to be defined and overriden in order for the Task to be called
 by the task manager. This consists of:
-                    * The constructor
-                    * The .run() method
-        minimum example:: my_task_class(Task):
-                            def __init__(self, *args):
-                                # Some unique initialization specific to that task
-                            def run(self):
-                                # The code that will be performed upon each call of the task
-                                # DO NOT PLACE ANY BLOCKING CODE HERE OR ANYTHING THAT SLEEPS, THIS CODE MUST
-                                # BE INTENDED TO BE USED IN A COOPERATIVE MULTITASKING ENVIRONMENT (YES, EVEN THOUGH
-                                # THREADING IS BEING USED). THE TASK MANAGER WILL CONTROL THE TIMING AND SLEEP CALLS.
+
+    * The constructor
+    * The .run() method
+
+        :Example:
+
+               | my_task_class(Task):
+               |     def __init__(self, \*args):
+               |         #: Some unique initialization specific to that task
+               |     def run(self):
+               |         #: The code that will be performed upon each call of the task
+               |         #: DO NOT PLACE ANY BLOCKING CODE HERE OR ANYTHING THAT SLEEPS, THIS CODE MUST
+               |         #: BE INTENDED TO BE USED IN A COOPERATIVE MULTITASKING ENVIRONMENT (YES, EVEN THOUGH
+               |         #: THREADING IS BEING USED). THE TASK MANAGER WILL CONTROL THE TIMING AND SLEEP CALLS.
 
 The TaskManager class should be used (preferably only one constructed for the project) to manage all of the tasks.
 Most importantly, the TaskManager is in control of the timing of each task, and calls each task's .run() method
 It stores exit flags so that tasks can be ended if necessary, as well as keeps track of the amount of calls that a
 task has received. The task manager is also able to kill all tasks if necessary.
-        example:
-                some_task = SomeTaskConstructor(*args)
-                my_manager = TaskManager()
-                my_manager.addTask("Some Task Name", some_task, some_task_timing_ms)
+
+        :Example:
+
+               | some_task = SomeTaskConstructor(\*args)
+               | my_manager = TaskManager()
+               | my_manager.addTask("Some Task Name", some_task, some_task_timing_ms)
 
 """
 
@@ -49,6 +55,7 @@ class ProtectedData:
     def __init__(self, data):
         """
         Constructor for the ProtectedData class
+
         :param data: The data that needs protecting.
                     Note** That objects will be a reference to the constructed one, while primitive data types
                     will be copies!
@@ -59,7 +66,10 @@ class ProtectedData:
     def getData(self):
         """
         Method to lock protected data and return it's value
+
         :return: the protected data
+        :rtype: obj
+
         """
         with self.lock:
             return self.data
@@ -67,6 +77,7 @@ class ProtectedData:
     def putData(self, new_data):
         """
         Method to lock protected data and reassign it's data
+
         :param new_data: the new data to reassign
         """
         with self.lock:
@@ -77,6 +88,7 @@ class ProtectedData:
     def __getitem__(self, key):
         """
         Gets the item located at key in the dictionary
+
         :param key: the index or key of the item to get
         :return: the item at the specified key
         """
@@ -87,6 +99,7 @@ class ProtectedData:
     def __setitem__(self, key, value):
         """
         Sets the item located at key to the value specified
+
         :param key: the index or key of the item to set
         :param value: the value to set the item to
         :return: self so that object is preserved
@@ -103,6 +116,7 @@ class ProtectedData:
     def __eq__(self, other):
         """
         Test that the other value is equal to the data
+
         :param other: other value to compare with
         :return: boolean if data matches
         """
@@ -111,6 +125,7 @@ class ProtectedData:
     def __iadd__(self, other):
         """
         Perform inline addition on the data present
+
         :param other: the value to add to the existing data
         :return: self so that the object is preserved
         """
@@ -121,6 +136,7 @@ class ProtectedData:
     def __lt__(self, other):
         """
         Perform less than comparison with data
+
         :param other: value to compare data with
         :return: boolean of the comparison
         """
@@ -129,6 +145,7 @@ class ProtectedData:
     def ___le__(self, other):
         """
         Perform less than/ equal to comparison with data
+
         :param other: value to compare data with
         :return: boolean of the comparison
         """
@@ -137,6 +154,7 @@ class ProtectedData:
     def __ne__(self, other):
         """
         Perform not equal comparison with data
+
         :param other: value to compare data with
         :return: boolean of the comparison
         """
@@ -145,6 +163,7 @@ class ProtectedData:
     def __gt__(self, other):
         """
         Perform greater than comparison with data
+
         :param other: value to compare data with
         :return: boolean of the comparison
         """
@@ -153,6 +172,7 @@ class ProtectedData:
     def __ge__(self, other):
         """
         Perform greater than/equal to comparison with data
+
         :param other: value to compare data with
         :return: boolean of the comparison
         """
@@ -195,6 +215,7 @@ class TaskManager:
     def add_new_task(self, task_name, timing, task_object):
         """
         Adds a new Task object to the TaskManager, and starts it's thread.
+
         :param task_name: Name to identify the task with
         :param timing: The timing that the task must run at
         :param task_object: The previously defined task object whose .run() method will be called
@@ -213,6 +234,7 @@ class TaskManager:
         """
         A wrapped callback for the task threads to use which facilitate using the correct exit_flag, incrementing runs,
         and the timing required.
+
         :param task_name: The name to identify the task by
         """
         task = self.thread_dict[task_name][0]
@@ -231,6 +253,7 @@ class TaskManager:
     def get_thread_dict(self):
         """
         A method for getting the thread dictionary that the TaskManager uses
+
         :return: the task manager thread_dict
         """
         return self.thread_dict
@@ -238,6 +261,7 @@ class TaskManager:
     def end_task(self, task_name):
         """
         Ends a specific task as identified by it's task_name
+
         :param task_name: the string name of the task to end
         """
         self.thread_dict[task_name][3].putData(True)
@@ -245,6 +269,7 @@ class TaskManager:
     def get_runs(self, task_name):
         """
         Gets the number of runs that a specific task has ran as identified by it's task_name
+
         :param task_name: the string name of the task whose runs to get
         :return:
         """

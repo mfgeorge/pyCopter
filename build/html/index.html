@@ -8,7 +8,7 @@
     
     <title>Welcome to pyCopter’s documentation! &#8212; pyCopter 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,16 +26,21 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="search" title="Search" href="search.html" /> 
   </head>
   <body role="document">
-  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">pyCopter 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -44,90 +49,286 @@
             
   <div class="section" id="welcome-to-pycopter-s-documentation">
 <h1>Welcome to pyCopter&#8217;s documentation!<a class="headerlink" href="#welcome-to-pycopter-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>The quadcopter that runs on micropython using the Pycom LoPy!</p>
 <div class="toctree-wrapper compound">
 </div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
-</ul>
-</div>
 <div class="section" id="module-task_manager">
-<span id="source-code"></span><h1>Source Code<a class="headerlink" href="#module-task_manager" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="task-manager-py">
-<h2>task_manager.py<a class="headerlink" href="#task-manager-py" title="Permalink to this headline">¶</a></h2>
-<p>Michael George
-11/10/16</p>
-<p>A module for micropython which utilizes the primitive _thread module to schedule tasks, and keep track of their
+<span id="task-manager"></span><h2>task_manager<a class="headerlink" href="#module-task_manager" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-task_manager.py"></span><p>A module for micropython which utilizes the primitive _thread module to schedule tasks, and keep track of their
 exit flag.</p>
 <dl class="docutils">
 <dt>The ProtectedData class should be used by any class that needs to share any data between threads/ other tasks</dt>
-<dd><dl class="first last docutils">
-<dt>example: shared_int = ProtectedData(some_integer)</dt>
-<dd><dl class="first last docutils">
-<dt>Access in tasks using:</dt>
-<dd>shared_int.putData(new_int)
-current_shared_int = shared_int.getData()</dd>
-</dl>
-</dd>
-</dl>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><div class="first last line-block">
+<div class="line">shared_int = ProtectedData(some_integer)</div>
+<div class="line-block">
+<div class="line"># Access in tasks using:</div>
+<div class="line">shared_int.putData(new_int)</div>
+<div class="line">current_shared_int = shared_int.getData()</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
 </dd>
 </dl>
 <p>The Task class should be extended by all classes which are classified as tasks. The task class is a pure virtual task,
 meaning that it only lays out the methods that need to be defined and overriden in order for the Task to be called
 by the task manager. This consists of:</p>
 <blockquote>
-<div><blockquote>
-<div><ul class="simple">
-<li>The constructor</li>
-<li>The .run() method</li>
-</ul>
+<div><ul>
+<li><p class="first">The constructor</p>
+</li>
+<li><p class="first">The .run() method</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><div class="first last line-block">
+<div class="line">my_task_class(Task):</div>
+<div class="line-block">
+<div class="line">def __init__(self, *args):</div>
+<div class="line-block">
+<div class="line">#: Some unique initialization specific to that task</div>
+</div>
+<div class="line">def run(self):</div>
+<div class="line-block">
+<div class="line">#: The code that will be performed upon each call of the task</div>
+<div class="line">#: DO NOT PLACE ANY BLOCKING CODE HERE OR ANYTHING THAT SLEEPS, THIS CODE MUST</div>
+<div class="line">#: BE INTENDED TO BE USED IN A COOPERATIVE MULTITASKING ENVIRONMENT (YES, EVEN THOUGH</div>
+<div class="line">#: THREADING IS BEING USED). THE TASK MANAGER WILL CONTROL THE TIMING AND SLEEP CALLS.</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
 </div></blockquote>
-<dl class="docutils">
-<dt>minimum example:: my_task_class(Task):</dt>
-<dd><dl class="first last docutils">
-<dt>def __init__(self, <a href="#id1"><span class="problematic" id="id2">*</span></a>args):</dt>
-<dd># Some unique initialization specific to that task</dd>
-<dt>def run(self):</dt>
-<dd># The code that will be performed upon each call of the task
-# DO NOT PLACE ANY BLOCKING CODE HERE OR ANYTHING THAT SLEEPS, THIS CODE MUST
-# BE INTENDED TO BE USED IN A COOPERATIVE MULTITASKING ENVIRONMENT (YES, EVEN THOUGH
-# THREADING IS BEING USED). THE TASK MANAGER WILL CONTROL THE TIMING AND SLEEP CALLS.</dd>
-</dl>
-</dd>
-</dl>
+</li>
+</ul>
 </div></blockquote>
 <p>The TaskManager class should be used (preferably only one constructed for the project) to manage all of the tasks.
 Most importantly, the TaskManager is in control of the timing of each task, and calls each task&#8217;s .run() method
 It stores exit flags so that tasks can be ended if necessary, as well as keeps track of the amount of calls that a
 task has received. The task manager is also able to kill all tasks if necessary.</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>example:</dt>
-<dd>some_task = SomeTaskConstructor(<a href="#id3"><span class="problematic" id="id4">*</span></a>args)
-my_manager = TaskManager()
-my_manager.addTask(&#8220;Some Task Name&#8221;, some_task, some_task_timing_ms)</dd>
-</dl>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><div class="first last line-block">
+<div class="line">some_task = SomeTaskConstructor(*args)</div>
+<div class="line">my_manager = TaskManager()</div>
+<div class="line">my_manager.addTask(&#8220;Some Task Name&#8221;, some_task, some_task_timing_ms)</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
 </div></blockquote>
 <dl class="class">
 <dt id="task_manager.ProtectedData">
 <em class="property">class </em><code class="descclassname">task_manager.</code><code class="descname">ProtectedData</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to facilitate thread safe variables of primitive data type.</p>
 <dl class="method">
+<dt id="task_manager.ProtectedData.___le__">
+<code class="descname">___le__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.___le__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform less than/ equal to comparison with data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> &#8211; value to compare data with</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">boolean of the comparison</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.ProtectedData.__eq__">
+<code class="descname">__eq__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.__eq__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that the other value is equal to the data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> &#8211; other value to compare with</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">boolean if data matches</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.ProtectedData.__ge__">
+<code class="descname">__ge__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.__ge__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform greater than/equal to comparison with data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> &#8211; value to compare data with</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">boolean of the comparison</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.ProtectedData.__getitem__">
+<code class="descname">__getitem__</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the item located at key in the dictionary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> &#8211; the index or key of the item to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the item at the specified key</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.ProtectedData.__gt__">
+<code class="descname">__gt__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.__gt__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform greater than comparison with data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> &#8211; value to compare data with</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">boolean of the comparison</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.ProtectedData.__iadd__">
+<code class="descname">__iadd__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.__iadd__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform inline addition on the data present</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> &#8211; the value to add to the existing data</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">self so that the object is preserved</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.ProtectedData.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor for the ProtectedData class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> &#8211; The data that needs protecting.
+Note** That objects will be a reference to the constructed one, while primitive data types
+will be copies!</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.ProtectedData.__lt__">
+<code class="descname">__lt__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.__lt__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform less than comparison with data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> &#8211; value to compare data with</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">boolean of the comparison</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.ProtectedData.__ne__">
+<code class="descname">__ne__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.__ne__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform not equal comparison with data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> &#8211; value to compare data with</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">boolean of the comparison</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="task_manager.ProtectedData.__setitem__">
+<code class="descname">__setitem__</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the item located at key to the value specified</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; the index or key of the item to set</li>
+<li><strong>value</strong> &#8211; the value to set the item to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self so that object is preserved</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="task_manager.ProtectedData.getData">
 <code class="descname">getData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.getData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method to lock protected data and return it&#8217;s value
-:return: the protected data</p>
+<dd><p>Method to lock protected data and return it&#8217;s value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the protected data</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">obj</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="task_manager.ProtectedData.putData">
 <code class="descname">putData</code><span class="sig-paren">(</span><em>new_data</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.ProtectedData.putData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method to lock protected data and reassign it&#8217;s data
-:param new_data: the new data to reassign</p>
+<dd><p>Method to lock protected data and reassign it&#8217;s data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_data</strong> &#8211; the new data to reassign</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -145,32 +346,64 @@ my_manager.addTask(&#8220;Some Task Name&#8221;, some_task, some_task_timing_ms)
 <dl class="method">
 <dt id="task_manager.TaskManager.add_new_task">
 <code class="descname">add_new_task</code><span class="sig-paren">(</span><em>task_name</em>, <em>timing</em>, <em>task_object</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.TaskManager.add_new_task" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a new Task object to the TaskManager, and starts it&#8217;s thread.
-:param task_name: Name to identify the task with
-:param timing: The timing that the task must run at
-:param task_object: The previously defined task object whose .run() method will be called</p>
+<dd><p>Adds a new Task object to the TaskManager, and starts it&#8217;s thread.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>task_name</strong> &#8211; Name to identify the task with</li>
+<li><strong>timing</strong> &#8211; The timing that the task must run at</li>
+<li><strong>task_object</strong> &#8211; The previously defined task object whose .run() method will be called</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="task_manager.TaskManager.end_task">
 <code class="descname">end_task</code><span class="sig-paren">(</span><em>task_name</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.TaskManager.end_task" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ends a specific task as identified by it&#8217;s task_name
-:param task_name: the string name of the task to end</p>
+<dd><p>Ends a specific task as identified by it&#8217;s task_name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_name</strong> &#8211; the string name of the task to end</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="task_manager.TaskManager.get_runs">
 <code class="descname">get_runs</code><span class="sig-paren">(</span><em>task_name</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.TaskManager.get_runs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the number of runs that a specific task has ran as identified by it&#8217;s task_name
-:param task_name: the string name of the task whose runs to get
-:return:</p>
+<dd><p>Gets the number of runs that a specific task has ran as identified by it&#8217;s task_name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_name</strong> &#8211; the string name of the task whose runs to get</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="task_manager.TaskManager.get_thread_dict">
 <code class="descname">get_thread_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.TaskManager.get_thread_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>A method for getting the thread dictionary that the TaskManager uses
-:return: the task manager thread_dict</p>
+<dd><p>A method for getting the thread dictionary that the TaskManager uses</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the task manager thread_dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -183,13 +416,28 @@ my_manager.addTask(&#8220;Some Task Name&#8221;, some_task, some_task_timing_ms)
 <dt id="task_manager.TaskManager.wrapped_callback">
 <code class="descname">wrapped_callback</code><span class="sig-paren">(</span><em>task_name</em><span class="sig-paren">)</span><a class="headerlink" href="#task_manager.TaskManager.wrapped_callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapped callback for the task threads to use which facilitate using the correct exit_flag, incrementing runs,
-and the timing required.
-:param task_name: The name to identify the task by</p>
+and the timing required.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_name</strong> &#8211; The name to identify the task by</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
 
 </div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
 </div>
 
 
@@ -200,20 +448,13 @@ and the timing required.
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to pyCopter&#8217;s documentation!</a></li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
-<li><a class="reference internal" href="#module-task_manager">Source Code</a><ul>
-<li><a class="reference internal" href="#task-manager-py">task_manager.py</a></li>
+<li><a class="reference internal" href="#">Welcome to pyCopter&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#module-task_manager">task_manager</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="#">Documentation overview</a><ul>
-  </ul></li>
-</ul>
-</div>
+
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -235,20 +476,21 @@ and the timing required.
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2016, Chad Bickle, Oscar Ruiz, Michael George.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
-      
-      |
-      <a href="_sources/index.rst.txt"
-          rel="nofollow">Page source</a>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">pyCopter 0.1 documentation</a> &#187;</li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Chad Bickle, Oscar Ruiz, Michael George.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
+    </div>
   </body>
 </html>

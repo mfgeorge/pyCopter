@@ -1,6 +1,7 @@
 #!/bin/python
 import pyb
 import time
+import utime
 """
 Miscillaneous file for classes that help get things done.
 """
@@ -97,6 +98,12 @@ class TimerHelper:
     timer_avail = {}
 
     def get_timer(self, pin, index=0):
+        """
+
+        :param pin:
+        :param index:
+        :return:
+        """
         try:
             timer_number = TimerHelper.timer_dict[str(pin)][index]
             timer_channel_number = TimerHelper.channel_dict[str(pin)][index]
@@ -110,9 +117,9 @@ class TimerHelper:
 def timed_function(f, *args, **kwargs):
     myname = str(f).split(' ')[1]
     def new_func(*args, **kwargs):
-        t = time.ticks_us()
+        t = utime.ticks_ms()
         result = f(*args, **kwargs)
-        delta = time.ticks_diff(t, time.ticks_us())
-        print('Function {} Time = {:6.3f}ms'.format(myname, delta/1000))
+        delta = utime.ticks_ms() - t
+        print('Function {} Time = {:6.3f}ms'.format(myname, delta))
         return result
     return new_func
