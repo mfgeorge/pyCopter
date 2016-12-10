@@ -1,0 +1,7 @@
+bmp180 module
+=============
+
+.. automodule:: bmp180
+    :members:
+    :undoc-members:
+    :show-inheritance:
