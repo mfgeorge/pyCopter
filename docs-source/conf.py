@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# pyCopter documentation build configuration file, created by
+# pyCopter documentation docs-build configuration file, created by
 # sphinx-quickstart on Wed Dec  7 17:37:34 2016.
 #
 # This file is execfile()d with the current directory set to its

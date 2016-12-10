@@ -1,42 +1,43 @@
 """
-main.py
-*******
-pyCopter - the micropython quadcopter main file
-Chad Bickel
-Oscar Ruiz
-Michael George
+..  module:: main.py
+    : platform: Pycom LoPy
+    :synopsis: pyCopter - the micropython quadcopter main file
+..  moduleauthor:: Chad Bickel
+..  moduleauthor:: Oscar Ruiz
+..  moduleauthor:: Michael George
 
 In this file you will find the main code which makes use of the libraries and tasks that we have written to run the
 quadcopter. It is from this file that the all of the task objects are made and the task_manager is ran.
 
-TODO:
-=====
-    * Test the new task scheme with while loop
-    * Test the new task scheme using task_manager
-    * Implement a bmp180 task/ or add to imu_task? see task diagram
-    * Implement a GPS sensor query task 
-        -> add the GPS sensor queries as inputs to the PID task
-    * Implement a ground control task
+TODO/BUGS:
+**********
+    * Speed up implementation by switching many datatypes from dict to array
+    * Implement many Enums for cases where dictionaries were being used
+    * Speed up ground control socket by popping backwards till all setpoints are good.
 
 """
 
 # All of the required libraries:
-import micropython
-# from pyb import Servo, millis#, I2C  # ****** To change as we port to the LoPy
-from machine import I2C,PWM,Pin
-from servo_lib import Servo
-from motor_control_task import MotorControlTask
-from BNO055_lib import BNO055
-import time
-# from rfComm import SpektrumController, ServoPulse
-from pid_controller_task import PIDControlTask
-from imu_task import IMUTask
-import sys
-import json
-from bmp180 import BMP180
-from task_manager import TaskManager, ProtectedData
-from ground_control import GroundControlSocketTask
-import gc
+try:
+    import micropython
+    # from pyb import Servo, millis#, I2C  # ****** To change as we port to the LoPy
+    from machine import I2C,PWM,Pin
+    from servo_lib import Servo
+    from motor_control_task import MotorControlTask
+    from BNO055_lib import BNO055
+    import time
+    # from rfComm import SpektrumController, ServoPulse
+    from pid_controller_task import PIDControlTask
+    from imu_task import IMUTask
+    import sys
+    import json
+    from bmp180 import BMP180
+    from task_manager import TaskManager, ProtectedData
+    from ground_control import GroundControlSocketTask
+    import gc
+except ImportError:
+    print("ImportError: Are you in uPy? ")
+    pass
 
 
 # Set debugging to true for a lot of printing and waiting for input
@@ -50,6 +51,7 @@ def load_config_file(config_file):
     """
     A function to load a .json configuration file, parse the json entries, and return a python
     dictionary with all of the .json entries.
+
     :param config_file: String, the path to the config file to open
     :return: The config dictionary parsed from the .json file
     """

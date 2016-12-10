@@ -1,3 +1,10 @@
+"""
+..  module:: mtk_gps_driver
+..  moduleauthor:: Michael George <michaelgeorge180@gmail.com>
+
+
+"""
+
 from micropyGPS.micropyGPS import MicropyGPS
 from MTK_commands import mtk
 

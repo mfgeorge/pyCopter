@@ -1,5 +1,8 @@
 """
 ..  module:: task_manager.py
+    :platform: Pycom LoPy
+    :synopsis: A module for performing task management and facilitating inter-task communication
+
 ..  moduleauthor:: Michael George <michaelgeorge180@gmail.com>
 
 A module for micropython which utilizes the primitive _thread module to schedule tasks, and keep track of their
