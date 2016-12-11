@@ -1,12 +1,34 @@
-import machine
-import network
-import time
-import utime
-import os
-from network import WLAN
-from network import Server
-from servo_lib import Servo
-import pycom
+"""
+..  module:: boot.py
+    :platform: Pycom LoPy
+    :synopsis: The boot file for LoPy.
+
+..  topic:: Author
+
+    | Michael George
+    | With some modified code from: https://forum.pycom.io/topic/104/boot-py-wifi-script
+
+Boot.py contains the code executed upon startup/reset of the LoPy.
+"""
+# Handle the case where we aren't in micropython for documentation
+# generation
+try:
+    import machine
+    import time
+    import utime
+    import os
+    from network import WLAN
+    from network import Server
+    from servo_lib import Servo
+except ImportError:
+    import sys
+    import os
+    from servo_lib import Servo
+    # Add some dummy libraries
+    sys.path.insert(0, '../dummy_libraries')
+    from dummy_libraries import machine, utime
+    from dummy_libraries.network import WLAN, Server
+
 
 known_nets = {
     # SSID : PSK (passphrase)
@@ -16,7 +38,13 @@ known_nets = {
 
 # Do not change these two lines- This allows uart to gain a REPL prompt
 uart = machine.UART(0, 115200)
-os.dupterm(uart)
+
+# Output the terminal to serial port
+try:
+    os.dupterm(uart)
+except:
+    # Handle case of running in normal python
+    pass
 
 custom_ssid = 'pyCopter Dev 1'
 custom_auth = (WLAN.WPA2, 'calpoly123')

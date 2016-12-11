@@ -1,18 +1,59 @@
 #!/usr/bin/python3
 """
-ground_control.py
+..  module: ground_control
+    :platform: Pycom LoPy
+    :synopsis: Contains the task for ground control communication via Wifi sockets
+
+..  topic: Authors
+
+    | Michael George
+    | Oscar Ruiz
 
 Module for hosting connections to ground control on the LoPy
+The scheme for incoming commands to be parsed is as follows::
+
+    incoming = b'p_val1;r_val2;y_val3;t_val4'
+
+where incoming is then parsed and the letters *p, r, y, and t* indicate
+to stick the *val* that follows into the pitch, roll, yaw, or thrust
+set-point respectively. Commands can also be added dynamically during
+run-time or start up using the
+:func:`~ground_control.GroundControlSocketTask.add_command` method.
+
+
 """
 import socket
-from network import WLAN
 import time
 import task_manager
 import sys
 
+# Handle the case where we aren't in micropython for documentation
+# generation
+try:
+    from network import WLAN
+except ImportError:
+    import sys
+    # Add some dummy libraries
+    sys.path.insert(0, '../dummy_libraries')
+    from dummy_libraries.network import WLAN
+
 
 class GroundControlSocketTask(task_manager.Task):
+    """
+    Class for hosting a server socket and communicating to
+    a ground control client socket
+
+    :param shared_setpoint_dict: Dictionary to put received set-points in
+    :param setpoint_map: Map of command letters to keys of setpoint_dict
+
+    """
     def __init__(self, shared_setpoint_dict, setpoint_map):
+        """
+        Constructor for the Ground Control Task
+
+        :param shared_setpoint_dict: Dictionary to put received set-points in
+        :param setpoint_map: Map of command letters to keys of setpoint_dict
+        """
 
         # make sure that the setpoint dict is a ProtectedData object
         assert type(shared_setpoint_dict) == task_manager.ProtectedData
@@ -32,10 +73,13 @@ class GroundControlSocketTask(task_manager.Task):
         self.last_time = time.ticks_ms()
 
     def run(self):
+        """
+        Function called by the task manager repeatedly for this task
+        to run.
+        """
         try:
 
-                self.command_string_in = self.clientsocket.recv(1024)
-                # self.now = time.ticks_ms()
+                self.command_string_in = self.clientsocket.recv(200)               # self.now = time.ticks_ms()
                 # print("time difference: " + str(self.now-self.last_time))
                 # self.last_time = now
                 self.parse_command_string()
@@ -50,7 +94,6 @@ class GroundControlSocketTask(task_manager.Task):
     def open_socket(self):
         """
         open a socket connection with ground control
-        :return: Nothing
         """
         # create a socket object
         self.serversocket = socket.socket(
@@ -86,6 +129,10 @@ class GroundControlSocketTask(task_manager.Task):
         self.clientsocket.send(msg.encode('ascii'))
 
     def close_socket(self):
+        """
+        Close the socket that was opened with ground control as well
+        as the server socket
+        """
         self.clientsocket.close()
         self.serversocket.close()
 
@@ -94,8 +141,6 @@ class GroundControlSocketTask(task_manager.Task):
         method for parsing the command string received from ground control
         the in_command_dict will be filled by this method, where the keys are
         the command letter, and the value is the argument for the command letter
-
-        :return: Nothing
         """
         # convert the command string from a byte string to a normal
         # one so that string operations can be performed on it
@@ -125,11 +170,14 @@ class GroundControlSocketTask(task_manager.Task):
 
     def add_command(self, command_letter, command_callback):
         """
-        method for adding a command to the command_dict so that
+        Method for adding a command to the command_dict so that
         a received command letter has a callback it is mapped to.
+
         :param command_letter: the command letter that will be received from ground control
         :param command_callback: the callback associated with the letter
-        :return: Nothing
+
+        ..  warning:: *command_callback* needs to take exactly one parameter
+            to work with the parsing scheme.
         """
 
         # Check that the command letter is not already in the command_dict
@@ -143,9 +191,8 @@ class GroundControlSocketTask(task_manager.Task):
 
     def store_basic_setpoints(self):
         """
-        method to use for quickly storing the basic setpoints needed
+        method to use for quickly storing the basic set-points needed
         to fly the drone
-        :return: Nothing
         """
 
         # iterate through all of the command letters received
@@ -160,7 +207,6 @@ class GroundControlSocketTask(task_manager.Task):
         """
         method to use for calling the other command callbacks that
         were added
-        :return: Nothing
         """
 
         # check that there are items still left in the in_command_dict

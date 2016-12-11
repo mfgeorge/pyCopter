@@ -1,5 +1,11 @@
-from machine import I2C
-import utime
+
+try:
+    import utime
+except ImportError:
+    import sys
+    # Add some dummy libraries
+    sys.path.insert(0, '../dummy_libraries')
+    from dummy_libraries import utime
 
 # I2C addresses
 BNO055_ADDRESS_A                     = 0x28

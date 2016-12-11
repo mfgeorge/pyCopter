@@ -1,5 +1,12 @@
-from machine import PWM
-import time
+
+try:
+    from machine import PWM
+    import time
+except ImportError:
+    import sys
+    # Add some dummy libraries
+    sys.path.insert(0, '../dummy_libraries')
+    from dummy_libraries.machine import PWM
 
 class Servo:
     '''

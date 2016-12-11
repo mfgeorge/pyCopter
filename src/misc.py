@@ -1,17 +1,25 @@
 #!/bin/python
-import pyb
-import time
 """
 Miscillaneous file for classes that help get things done.
 """
 
+# Handle the case where we aren't in micropython for documentation
+# generation
+try:
+    import pyb
+    import utime
+except ImportError:
+    import sys
+    # Add some dummy libraries
+    sys.path.insert(0, '../dummy_libraries')
+    from dummy_libraries import utime, pyb
+
 class TimerHelper:
     'A simple class for helping pick timers and channels based upon pin number'
-    """
-    timer_dict: class varible for storing all the possible timer selections based upon pin
-    due to it being a class varible, this dictionary is only created once upon the first
-    instantiation of this class.
-    """
+
+    #: class varible for storing all the possible timer selections based upon pin
+    #: due to it being a class varible, this dictionary is only created once upon the first
+    #: instantiation of this class.
     timer_dict = {}
     timer_dict[str(pyb.Pin.board.Y1)] = (8)
     timer_dict[str(pyb.Pin.board.Y2)] = (8)
@@ -50,11 +58,10 @@ class TimerHelper:
     # timer_dict[str(pyb.Pin.board.P4)] = None
     # timer_dict[str(pyb.Pin.board.P5)] = None
 
-    """
-    channel_dict: class varible for storing all the possible channel selections based upon pin
-    due to it being a class varible, this dictionary is only created once upon the first
-    instantiation of this class.
-    """
+
+    #: class varible for storing all the possible channel selections based upon pin
+    #: due to it being a class varible, this dictionary is only created once upon the first
+    #: instantiation of this class.
     channel_dict = {}
     channel_dict[str(pyb.Pin.board.Y1)] = (1)
     channel_dict[str(pyb.Pin.board.Y2)] = (2)
@@ -93,10 +100,18 @@ class TimerHelper:
     # channel_dict[str(pyb.Pin.board.P4)] = None
     # channel_dict[str(pyb.Pin.board.P5)] = None
 
-    # A dictionary to keep track of the timers that are available?
+    #: A dictionary to keep track of the timers that are available
     timer_avail = {}
 
     def get_timer(self, pin, index=0):
+        """
+        A method to get a timer connected to a pin.
+
+        :param pin: Pin that timer should be connected to
+        :param index: the index of the timer on that pin (for the
+            case of multiple timers connected to one pin).
+        :return: The timer number and channel associated with that pin.
+        """
         try:
             timer_number = TimerHelper.timer_dict[str(pin)][index]
             timer_channel_number = TimerHelper.channel_dict[str(pin)][index]
@@ -108,11 +123,15 @@ class TimerHelper:
 
 
 def timed_function(f, *args, **kwargs):
+    """
+    Obtained from the micropython documentation.
+    A function decorator which will time the function that was decorated.
+    """
     myname = str(f).split(' ')[1]
     def new_func(*args, **kwargs):
-        t = time.ticks_us()
+        t = utime.ticks_ms()
         result = f(*args, **kwargs)
-        delta = time.ticks_diff(t, time.ticks_us())
-        print('Function {} Time = {:6.3f}ms'.format(myname, delta/1000))
+        delta = utime.ticks_ms() - t
+        print('Function {} Time = {:6.3f}ms'.format(myname, delta))
         return result
     return new_func

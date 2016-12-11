@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mtk_gps_driver module &#8212; pyCopter 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pid_controller_task module" href="pid_controller_task.html" />
+    <link rel="prev" title="motor_control_task module" href="motor_control_task.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pid_controller_task.html" title="pid_controller_task module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="motor_control_task.html" title="motor_control_task module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pyCopter 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">src</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-mtk_gps_driver">
+<span id="mtk-gps-driver-module"></span><h1>mtk_gps_driver module<a class="headerlink" href="#module-mtk_gps_driver" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-mtk_gps_driver"></span><div class="topic">
+<p class="topic-title first">Author</p>
+<p>Michael George</p>
+</div>
+<p>A module for housing the MTKGPS driver which will obtain readings from the
+GPS and implement function calls for retrieving the most up to date version
+of those readings.</p>
+<dl class="class">
+<dt id="mtk_gps_driver.MTKGPS">
+<em class="property">class </em><code class="descclassname">mtk_gps_driver.</code><code class="descname">MTKGPS</code><span class="sig-paren">(</span><em>uart_object</em><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Task for the adafruit ultimate gps featherWing module. This class is instantiated with a UART object that is
+configured for the correct UART bus that the GPS is connected to. It wraps the implementation of MtkCommandRx so
+that it supplies characters to this class, letting the class perform the error checking and sentence generation.
+Subsequently, this class will utilize microPyGPS to interpret the sentence and return position data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uart_object</strong> &#8211; a pre-initialized uart bus object at 9600 baudrate,
+No parity, no stop bit.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mtk_gps_driver.MTKGPS.check_command_success">
+<code class="descname">check_command_success</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.check_command_success" title="Permalink to this definition">¶</a></dt>
+<dd><p>To be ran after a command is sent to the MTK board to indicate success</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True for success, False if Timeout reached</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mtk_gps_driver.MTKGPS.get_altitude">
+<code class="descname">get_altitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.get_altitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the altitude based upon the GPS satellite triangulation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">altitude in meters</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mtk_gps_driver.MTKGPS.get_fix">
+<code class="descname">get_fix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.get_fix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reports whether or not the GPS has obtained a fix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">number of satellites the GPS has a fix on</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mtk_gps_driver.MTKGPS.get_heading">
+<code class="descname">get_heading</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.get_heading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting the heading according to the GPS.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Heading direction in degrees</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mtk_gps_driver.MTKGPS.get_latitude">
+<code class="descname">get_latitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.get_latitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for obtaining the latitude position of the GPS</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Latitude GPS position</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mtk_gps_driver.MTKGPS.get_longitude">
+<code class="descname">get_longitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.get_longitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for obtaining the longitude position of the GPS</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Longitude GPS position</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mtk_gps_driver.MTKGPS.get_next_sentence_char">
+<code class="descname">get_next_sentence_char</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.get_next_sentence_char" title="Permalink to this definition">¶</a></dt>
+<dd><p>gets the next character from the uart bus and updates the interpretter
+with it.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="motor_control_task.html"
+                        title="previous chapter">motor_control_task module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pid_controller_task.html"
+                        title="next chapter">pid_controller_task module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mtk_gps_driver.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pid_controller_task.html" title="pid_controller_task module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="motor_control_task.html" title="motor_control_task module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pyCopter 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >src</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Chad Bickle, Oscar Ruiz, Michael George.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
+    </div>
+  </body>
+</html>

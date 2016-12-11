@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bmp180 module &#8212; pyCopter 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="boot module" href="boot.html" />
+    <link rel="prev" title="BNO055_lib module" href="BNO055_lib.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="boot.html" title="boot module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="BNO055_lib.html" title="BNO055_lib module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pyCopter 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">src</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bmp180">
+<span id="bmp180-module"></span><h1>bmp180 module<a class="headerlink" href="#module-bmp180" title="Permalink to this headline">¶</a></h1>
+<p>bmp180 is a micropython module for the Bosch BMP180 sensor. It measures
+temperature as well as pressure, with a high enough resolution to calculate
+altitude.
+Breakoutboard: <a class="reference external" href="http://www.adafruit.com/products/1603">http://www.adafruit.com/products/1603</a>  
+data-sheet: <a class="reference external" href="http://ae-bst.resource.bosch.com/media/products/dokumente/">http://ae-bst.resource.bosch.com/media/products/dokumente/</a>
+bmp180/BST-BMP180-DS000-09.pdf</p>
+<p>The MIT License (MIT)
+Copyright (c) 2014 Sebastian Plamauer, <a class="reference external" href="mailto:oeplse&#37;&#52;&#48;gmail&#46;com">oeplse<span>&#64;</span>gmail<span>&#46;</span>com</a>
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &#8220;Software&#8221;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED &#8220;AS IS&#8221;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+<dl class="class">
+<dt id="bmp180.BMP180">
+<em class="property">class </em><code class="descclassname">bmp180.</code><code class="descname">BMP180</code><span class="sig-paren">(</span><em>i2c_bus</em><span class="sig-paren">)</span><a class="headerlink" href="#bmp180.BMP180" title="Permalink to this definition">¶</a></dt>
+<dd><p>Module for the BMP180 pressure sensor.</p>
+<dl class="attribute">
+<dt id="bmp180.BMP180.altitude">
+<code class="descname">altitude</code><a class="headerlink" href="#bmp180.BMP180.altitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Altitude in m.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bmp180.BMP180.blocking_read">
+<code class="descname">blocking_read</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmp180.BMP180.blocking_read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bmp180.BMP180.compvaldump">
+<code class="descname">compvaldump</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmp180.BMP180.compvaldump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all compensation values</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bmp180.BMP180.makegauge">
+<code class="descname">makegauge</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmp180.BMP180.makegauge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator refreshing the raw measurments.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bmp180.BMP180.oversample_sett">
+<code class="descname">oversample_sett</code><a class="headerlink" href="#bmp180.BMP180.oversample_sett" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bmp180.BMP180.pressure">
+<code class="descname">pressure</code><a class="headerlink" href="#bmp180.BMP180.pressure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pressure in mbar.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bmp180.BMP180.temperature">
+<code class="descname">temperature</code><a class="headerlink" href="#bmp180.BMP180.temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Temperature in degree C.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="BNO055_lib.html"
+                        title="previous chapter">BNO055_lib module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="boot.html"
+                        title="next chapter">boot module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/bmp180.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="boot.html" title="boot module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="BNO055_lib.html" title="BNO055_lib module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pyCopter 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >src</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Chad Bickle, Oscar Ruiz, Michael George.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.
+    </div>
+  </body>
+</html>
