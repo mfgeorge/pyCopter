@@ -1,4 +1,16 @@
 #!/bin/python
+"""
+..  module: rfComm
+    :platform: micropython boards
+    :synopsis: Module for an RF controller to control the quadcopter
+
+..  topic:: Author
+
+    Michael George
+
+Module for containing the code necessary to communicate with an RF controller
+receiver, such as the Spektrum DX 6.
+"""
 
 # Handle the case where we aren't in micropython for documentation
 # generation

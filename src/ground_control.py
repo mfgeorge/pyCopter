@@ -4,7 +4,7 @@
     :platform: Pycom LoPy
     :synopsis: Contains the task for ground control communication via Wifi sockets
 
-..  topic: Authors
+..  topic:: Authors
 
     | Michael George
     | Oscar Ruiz

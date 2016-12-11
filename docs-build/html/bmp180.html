@@ -58,15 +58,23 @@
             
   <div class="section" id="module-bmp180">
 <span id="bmp180-module"></span><h1>bmp180 module<a class="headerlink" href="#module-bmp180" title="Permalink to this headline">¶</a></h1>
+<div class="topic">
+<p class="topic-title first">Author</p>
+<p>Sebastian Plamauer</p>
+</div>
 <p>bmp180 is a micropython module for the Bosch BMP180 sensor. It measures
 temperature as well as pressure, with a high enough resolution to calculate
-altitude.
-Breakoutboard: <a class="reference external" href="http://www.adafruit.com/products/1603">http://www.adafruit.com/products/1603</a>  
-data-sheet: <a class="reference external" href="http://ae-bst.resource.bosch.com/media/products/dokumente/">http://ae-bst.resource.bosch.com/media/products/dokumente/</a>
-bmp180/BST-BMP180-DS000-09.pdf</p>
-<p>The MIT License (MIT)
-Copyright (c) 2014 Sebastian Plamauer, <a class="reference external" href="mailto:oeplse&#37;&#52;&#48;gmail&#46;com">oeplse<span>&#64;</span>gmail<span>&#46;</span>com</a>
-Permission is hereby granted, free of charge, to any person obtaining a copy
+altitude.</p>
+<div class="line-block">
+<div class="line">Breakoutboard: <a class="reference external" href="http://www.adafruit.com/products/1603">http://www.adafruit.com/products/1603</a></div>
+<div class="line">data-sheet: <a class="reference external" href="http://ae-bst.resource.bosch.com/media/products/dokumente/">http://ae-bst.resource.bosch.com/media/products/dokumente/</a></div>
+<div class="line">bmp180/BST-BMP180-DS000-09.pdf</div>
+</div>
+<div class="line-block">
+<div class="line">The MIT License (MIT)</div>
+<div class="line">Copyright (c) 2014 Sebastian Plamauer, <a class="reference external" href="mailto:oeplse&#37;&#52;&#48;gmail&#46;com">oeplse<span>&#64;</span>gmail<span>&#46;</span>com</a></div>
+</div>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &#8220;Software&#8221;), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
@@ -88,41 +96,83 @@ THE SOFTWARE.</p>
 <dl class="attribute">
 <dt id="bmp180.BMP180.altitude">
 <code class="descname">altitude</code><a class="headerlink" href="#bmp180.BMP180.altitude" title="Permalink to this definition">¶</a></dt>
-<dd><p>Altitude in m.</p>
+<dd><p>Method that takes the pressure value and baseline value to calculate altitude.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The altitude in meters</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="bmp180.BMP180.blocking_read">
 <code class="descname">blocking_read</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmp180.BMP180.blocking_read" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Method to iterate through the guage until all new data is present.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="bmp180.BMP180.compvaldump">
 <code class="descname">compvaldump</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmp180.BMP180.compvaldump" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a list of all compensation values</p>
+<dd><p>A method to return a list of all compensation values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of all compensation values</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="bmp180.BMP180.makegauge">
 <code class="descname">makegauge</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bmp180.BMP180.makegauge" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generator refreshing the raw measurments.</p>
+<dd><p>Method to refresh the raw measurements</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="bmp180.BMP180.oversample_sett">
 <code class="descname">oversample_sett</code><a class="headerlink" href="#bmp180.BMP180.oversample_sett" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set how accurate the bmp180 sensor is.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The oversample_setting member data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="bmp180.BMP180.pressure">
 <code class="descname">pressure</code><a class="headerlink" href="#bmp180.BMP180.pressure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pressure in mbar.</p>
+<dd><p>Method to read pressure in Pascals</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The pressure in Pascals.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="bmp180.BMP180.temperature">
 <code class="descname">temperature</code><a class="headerlink" href="#bmp180.BMP180.temperature" title="Permalink to this definition">¶</a></dt>
-<dd><p>Temperature in degree C.</p>
+<dd><p>Method to read Temperature in degree C.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The Temperature in degrees Celsius.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
