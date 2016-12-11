@@ -1,13 +1,23 @@
 '''
+..  module: bmp180
+    :platform: micropython board
+    :synopsis: Library for bmp180 pressure sensor
+
+..  topic:: Author
+
+    Sebastian Plamauer
+
 bmp180 is a micropython module for the Bosch BMP180 sensor. It measures
 temperature as well as pressure, with a high enough resolution to calculate
 altitude.
-Breakoutboard: http://www.adafruit.com/products/1603  
-data-sheet: http://ae-bst.resource.bosch.com/media/products/dokumente/
-bmp180/BST-BMP180-DS000-09.pdf
 
-The MIT License (MIT)
-Copyright (c) 2014 Sebastian Plamauer, oeplse@gmail.com
+| Breakoutboard: http://www.adafruit.com/products/1603
+| data-sheet: http://ae-bst.resource.bosch.com/media/products/dokumente/
+| bmp180/BST-BMP180-DS000-09.pdf
+
+| The MIT License (MIT)
+| Copyright (c) 2014 Sebastian Plamauer, oeplse@gmail.com
+
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -24,12 +34,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
-
-from ustruct import unpack as unp
-from machine import I2C, Pin
-import math
-import time
-
 # Handle the case that we are not in micropython for
 # documentation generation
 try:
@@ -54,13 +58,14 @@ class BMP180:
     '''
     Module for the BMP180 pressure sensor.
     '''
-    # address of BMP180 is hardcoded on the sensor
+    #: address of BMP180 is hardcoded on the sensor
     _bmp_addr = 119
 
     # init
     def __init__(self, i2c_bus):
         '''
         Constructor for BMP180 class.
+
         :param i2c_bus: Specifies the i2c bus on the microcontroller
         '''
         # create i2c obect
@@ -106,6 +111,7 @@ class BMP180:
 
         '''
         A method to return a list of all compensation values
+
         :return: A list of all compensation values
         '''
 
@@ -148,7 +154,7 @@ class BMP180:
     def blocking_read(self):
 
         """
-        Method to discard old data.
+        Method to iterate through the guage until all new data is present.
         """
         if next(self.gauge) is not None: # Discard old data
             print("Old Data Discarded")
@@ -160,10 +166,20 @@ class BMP180:
 
     @property
     def oversample_sett(self):
+        """
+        Set how accurate the bmp180 sensor is.
+
+        :return: The oversample_setting member data
+        """
         return self.oversample_setting
 
     @oversample_sett.setter
     def oversample_sett(self, value):
+        """
+        The setter for the oversample method. 0 is fastest 3 is most accurate.
+
+        :param value: The new oversample value to set between 0 and 3.
+        """
         if value in range(4):
             self.oversample_setting = value
         else:
@@ -175,6 +191,7 @@ class BMP180:
 
         '''
         Method to read Temperature in degree C.
+
         :return: The Temperature in degrees Celsius.
         '''
 
@@ -193,6 +210,7 @@ class BMP180:
 
         '''
         Method to read pressure in Pascals
+
         :return: The pressure in Pascals.
         '''
 
@@ -233,6 +251,7 @@ class BMP180:
 
         '''
         Method that takes the pressure value and baseline value to calculate altitude.
+
         :return: The altitude in meters
         '''
 

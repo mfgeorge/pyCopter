@@ -1,6 +1,14 @@
 #!/bin/python
 """
-Miscillaneous file for classes that help get things done.
+..  module: misc
+    :platform: Micropython boards
+    :synopsis: Module for holding miscellaneous helpful functions
+
+..  topic:: Author
+
+    | Michael George
+
+Miscellaneous file for classes that help get things done.
 """
 
 # Handle the case where we aren't in micropython for documentation

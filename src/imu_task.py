@@ -3,7 +3,7 @@
     :platform: Pycom LoPy
     :synopsis: Task for gaining imu data
 
-..  topic: Authors
+..  topic:: Authors
 
     | Michael George
     | Chad Bickel
