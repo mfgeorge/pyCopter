@@ -20,6 +20,8 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('.') + '/src')
 sys.path.insert(0, 'src')
+sys.path.insert(0, os.path.abspath('.') + '/test/ps-controller')
+sys.path.insert(0, 'test/ps-controller')
 
 # -- General configuration ------------------------------------------------
 
@@ -155,8 +157,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'pyCopter', u'pyCopter Documentation',
-     author, 'pyCopter', 'One line description of project.',
-     'Miscellaneous'),
+     author, 'pyCopter', 'A quadcopter control firmware written in micropython'),
 ]
 
 

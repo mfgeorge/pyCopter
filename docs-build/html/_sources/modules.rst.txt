@@ -17,3 +17,4 @@ src
    rfComm
    servo_lib
    task_manager
+   ps_socket
