@@ -1,4 +1,24 @@
+"""
+..  module:: BNO055_lib.py
+    :platform: Pycom LoPy
+    :synopsis: A module for gathering data for the BNO055 Absolute Orientation Sensor
 
+..  topic:: Authors
+
+    | Chad Bickel
+    | Michael George
+
+A module for micropython which uses UART to read orientation data from the BNO055 Absolute Orientation Sensor.
+
+The BNO055 class should be used to control and read data from every BNO055 attached to a UART bus.
+
+Example::
+
+    UART_bus = machine.UART(1,115200)
+    IMU = BNO055(UART_bus)
+    pitch = IMU.get_pitch()
+
+"""
 try:
     import utime
 except ImportError:
@@ -187,6 +207,9 @@ OPERATION_MODE_NDOF_FMC_OFF          = 0X0B
 OPERATION_MODE_NDOF                  = 0X0C
 
 class BNO055:
+    """
+    Class to control and read data from a single BNO055 sensor.
+    """
     command_response_dict = {0x01: "WRITE_SUCCESS",
                             0x03: "WRITE_FAIL",
                             0x04: "REGMAP_INVALID_ADDRESS",
@@ -207,6 +230,11 @@ class BNO055:
                             0x0A: "RECEIVE_CHARACTER_TIMEOUT"}
 
     def __init__(self, uart_bus):
+        """
+        Constructor for BNO055 class.
+
+        :param uart_bus: The UART bus that the BNO055 is wired to. Created from machine.UART
+        """
         self.uart = uart_bus
         self.uart.init(baudrate = 115200, parity= None, stop=1)
 
@@ -229,6 +257,14 @@ class BNO055:
         self.last_yaw_rate = self.get_yaw_rate()
 
     def write_register(self, register_adr, data):
+        """
+        Method to send bytes to a specific register on the BNO055
+
+        :param register_adr: The address of the register to send data to.
+        :param data: The bytes to send to the register.
+        :return: Write Success
+        :rtype: bool
+        """
         write_success = False
         tries = 0
         while (not write_success) and (tries < 20):
@@ -256,6 +292,14 @@ class BNO055:
         return write_success
 
     def read_register(self, register_adr, num_bytes):
+        """
+        Method to read bytes from a specific register on the BNO055
+
+        :param register_adr: The address of the register to read data from.
+        :param num_bytes: The number of bytes to receive from the register.
+        :return: Bytes received
+        :rtype: int
+        """
         read_success = False
         tries = 0
         while (not read_success) and (tries < 20):
@@ -282,7 +326,12 @@ class BNO055:
         return int.from_bytes(response[2:])
 
     def get_pitch(self):
+        """
+        Method to get pitch orientation from the BNO055
 
+        :return: Pitch in degrees from 180 to -180
+        :rtype: float
+        """
         tempL = self.read_register(BNO055_EULER_P_LSB_ADDR, 1)
         tempH = self.read_register(BNO055_EULER_P_MSB_ADDR, 1)
 
@@ -300,7 +349,12 @@ class BNO055:
         return out
 
     def get_roll(self):
+        """
+        Method to get roll orientation from the BNO055
 
+        :return: Roll in degrees from 180 to -180
+        :rtype: float
+        """
         tempL = self.read_register(BNO055_EULER_R_LSB_ADDR, 1)
         tempH = self.read_register(BNO055_EULER_R_MSB_ADDR, 1)
 
@@ -318,7 +372,12 @@ class BNO055:
         return out
 
     def get_yaw(self):
+        """
+        Method to get yaw orientation from the BNO055
 
+        :return: Yaw in degrees from 180 to -180
+        :rtype: float
+        """
         tempL = self.read_register(BNO055_EULER_H_LSB_ADDR, 1)
         tempH = self.read_register(BNO055_EULER_H_MSB_ADDR, 1)
 
@@ -336,7 +395,12 @@ class BNO055:
         return out
 
     def get_yaw_rate(self):
+        """
+        Method to get yaw rate from the BNO055
 
+        :return: Yaw rate in degrees per second
+        :rtype: float
+        """
         tempL = self.read_register(BNO055_GYRO_DATA_Z_LSB_ADDR, 1)
         tempH = self.read_register(BNO055_GYRO_DATA_Z_MSB_ADDR, 1)
 
@@ -353,5 +417,8 @@ class BNO055:
         return out
 
     def deinit_uart(self):
+        """
+        Method to release UART bus.
+        """
         self.uart.deinit()
 

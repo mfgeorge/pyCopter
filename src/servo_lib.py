@@ -1,4 +1,24 @@
+"""
+..  module:: servo_lib.py
+    :platform: Pycom LoPy
+    :synopsis: A module for controlling servos using PWM without the machine library.
 
+..  topic:: Authors
+
+    | Chad Bickel
+    | Michael George
+
+A module for micropython which allows for easy control of servos or ESCs.
+
+The Servo class should be used once for every servo that needs to be controlled.
+
+Example::
+
+    servo1 = Servo('P23')
+    servo1.calibration()
+    servo1.speed(90)
+
+"""
 try:
     from machine import PWM
     import time
@@ -9,16 +29,24 @@ except ImportError:
     from dummy_libraries.machine import PWM
 
 class Servo:
-    '''
-    Basic Servo replacement class since machine has no servo library
-    '''
+    """
+    Class to control servos since machine library has no servo class yet.
+    """
     next_channel = 0
     def __init__(self,pin):
+        """
+        Constructor for the Servo class
+
+        :param pin: LoPy pin wired to the signal pin of the servo.
+        """
         pwm = PWM(0,frequency=50)
         self.servo_control = pwm.channel(Servo.next_channel, pin = pin, duty_cycle=1)
         Servo.next_channel += 1
 
     def calibration(self):
+        """
+        Method to calibrate ESCs by sending the upper and lower signal limits.
+        """
         self.speed(185)
         time.sleep(2)
         self.speed(0)
@@ -27,6 +55,11 @@ class Servo:
 
 
     def speed(self,speedin):
+        """
+        Method to set servo position.
+
+        :param speedin: The new ESC speed/servo position, from 0 to 180.
+        """
         #Servo pwm goes from 40 to 115, must convert from 0 to 180
         # pwm = 40 + (speedin)*(115-40)/180 #Linear interpolation
         if speedin > 180:
