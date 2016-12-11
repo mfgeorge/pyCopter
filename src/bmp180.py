@@ -25,12 +25,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
 
-<<<<<<< HEAD
 from ustruct import unpack as unp
 from machine import I2C, Pin
 import math
 import time
-=======
+
 # Handle the case that we are not in micropython for
 # documentation generation
 try:
@@ -46,10 +45,6 @@ except ImportError:
     # Add some dummy libraries
     sys.path.insert(0, '../dummy_libraries')
     from dummy_libraries.machine import I2C, Pin
-
-
->>>>>>> 69da7bf7823c45084b3ff2024aaea907699a7758
-
 
 
 
