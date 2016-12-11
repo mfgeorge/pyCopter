@@ -193,6 +193,12 @@ class Task:
         raise NotImplementedError("Individual (children) tasks must implement task constructor")
 
     def run(self):
+        """
+        Placeholder for a task's run method
+
+        ..  warning:: Do not place any blocking code or sleeps here in order
+            to cooperate nicely with other tasks
+        """
         # The code that will be performed upon each call of the task
         # DO NOT PLACE ANY BLOCKING CODE HERE OR ANYTHING THAT SLEEPS, THIS CODE MUST
         # BE INTENDED TO BE USED IN A COOPERATIVE MULTITASKING ENVIRONMENT (YES, EVEN THOUGH

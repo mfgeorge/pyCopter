@@ -58,40 +58,76 @@
             
   <div class="section" id="module-ground_control">
 <span id="ground-control-module"></span><h1>ground_control module<a class="headerlink" href="#module-ground_control" title="Permalink to this headline">¶</a></h1>
-<p>ground_control.py</p>
-<p>Module for hosting connections to ground control on the LoPy</p>
+<p>Module for hosting connections to ground control on the LoPy
+The scheme for incoming commands to be parsed is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">incoming</span> <span class="o">=</span> <span class="n">b</span><span class="s1">&#39;p_val1;r_val2;y_val3;t_val4&#39;</span>
+</pre></div>
+</div>
+<p>where incoming is then parsed and the letters <em>p, r, y, and t</em> indicate
+to stick the <em>val</em> that follows into the pitch, roll, yaw, or thrust
+set-point respectively. Commands can also be added dynamically during
+run-time or start up using the
+<a class="reference internal" href="#ground_control.GroundControlSocketTask.add_command" title="ground_control.GroundControlSocketTask.add_command"><code class="xref py py-func docutils literal"><span class="pre">add_command()</span></code></a> method.</p>
 <dl class="class">
 <dt id="ground_control.GroundControlSocketTask">
 <em class="property">class </em><code class="descclassname">ground_control.</code><code class="descname">GroundControlSocketTask</code><span class="sig-paren">(</span><em>shared_setpoint_dict</em>, <em>setpoint_map</em><span class="sig-paren">)</span><a class="headerlink" href="#ground_control.GroundControlSocketTask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="task_manager.html#task_manager.Task" title="task_manager.Task"><code class="xref py py-class docutils literal"><span class="pre">task_manager.Task</span></code></a></p>
+<p>Class for hosting a server socket and communicating to
+a ground control client socket</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>shared_setpoint_dict</strong> &#8211; Dictionary to put received set-points in</li>
+<li><strong>setpoint_map</strong> &#8211; Map of command letters to keys of setpoint_dict</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="ground_control.GroundControlSocketTask.add_command">
 <code class="descname">add_command</code><span class="sig-paren">(</span><em>command_letter</em>, <em>command_callback</em><span class="sig-paren">)</span><a class="headerlink" href="#ground_control.GroundControlSocketTask.add_command" title="Permalink to this definition">¶</a></dt>
-<dd><p>method for adding a command to the command_dict so that
-a received command letter has a callback it is mapped to.
-:param command_letter: the command letter that will be received from ground control
-:param command_callback: the callback associated with the letter
-:return: Nothing</p>
+<dd><p>Method for adding a command to the command_dict so that
+a received command letter has a callback it is mapped to.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>command_letter</strong> &#8211; the command letter that will be received from ground control</li>
+<li><strong>command_callback</strong> &#8211; the callback associated with the letter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><em>command_callback</em> needs to take exactly one parameter
+to work with the parsing scheme.</p>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="ground_control.GroundControlSocketTask.call_other_commands">
 <code class="descname">call_other_commands</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ground_control.GroundControlSocketTask.call_other_commands" title="Permalink to this definition">¶</a></dt>
 <dd><p>method to use for calling the other command callbacks that
-were added
-:return: Nothing</p>
+were added</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="ground_control.GroundControlSocketTask.close_socket">
 <code class="descname">close_socket</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ground_control.GroundControlSocketTask.close_socket" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Close the socket that was opened with ground control as well
+as the server socket</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="ground_control.GroundControlSocketTask.open_socket">
 <code class="descname">open_socket</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ground_control.GroundControlSocketTask.open_socket" title="Permalink to this definition">¶</a></dt>
-<dd><p>open a socket connection with ground control
-:return: Nothing</p>
+<dd><p>open a socket connection with ground control</p>
 </dd></dl>
 
 <dl class="method">
@@ -100,27 +136,20 @@ were added
 <dd><p>method for parsing the command string received from ground control
 the in_command_dict will be filled by this method, where the keys are
 the command letter, and the value is the argument for the command letter</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Nothing</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="ground_control.GroundControlSocketTask.run">
 <code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ground_control.GroundControlSocketTask.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Function called by the task manager repeatedly for this task
+to run.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="ground_control.GroundControlSocketTask.store_basic_setpoints">
 <code class="descname">store_basic_setpoints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ground_control.GroundControlSocketTask.store_basic_setpoints" title="Permalink to this definition">¶</a></dt>
-<dd><p>method to use for quickly storing the basic setpoints needed
-to fly the drone
-:return: Nothing</p>
+<dd><p>method to use for quickly storing the basic set-points needed
+to fly the drone</p>
 </dd></dl>
 
 </dd></dl>

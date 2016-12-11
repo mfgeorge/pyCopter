@@ -58,49 +58,119 @@
             
   <div class="section" id="module-mtk_gps_driver">
 <span id="mtk-gps-driver-module"></span><h1>mtk_gps_driver module<a class="headerlink" href="#module-mtk_gps_driver" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-mtk_gps_driver"></span><dl class="class">
+<span class="target" id="module-mtk_gps_driver"></span><div class="topic">
+<p class="topic-title first">Author</p>
+<p>Michael George</p>
+</div>
+<p>A module for housing the MTKGPS driver which will obtain readings from the
+GPS and implement function calls for retrieving the most up to date version
+of those readings.</p>
+<dl class="class">
 <dt id="mtk_gps_driver.MTKGPS">
 <em class="property">class </em><code class="descclassname">mtk_gps_driver.</code><code class="descname">MTKGPS</code><span class="sig-paren">(</span><em>uart_object</em><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Task for the adafruit ultimate gps featherWing module. This class is instantiated with a UART object that is
 configured for the correct UART bus that the GPS is connected to. It wraps the implementation of MtkCommandRx so
 that it supplies characters to this class, letting the class perform the error checking and sentence generation.
 Subsequently, this class will utilize microPyGPS to interpret the sentence and return position data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uart_object</strong> &#8211; a pre-initialized uart bus object at 9600 baudrate,
+No parity, no stop bit.</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="mtk_gps_driver.MTKGPS.check_command_success">
 <code class="descname">check_command_success</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.check_command_success" title="Permalink to this definition">¶</a></dt>
-<dd><p>To be ran after a command is sent to the MTK board to indicate success
-:return: True for success, False if Timeout reached</p>
+<dd><p>To be ran after a command is sent to the MTK board to indicate success</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True for success, False if Timeout reached</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="mtk_gps_driver.MTKGPS.get_altitude">
 <code class="descname">get_altitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.get_altitude" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets the altitude based upon the GPS satellite triangulation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">altitude in meters</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="mtk_gps_driver.MTKGPS.get_fix">
 <code class="descname">get_fix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.get_fix" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Reports whether or not the GPS has obtained a fix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">number of satellites the GPS has a fix on</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="mtk_gps_driver.MTKGPS.get_heading">
 <code class="descname">get_heading</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.get_heading" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Method for getting the heading according to the GPS.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Heading direction in degrees</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="mtk_gps_driver.MTKGPS.get_latitude">
 <code class="descname">get_latitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.get_latitude" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Method for obtaining the latitude position of the GPS</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Latitude GPS position</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="mtk_gps_driver.MTKGPS.get_longitude">
 <code class="descname">get_longitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.get_longitude" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Method for obtaining the longitude position of the GPS</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Longitude GPS position</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="mtk_gps_driver.MTKGPS.get_next_sentence_char">
 <code class="descname">get_next_sentence_char</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mtk_gps_driver.MTKGPS.get_next_sentence_char" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>gets the next character from the uart bus and updates the interpretter
+with it.</p>
+</dd></dl>
 
 </dd></dl>
 

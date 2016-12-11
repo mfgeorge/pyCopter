@@ -16,11 +16,10 @@ except ImportError:
 
 class TimerHelper:
     'A simple class for helping pick timers and channels based upon pin number'
-    """
-    timer_dict: class varible for storing all the possible timer selections based upon pin
-    due to it being a class varible, this dictionary is only created once upon the first
-    instantiation of this class.
-    """
+
+    #: class varible for storing all the possible timer selections based upon pin
+    #: due to it being a class varible, this dictionary is only created once upon the first
+    #: instantiation of this class.
     timer_dict = {}
     timer_dict[str(pyb.Pin.board.Y1)] = (8)
     timer_dict[str(pyb.Pin.board.Y2)] = (8)
@@ -59,11 +58,10 @@ class TimerHelper:
     # timer_dict[str(pyb.Pin.board.P4)] = None
     # timer_dict[str(pyb.Pin.board.P5)] = None
 
-    """
-    channel_dict: class varible for storing all the possible channel selections based upon pin
-    due to it being a class varible, this dictionary is only created once upon the first
-    instantiation of this class.
-    """
+
+    #: class varible for storing all the possible channel selections based upon pin
+    #: due to it being a class varible, this dictionary is only created once upon the first
+    #: instantiation of this class.
     channel_dict = {}
     channel_dict[str(pyb.Pin.board.Y1)] = (1)
     channel_dict[str(pyb.Pin.board.Y2)] = (2)
@@ -102,15 +100,17 @@ class TimerHelper:
     # channel_dict[str(pyb.Pin.board.P4)] = None
     # channel_dict[str(pyb.Pin.board.P5)] = None
 
-    # A dictionary to keep track of the timers that are available?
+    #: A dictionary to keep track of the timers that are available
     timer_avail = {}
 
     def get_timer(self, pin, index=0):
         """
+        A method to get a timer connected to a pin.
 
-        :param pin:
-        :param index:
-        :return:
+        :param pin: Pin that timer should be connected to
+        :param index: the index of the timer on that pin (for the
+            case of multiple timers connected to one pin).
+        :return: The timer number and channel associated with that pin.
         """
         try:
             timer_number = TimerHelper.timer_dict[str(pin)][index]
@@ -123,6 +123,10 @@ class TimerHelper:
 
 
 def timed_function(f, *args, **kwargs):
+    """
+    Obtained from the micropython documentation.
+    A function decorator which will time the function that was decorated.
+    """
     myname = str(f).split(' ')[1]
     def new_func(*args, **kwargs):
         t = utime.ticks_ms()

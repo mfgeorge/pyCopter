@@ -61,7 +61,12 @@
 <dl class="class">
 <dt id="rfComm.RFController6CH">
 <em class="property">class </em><code class="descclassname">rfComm.</code><code class="descname">RFController6CH</code><a class="headerlink" href="#rfComm.RFController6CH" title="Permalink to this definition">¶</a></dt>
-<dd><p>A generic parent class for a 6 channel radio module</p>
+<dd><p>A generic parent class for a 6 channel radio module
+Lays out what needs to be implemented so that all controllers
+will implement the same methods, no matter what type they are.</p>
+<div class="line-block">
+<div class="line">All controller classes should implement at least these methods:</div>
+</div>
 <dl class="method">
 <dt id="rfComm.RFController6CH.get_pitch">
 <code class="descname">get_pitch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.RFController6CH.get_pitch" title="Permalink to this definition">¶</a></dt>
@@ -98,72 +103,186 @@
 <dt id="rfComm.ServoPulse">
 <em class="property">class </em><code class="descclassname">rfComm.</code><code class="descname">ServoPulse</code><span class="sig-paren">(</span><em>pin</em>, <em>timer=&lt;dummy_libraries.machine.Timer instance&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.ServoPulse" title="Permalink to this definition">¶</a></dt>
 <dd><p>A servo_pulse Class written by wagnerc4 on github and modified by michael george for our
-purposes. Instead of using IC interrupts here which limits the pin choice
+purposes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Changes Made:</th><td class="field-body">Instead of using IC interrupts here which limits the pin choice
 (trouble with timer 8 and 1 identified, may be others not working either)
 we use external interrupts so that this can be done on any pin, given they
 do not have the same CPU port NUMBER. ie PBn and PAn cannot both be used
-to measure servo pulses.</p>
+to measure servo pulses.</td>
+</tr>
+</tbody>
+</table>
+<p>The constructor parameters are:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pin</strong> &#8211; Pin that the servo pulse is connected to.</li>
+<li><strong>timer</strong> &#8211; Timer that can be used to mark the amount of time
+the pulse was high for.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="rfComm.ServoPulse.callback">
 <code class="descname">callback</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.ServoPulse.callback" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Callback that the external interrupt will call</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>line</strong> &#8211; The line that the interrupt is on always gets passed
+to the callback.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="rfComm.ServoPulse.get_width">
 <code class="descname">get_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.ServoPulse.get_width" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>method for getting the most recent width of the last servo pulse</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the width in useconds</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="rfComm.ServoPulse.last_width">
 <code class="descname">last_width</code><em class="property"> = 0</em><a class="headerlink" href="#rfComm.ServoPulse.last_width" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Varible to hold information about the pulse timing</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="rfComm.ServoPulse.start">
 <code class="descname">start</code><em class="property"> = 0</em><a class="headerlink" href="#rfComm.ServoPulse.start" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Varible to hold information about the pulse timing</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="rfComm.ServoPulse.width">
 <code class="descname">width</code><em class="property"> = 0</em><a class="headerlink" href="#rfComm.ServoPulse.width" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Varible to hold information about the pulse timing</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="rfComm.SpektrumController">
-<em class="property">class </em><code class="descclassname">rfComm.</code><code class="descname">SpektrumController</code><span class="sig-paren">(</span><em>thro_pin</em>, <em>aile_pin</em>, <em>elev_pin</em>, <em>rudd_pin</em>, <em>gear_pin</em>, <em>aux1_pin</em>, <em>smoothing_factor=1</em><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">rfComm.</code><code class="descname">SpektrumController</code><span class="sig-paren">(</span><em>thro_pin</em>, <em>aile_pin</em>, <em>elev_pin</em>, <em>rudd_pin</em>, <em>gear_pin</em>, <em>aux1_pin</em><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#rfComm.RFController6CH" title="rfComm.RFController6CH"><code class="xref py py-class docutils literal"><span class="pre">rfComm.RFController6CH</span></code></a></p>
 <p>A class for a specific 6 channel Spektrum radio module.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>thro_pin</strong> &#8211; Pin that the thro connection is on</li>
+<li><strong>aile_pin</strong> &#8211; Pin that the aile connection is on</li>
+<li><strong>elev_pin</strong> &#8211; Pin that the elev connection is on</li>
+<li><strong>rudd_pin</strong> &#8211; Pin that the rudd connection is on</li>
+<li><strong>gear_pin</strong> &#8211; Pin that the gear connection is on</li>
+<li><strong>aux1_pin</strong> &#8211; Pin that the aux1 connection is on</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="rfComm.SpektrumController.get_pitch">
 <code class="descname">get_pitch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController.get_pitch" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets the pitch value of the pitch signal being sent</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pitch value on a 0-50 scale</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="rfComm.SpektrumController.get_roll">
 <code class="descname">get_roll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController.get_roll" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets the roll value of the roll signal being sent</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">roll value on a 0-50 scale</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="rfComm.SpektrumController.get_switch1">
 <code class="descname">get_switch1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController.get_switch1" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets the position of the 1st switch</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">1 if the switch is on, 0 if it is off</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="rfComm.SpektrumController.get_switch2">
 <code class="descname">get_switch2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController.get_switch2" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets the position of the 2nd switch</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">1 if the switch is on, 0 if it is off</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="rfComm.SpektrumController.get_thrust">
 <code class="descname">get_thrust</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController.get_thrust" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets the thrust value of the thrust signal being sent</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">thrust value on a 0-50 scale</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="rfComm.SpektrumController.get_yaw">
 <code class="descname">get_yaw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rfComm.SpektrumController.get_yaw" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets the yaw value of the yaw signal being sent</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Yaw value on a 0-50 scale</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 

@@ -58,24 +58,34 @@
             
   <div class="section" id="module-imu_task">
 <span id="imu-task-module"></span><h1>imu_task module<a class="headerlink" href="#module-imu_task" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="imu-task-py">
-<h2>imu_task.py<a class="headerlink" href="#imu-task-py" title="Permalink to this headline">¶</a></h2>
-<p>Michael George
-Chad Bickel
-Oscar Ruiz</p>
-<p>A Task to update the shared sensor reading dictionary with the imu readings</p>
+<p>Module for housing the IMUTask which updates the sensor readings</p>
 <dl class="class">
 <dt id="imu_task.IMUTask">
 <em class="property">class </em><code class="descclassname">imu_task.</code><code class="descname">IMUTask</code><span class="sig-paren">(</span><em>imu</em>, <em>sensor_reading_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#imu_task.IMUTask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="task_manager.html#task_manager.Task" title="task_manager.Task"><code class="xref py py-class docutils literal"><span class="pre">task_manager.Task</span></code></a></p>
+<p>A Task to update the shared sensor reading dictionary with the imu readings</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>imu</strong> &#8211; <a class="reference internal" href="BNO055_lib.html#BNO055_lib.BNO055" title="BNO055_lib.BNO055"><code class="xref py py-class docutils literal"><span class="pre">BNO055_lib.BNO055</span></code></a> object to get readings from</li>
+<li><strong>sensor_reading_dict</strong> &#8211; the shared <a class="reference internal" href="task_manager.html#task_manager.ProtectedData" title="task_manager.ProtectedData"><code class="xref py py-class docutils literal"><span class="pre">task_manager.ProtectedData</span></code></a>
+dictionary which will contain sensor readings.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="imu_task.IMUTask.run">
 <code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#imu_task.IMUTask.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Run method of this class will update the <em>sensor_reading_dict</em>
+with fresh readings.</p>
+</dd></dl>
 
 </dd></dl>
 
-</div>
 </div>
 
 
@@ -84,14 +94,6 @@ Oscar Ruiz</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">imu_task module</a><ul>
-<li><a class="reference internal" href="#imu-task-py">imu_task.py</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
   <p class="topless"><a href="ground_control.html"
                         title="previous chapter">ground_control module</a></p>

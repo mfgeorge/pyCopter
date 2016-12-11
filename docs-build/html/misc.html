@@ -66,22 +66,27 @@
 <dl class="attribute">
 <dt id="misc.TimerHelper.channel_dict">
 <code class="descname">channel_dict</code><em class="property"> = {'(4, 11)': (4, 1), '(2, 8)': (1, 1), 'None': None, '4': 2, '(1, 8)': (3, 3), '13': 1, '1': 1, '2': 4, '(1, 8, 12)': (3, 3, 2), '(2, 5, 9)': (4, 4, 2), '8': 2, '(1, 8, 14)': (1, 1, 1), '(2, 5)': (2, 2), '(4, 10)': (3, 1)}</em><a class="headerlink" href="#misc.TimerHelper.channel_dict" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>class varible for storing all the possible channel selections based upon pin
+due to it being a class varible, this dictionary is only created once upon the first
+instantiation of this class.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="misc.TimerHelper.get_timer">
 <code class="descname">get_timer</code><span class="sig-paren">(</span><em>pin</em>, <em>index=0</em><span class="sig-paren">)</span><a class="headerlink" href="#misc.TimerHelper.get_timer" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>A method to get a timer connected to a pin.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pin</strong> &#8211; </li>
-<li><strong>index</strong> &#8211; </li>
+<li><strong>pin</strong> &#8211; Pin that timer should be connected to</li>
+<li><strong>index</strong> &#8211; the index of the timer on that pin (for the
+case of multiple timers connected to one pin).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The timer number and channel associated with that pin.</p>
 </td>
 </tr>
 </tbody>
@@ -91,19 +96,25 @@
 <dl class="attribute">
 <dt id="misc.TimerHelper.timer_avail">
 <code class="descname">timer_avail</code><em class="property"> = {}</em><a class="headerlink" href="#misc.TimerHelper.timer_avail" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>A dictionary to keep track of the timers that are available</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="misc.TimerHelper.timer_dict">
 <code class="descname">timer_dict</code><em class="property"> = {'(4, 11)': (4, 11), '(2, 8)': (2, 8), 'None': None, '4': 4, '(1, 8)': (1, 8), '13': 13, '1': 1, '2': 2, '(1, 8, 12)': (1, 8, 12), '(2, 5, 9)': (2, 5, 9), '8': 8, '(1, 8, 14)': (1, 8, 14), '(2, 5)': (2, 5), '(4, 10)': (4, 10)}</em><a class="headerlink" href="#misc.TimerHelper.timer_dict" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>class varible for storing all the possible timer selections based upon pin
+due to it being a class varible, this dictionary is only created once upon the first
+instantiation of this class.</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="misc.timed_function">
 <code class="descclassname">misc.</code><code class="descname">timed_function</code><span class="sig-paren">(</span><em>f</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#misc.timed_function" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Obtained from the micropython documentation.
+A function decorator which will time the function that was decorated.</p>
+</dd></dl>
 
 </div>
 
