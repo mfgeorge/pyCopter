@@ -107,6 +107,7 @@ def main():
     pid_task = PIDControlTask(gain_dict, sensor_reading_dict, set_point_dict, speed_list)
     # Instantiate the ground control socket task
     setpoint_command_map = {"p": "pitch", "r": "roll", "y": "yaw", "t": "thrust"}
+
     ground_control_task = GroundControlSocketTask(set_point_dict, setpoint_command_map)
     # Make a task manager to add tasks to
     task_manager = TaskManager()

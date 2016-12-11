@@ -25,34 +25,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
 
-"""
-List of problems that may be occuring:
-    * The writeto_mem function is not working properly
-    * The start sequence is not being sent properly
-    * The read is misinterpretting the number recieved
-"""
-
 from ustruct import unpack as unp
 from machine import I2C, Pin
 import math
 import time
 
+
+
+
 # BMP180 class
 class BMP180:
+
     '''
     Module for the BMP180 pressure sensor.
     '''
-
-    _bmp_addr = 119             # adress of BMP180 is hardcoded on the sensor
+    # address of BMP180 is hardcoded on the sensor
+    _bmp_addr = 119
 
     # init
     def __init__(self, i2c_bus):
-
+        '''
+        Constructor for BMP180 class.
+        :param i2c_bus: Specifies the i2c bus on the microcontroller
+        '''
         # create i2c obect
         _bmp_addr = self._bmp_addr
         self._bmp_i2c = i2c_bus
-        #self._bmp_i2c.start()
         self.chip_id = self._bmp_i2c.readfrom_mem(_bmp_addr, 0xD0, 2)
+
         # read calibration data from EEPROM
         self._AC1 = unp('>h', self._bmp_i2c.readfrom_mem(_bmp_addr, 0xAA, 2))[0]
         self._AC2 = unp('>h', self._bmp_i2c.readfrom_mem(_bmp_addr, 0xAC, 2))[0]
@@ -79,25 +79,31 @@ class BMP180:
         for _ in range(128):
             next(self.gauge)
             time.sleep_ms(1)
+
         # First get a temperature reading
         t = self.temperature
+
         # The baseline pressure is the starting pressure
         self.baseline = self.pressure
-        # print("BMP180 Baseline Pressure set to: ", self.baseline)
 
 
     def compvaldump(self):
+
         '''
-        Returns a list of all compensation values
+        A method to return a list of all compensation values
+        :return: A list of all compensation values
         '''
+
         return [self._AC1, self._AC2, self._AC3, self._AC4, self._AC5, self._AC6, 
                 self._B1, self._B2, self._MB, self._MC, self._MD, self.oversample_setting]
 
-    # gauge raw
+
     def makegauge(self):
-        '''
-        Generator refreshing the raw measurments.
-        '''
+
+        """
+        Method to refresh the raw measurements
+        """
+
         delays = (5, 8, 14, 25)
         while True:
             self._bmp_i2c.writeto_mem(self._bmp_addr, 0xF4, bytearray([0x2E]))
@@ -125,6 +131,10 @@ class BMP180:
             yield True
 
     def blocking_read(self):
+
+        """
+        Method to discard old data.
+        """
         if next(self.gauge) is not None: # Discard old data
             print("Old Data Discarded")
             pass
@@ -147,9 +157,12 @@ class BMP180:
 
     @property
     def temperature(self):
+
         '''
-        Temperature in degree C.
+        Method to read Temperature in degree C.
+        :return: The Temperature in degrees Celsius.
         '''
+
         next(self.gauge)
         try:
             UT = unp('>h', self.UT_raw)[0]
@@ -162,17 +175,21 @@ class BMP180:
 
     @property
     def pressure(self):
+
         '''
-        Pressure in mbar.
+        Method to read pressure in Pascals
+        :return: The pressure in Pascals.
         '''
+
         next(self.gauge)
-        self.temperature  # Populate self.B5_raw
+
         try:
             MSB = unp('<h', self.MSB_raw)[0]
             LSB = unp('<h', self.LSB_raw)[0]
             XLSB = unp('<h', self.XLSB_raw)[0]
         except:
             return 0.0
+
         UP = ((MSB << 16)+(LSB << 8)+XLSB) >> (8-self.oversample_setting)
         B6 = self.B5_raw-4000
         X1 = (self._B2*(B6**2/2**12))/2**11
@@ -184,11 +201,12 @@ class BMP180:
         X3 = ((X1+X2)+2)/2**2
         B4 = abs(self._AC4)*(X3+32768)/2**15
         B7 = (abs(UP)-B3) * (50000 >> self.oversample_setting)
+
         if B7 < 0x80000000:
-            #print("Register B4 is: ", B4)
+
             pressure = (B7*2)/B4
         else:
-            #print("Register B4 is: ", B4)
+
             pressure = (B7/B4)*2
         X1 = (pressure/2**8)**2
         X1 = (X1*3038)/2**16
@@ -197,9 +215,12 @@ class BMP180:
 
     @property
     def altitude(self):
+
         '''
-        Altitude in m.
+        Method that takes the pressure value and baseline value to calculate altitude.
+        :return: The altitude in meters
         '''
+
         try:
             p = -7990.0*math.log(self.pressure/self.baseline)
             # p = 44330.0*(1-self.pressure/self.baseline**(1/5.255))
