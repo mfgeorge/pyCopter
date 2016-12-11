@@ -1,5 +1,5 @@
 """
-..  module:: main.py
+..  module: main.py
     : platform: Pycom LoPy
     :synopsis: pyCopter - the micropython quadcopter main file
 

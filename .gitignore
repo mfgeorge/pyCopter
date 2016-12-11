@@ -5,3 +5,4 @@
 *.job
 *.pro
 *.lck
+docs-build/*

@@ -5,9 +5,9 @@
 
 ..  topic:: Author
 
-    Michael George
+    Oscar Ruiz
 
-A module for micropython which creates servo object and takes speeds as input for servo control.
+A task for micropython which creates servo object and takes speeds as input for servo control.
 
 
 """
@@ -17,17 +17,21 @@ import time
 from task_manager import Task
 
 class MotorControlTask(Task):
+    """
+    Task for sending the most up to date outputs to the motor
+
+    :param s1: Parameter is the first servo object.
+    :param s2: Parameter is the second servo object.
+    :param s3: Parameter is the third servo object.
+    :param s4: Parameter is the fourth servo object.
+    :param speed_list: A parameter containing a list of commanded speeds for servos 1-4.
+    :param offset: An offset parameter to adjust the speed on each servo.
+    :param calibrate: A boolean parameter to calibrate or not.
+    """
     def __init__(self, s1, s2, s3, s4, speed_list, offset=0, calibrate=False):
 
         '''
-
-        :param s1: Parameter is the first servo object.
-        :param s2: Parameter is the second servo object.
-        :param s3: Parameter is the third servo object.
-        :param s4: Parameter is the fourth servo object.
-        :param speed_list: A parameter containing a list of commanded speeds for servos 1-4.
-        :param offset: An offset parameter to adjust the speed on each servo.
-        :param calibrate: A boolean parameter to calibrate or not.
+        Constructor for the MotorControlTask
         '''
         self.servo1 = s1
         self.servo2 = s2
@@ -51,7 +55,7 @@ class MotorControlTask(Task):
 
     def run(self):
         '''
-        Method for setting the speeds on each servo.
+        Method to update the speed of each motor with the newest outputs
         '''
         self.servo1.speed(self.speed_list[0] + self.offset)
         

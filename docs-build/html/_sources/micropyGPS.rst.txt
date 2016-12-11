@@ -1,7 +1,0 @@
-micropyGPS module
-=================
-
-.. automodule:: micropyGPS
-    :members:
-    :undoc-members:
-    :show-inheritance:

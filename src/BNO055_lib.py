@@ -209,7 +209,11 @@ OPERATION_MODE_NDOF                  = 0X0C
 class BNO055:
     """
     Class to control and read data from a single BNO055 sensor.
+
+    :param uart_bus: The UART bus that the BNO055 is wired to. Created from machine.UART
     """
+
+    #: A dictionary for interpreting responses to write commands
     command_response_dict = {0x01: "WRITE_SUCCESS",
                             0x03: "WRITE_FAIL",
                             0x04: "REGMAP_INVALID_ADDRESS",
@@ -220,6 +224,7 @@ class BNO055:
                             0x09: "MIN_LENGTH_ERROR",
                             0x0A: "RECEIVE_CHARACTER_TIMEOUT"}
 
+    #: A dictionary for interpreting responses to read commands
     read_response_dict = {0x02: "READ_FAIL",
                             0x04: "REGMAP_INVALID_ADDRESS",
                             0x05: "REGMAP_WRITE_DISABLED",
@@ -232,8 +237,6 @@ class BNO055:
     def __init__(self, uart_bus):
         """
         Constructor for BNO055 class.
-
-        :param uart_bus: The UART bus that the BNO055 is wired to. Created from machine.UART
         """
         self.uart = uart_bus
         self.uart.init(baudrate = 115200, parity= None, stop=1)

@@ -31,13 +31,16 @@ except ImportError:
 class Servo:
     """
     Class to control servos since machine library has no servo class yet.
+
+    :param pin: LoPy pin wired to the signal pin of the servo.
     """
+
+    #: A class variable that holds the next channel available for connecting to PWM.
+    #: This variable will increment with each instantiation of the class.
     next_channel = 0
     def __init__(self,pin):
         """
         Constructor for the Servo class
-
-        :param pin: LoPy pin wired to the signal pin of the servo.
         """
         pwm = PWM(0,frequency=50)
         self.servo_control = pwm.channel(Servo.next_channel, pin = pin, duty_cycle=1)
