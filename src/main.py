@@ -39,6 +39,7 @@ try:
     from task_manager import TaskManager, ProtectedData
     from ground_control import GroundControlSocketTask
     import gc
+    from array import array
 except ImportError:
     print("ImportError: Are you in uPy? ")
     pass
@@ -66,6 +67,19 @@ def load_config_file(config_file):
             print("ERROR: Invalid Configuration File '" + str(file) +"'")
             return None
         return config_dict
+
+    # ----------------------------------------------------------------------
+def dump_info_file(info_file, time, list):
+        """
+        A function to load a .json configuration file, parse the json entries, and return a python
+        dictionary with all of the .json entries.
+
+        :param config_file: String, the path to the config file to open
+        :return: The config dictionary parsed from the .json file
+        """
+        with open(info_file, mode='w') as file:
+            for index, item in enumerate(list):
+                file.write(str(time[index]) + ', '+ str(item) + '\n')
 
 # ----------------------------------------------------------------------
 def main():
@@ -97,6 +111,9 @@ def main():
     sensor_reading_dict = ProtectedData({})
     set_point_dict = ProtectedData({"pitch": 0, "roll":0, "yaw":0, "thrust":0})
     speed_list = ProtectedData([0, 0, 0, 0])
+    # Logging arrays
+    pitch_log = array('f')
+    time_log = array('i')
 
     # Instantiate the necessary sensors required for quadcopter control
     # Pressure Sensor
@@ -116,11 +133,11 @@ def main():
     # Instantiate the Motor Control Task which will be responsible for updating the output to the motors
     motor_task = MotorControlTask(servo1, servo2, servo3, servo4, speed_list, calibrate=calibrate_esc)
     # Instantiate the PID control task which will update the outputs to the motors
-    pid_task = PIDControlTask(gain_dict, sensor_reading_dict, set_point_dict, speed_list)
+    pid_task = PIDControlTask(gain_dict, sensor_reading_dict, set_point_dict, speed_list, time_log, pitch_log)
     # Instantiate the ground control socket task
     setpoint_command_map = {"p": "pitch", "r": "roll", "y": "yaw", "t": "thrust"}
-
     ground_control_task = GroundControlSocketTask(set_point_dict, setpoint_command_map)
+
     # Make a task manager to add tasks to
     task_manager = TaskManager()
     # Add all of the tasks to the task_manager
@@ -172,6 +189,9 @@ def main():
         speed_list.putData([0, 0, 0, 0])
         # Run the motor task a last time to output 0 speed to motors
         motor_task.run()
+        # Dump log file
+        dump_info_file('pitch_log.csv', time_log, pitch_log)
+
         # Deinitialize the IMU so that the i2c bus doesn't get messed up
         # imu.deinit_i2c()
 

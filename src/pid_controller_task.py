@@ -20,6 +20,7 @@ A task to execute all of the PID control loops, and fuse their output together.
 
 import PID_lib
 from task_manager import Task
+import time
 # from misc import timed_function
 
 class PIDControlTask(Task):
@@ -27,7 +28,7 @@ class PIDControlTask(Task):
     A class to run the PID control for the quadcopter. This class houses all the controllers for stabilizing flight and
     manages them by updating their control loop. This task has specific timing requirements
     """
-    def __init__(self, gain_dict, sensor_reading_dict, set_point_dict, output_list):
+    def __init__(self, gain_dict, sensor_reading_dict, set_point_dict, output_list, time_log, val_log):
         """
         Constructor for the PID control class.
         :param gain_dict: A ProtectedData dictionary containing the key values "roll","pitch","yaw", and "thrust"
@@ -46,6 +47,10 @@ class PIDControlTask(Task):
         self.gain_dict = gain_dict
         self.sensor_reading_dict = sensor_reading_dict
         self.set_point_dict = set_point_dict
+
+        # Store the log arrays
+        self.time_log = time_log
+        self.val_log = val_log
 
         # Instantiate the needed controllers
         self.pitch_controller = PID_lib.PID()
@@ -102,6 +107,10 @@ class PIDControlTask(Task):
         #print("Output list is: ", output_list)
 
         self.output_list.putData(output_list)
+
+        # log some data
+        self.time_log.append(time.ticks_ms())
+        self.val_log.append(temp_sensor_reading_dict["pitch"])
 
     def update_gain_dict(self, gain_dict):
         """

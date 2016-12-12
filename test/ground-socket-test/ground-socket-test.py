@@ -14,11 +14,11 @@ import time
 def main():
 
     # address parameters of socket
-    host = "192.168.4.1"
+    host = "192.168.1.178"
     port = 9999
 
     # 0 message to send to the drone
-    # message = b'p_0;r_0;t_0;y_0;'
+    message = b'p_0;r_0;t_0.33;y_0;'
 
     # timing for sending the messages
     timing = 0.04
@@ -40,7 +40,7 @@ def main():
     profile = MotionProfile(ramp_profile)
     try:
         while True:
-            message = profile.get_profile()
+            # message = profile.get_profile()
             drone_socket.send(message)
             time.sleep(timing)
     except KeyboardInterrupt:
@@ -58,7 +58,7 @@ class MotionProfile:
     def get_profile(self):
         self.current_time = time.time()
         thrust = self.profile_callback(self.current_time - self.start_time)
-        if thrust > 1:
+        if thrust > 0.4:
             self.start_time = self.current_time
             thrust = self.profile_callback(self.current_time - self.start_time)
 

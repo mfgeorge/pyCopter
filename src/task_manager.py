@@ -235,7 +235,8 @@ class TaskManager:
         if task_name not in self.thread_dict.keys():
             exit_flag = ProtectedData(False)
             run_count = ProtectedData(0)
-            self.thread_dict[task_name] = (task_object, run_count, timing, exit_flag)
+            actual_timing = 0
+            self.thread_dict[task_name] = (task_object, run_count, timing, exit_flag, last_time)
             print("Task ", task_name, " added to TaskManager")
             _thread.start_new_thread(self.wrapped_callback, (task_name, ))
         else:
