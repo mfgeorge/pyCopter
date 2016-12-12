@@ -6,6 +6,7 @@
 ..  topic:: Author
 
     Sebastian Plamauer
+    Modified by: Oscar Ruiz
 
 bmp180 is a micropython module for the Bosch BMP180 sensor. It measures
 temperature as well as pressure, with a high enough resolution to calculate

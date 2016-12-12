@@ -54,8 +54,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'pyCopter'
-copyright = u'2016, Chad Bickle, Oscar Ruiz, Michael George'
-author = u'Chad Bickle, Oscar Ruiz, Michael George'
+copyright = u'2016, Chad Bickel, Oscar Ruiz, Michael George'
+author = u'Chad Bickel, Oscar Ruiz, Michael George'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -136,7 +136,7 @@ latex_elements = { 'papersize':'letterpaper',
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'pyCopter.tex', u'pyCopter Documentation',
-     u'Chad Bickle, Oscar Ruiz, Michael George', 'manual'),
+     u'Chad Bickel, Oscar Ruiz, Michael George', 'manual'),
 ]
 
 
